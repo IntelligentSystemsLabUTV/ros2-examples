@@ -1,0 +1,318 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        // Build tasks
+        {
+            "label": "build",
+            "detail": "Build workspace (default)",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "build-debug",
+            "detail": "Build workspace (debug)",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "build-selected",
+            "detail": "Build selected packages",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "build-selected-debug",
+            "detail": "Build selected packages (debug)",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
+            "group": "build",
+            "problemMatcher": "$gcc"
+        },
+        // Clean
+        {
+            "label": "clean",
+            "detail": "Run the clean target",
+            "type": "shell",
+            "command": "colcon build --cmake-target clean",
+            "problemMatcher": "$gcc"
+        },
+        {
+            "label": "purge",
+            "detail": "Purge workspace by deleting all generated files",
+            "type": "shell",
+            "command": "rm -rf build install log; py3clean .",
+            "problemMatcher": []
+        },
+        // Linting and static code analysis tasks
+        {
+            "label": "fix",
+            "detail": "Reformat files with uncrustify",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_uncrustify --reformat src/",
+            "problemMatcher": []
+        },
+        {
+            "label": "uncrustify",
+            "detail": "Lint files with uncrustify",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_uncrustify src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "uncrustify",
+                    "source": " uncrustify",
+                    "fileLocation": "relative",
+                    "pattern": [
+                    // just the file name message
+                        {
+                            "regexp": "^(.*)'(.*)':",
+                            "kind": "file",
+                            "file": 2,
+                            "message": 1
+                        },
+                  ]
+                }
+            ]
+        },
+        {
+            "label": "cpplint",
+            "detail": "Lint files with cpplint",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_cpplint src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "cpplint",
+                    "source": " cpplint",
+                    "fileLocation": "absolute",
+                    "pattern": [
+                        {
+                            "regexp": "^(.+):(\\d+):\\s+(.+)\\[(.+)\\]$",
+                            "file": 1,
+                            "line": 2,
+                            "message": 3,
+                            "code": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "cppcheck",
+            "detail": "Run static code checker cppcheck",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_cppcheck src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "cppcheck",
+                    "source": "cppcheck",
+                    "pattern": [
+                        {
+                            "regexp": "^\\[(.+):(\\d+)\\]:\\s+(.+)$",
+                            "file": 1,
+                            "line": 2,
+                            "message": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "lint_cmake",
+            "detail": "Run lint on cmake files",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_lint_cmake src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "lint_cmake",
+                    "source": "lint_cmake",
+                    "pattern": [
+                        {
+                            "regexp": "^(.+):(\\d+):\\s+(.+)$",
+                            "file": 1,
+                            "line": 2,
+                            "message": 3
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "flake8",
+            "detail": "Run flake8 on python files",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_flake8 src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                  "owner": "flake8",
+                  "source": "flake8",
+                  "pattern": [
+                    {
+                      "code": 4,
+                      "column": 3,
+                      "file": 1,
+                      "line": 2,
+                      "message": 5,
+                      "regexp": "^(.+):(\\d+):(\\d+): (\\w\\d+) (.+)$"
+                    }
+                  ]
+                }
+              ]
+        },
+        {
+            "label": "pep257",
+            "detail": "Run pep257 on python files",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_pep257 src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "pep257",
+                    "source": "pep257",
+                    "pattern": [
+                        {
+                            "regexp": "^(.+):(\\d+)\\s+(.+):\\s+(.+):\\s+(.+)$",
+                            "file": 1,
+                            "line": 2,
+                            "code": 4,
+                            "message": 5
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "xmllint",
+            "detail": "Run xmllint on xml files",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ament_xmllint src/",
+            "presentation": {
+                "panel": "dedicated",
+                "reveal": "silent",
+                "clear": true
+            },
+            "problemMatcher": [
+                {
+                    "owner": "xmllint",
+                    "source": "xmllint",
+                    "fileLocation": "absolute",
+                    "pattern": [
+                        {
+                            "regexp": "^(.+):(\\d+):\\s+(.+)\\s+:\\s+(.+)$",
+                            "file": 1,
+                            "line": 2,
+                            "code": 3,
+                            "message": 4
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "label": "lint all",
+            "detail": "Run all linters",
+            "dependsOn":["cppcheck", "cpplint", "flake8", "lint_cmake", "pep257","xmllint", "uncrustify"],
+            "problemMatcher": []
+        },
+        // Workspace editing tasks
+        {
+            "label": "new cpp package",
+            "detail": "Create a new ROS C++ package from a template",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
+            "problemMatcher": []
+        },
+        {
+            "label": "new python package",
+            "detail": "Create a new ROS Python package from a template",
+            "type": "shell",
+            "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_python --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
+            "problemMatcher": []
+        },
+        {
+            "label": "install dependencies",
+            "detail": "Install all dependencies specified in the workspaces package.xml files",
+            "type": "shell",
+            "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
+            "problemMatcher": []
+        }
+    ],
+    "inputs": [
+        {
+          "id": "package",
+          "type": "promptString",
+          "description": "Package name"
+        },
+        {
+          "id": "description",
+          "type": "promptString",
+          "description": "Package description"
+        },
+        {
+          "id": "license",
+          "type": "promptString",
+          "description": "Package license name and version"
+        },
+        {
+          "id": "dependencies",
+          "type": "promptString",
+          "description": "Package dependencies"
+        },
+        {
+          "id": "maintainerEmail",
+          "type": "promptString",
+          "description": "Package maintainer email address"
+        },
+        {
+          "id": "maintainerName",
+          "type": "promptString",
+          "description": "Package maintainer name"
+        },
+        {
+          "id": "nodeName",
+          "type": "promptString",
+          "description": "Main package node name (if any)"
+        },
+        {
+          "id": "selectedPackages",
+          "type": "promptString",
+          "description": "Packages to build"
+        }
+      ]
+}
