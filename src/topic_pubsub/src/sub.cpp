@@ -26,7 +26,7 @@ Sub::Sub()
   //!   (...)
   //! );
   subscriber_ = this->create_subscription<std_msgs::msg::String>(
-    "test_topic",
+    "/examples/test_topic",
     10,
     std::bind(
       &Sub::msg_callback,

@@ -27,7 +27,7 @@ Pub::Pub()
   //! );
   //! This object will be used later on to publish messages
   publisher_ = this->create_publisher<std_msgs::msg::String>(
-    "test_topic",
+    "/examples/test_topic",
     10);
 
   //! Create and activate a timer with create_wall_timer from the base class
