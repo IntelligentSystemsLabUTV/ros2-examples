@@ -21,13 +21,13 @@ Sub::Sub()
   //! Initialize a subscriber with create_subscription from the base class:
   //! this->create_subscription<INTERFACE_TYPE>(
   //!   TOPIC_NAME [string],
-  //!   SUBSCRIPTION_QUEUE_DEPTH (...),
+  //!   SUBSCRIPTION_QoS (...),
   //!   CALLBACK_WRAPPER (with captures and argument placeholders)
   //!   (...)
   //! );
   subscriber_ = this->create_subscription<std_msgs::msg::String>(
     "/examples/test_topic",
-    10,
+    rclcpp::QoS(10),
     std::bind(
       &Sub::msg_callback,
       this,

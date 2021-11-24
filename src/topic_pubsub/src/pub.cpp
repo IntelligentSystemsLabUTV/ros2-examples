@@ -22,13 +22,13 @@ Pub::Pub()
   //! Initialize a publisher with create_publisher from the base class:
   //! this->create_publisher<INTERFACE_TYPE>(
   //!   TOPIC_NAME [string],
-  //!   PUBLISH_QUEUE_DEPTH (...),
+  //!   PUBLISH_QoS (...),
   //!   ...
   //! );
   //! This object will be used later on to publish messages
   publisher_ = this->create_publisher<std_msgs::msg::String>(
     "/examples/test_topic",
-    10);
+    rclcpp::QoS(10));
 
   //! Create and activate a timer with create_wall_timer from the base class
   //! providing an std::chrono::duration as the period and a call wrapper for
