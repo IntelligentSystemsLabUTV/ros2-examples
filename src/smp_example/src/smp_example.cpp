@@ -1,3 +1,11 @@
+/**
+ * Multithreaded executors example.
+ *
+ * Roberto Masocco <robmasocco@gmail.com>
+ *
+ * November 24, 2021
+ */
+
 #include <iostream>
 
 #include <rclcpp/rclcpp.hpp>
@@ -14,11 +22,15 @@ int main(int argc, char ** argv)
 
   rclcpp::init(argc, argv);
 
+  //! This type of executor is needed to handle multithreaded workloads
+  //! coming from nodes
   rclcpp::executors::MultiThreadedExecutor smp_executor;
 
+  //! So we explicitly need to add nodes to it, in this case just one
   auto smp_node = std::make_shared<SMPNode>(T1, T2);
   smp_executor.add_node(smp_node);
 
+  //! And then call its spin method directly
   smp_executor.spin();
 
   rclcpp::shutdown();

@@ -1,5 +1,5 @@
 /**
- * Multithreaded node example.
+ * Multithreaded node definition.
  *
  * Roberto Masocco <robmasocco@gmail.com>
  *
@@ -11,6 +11,10 @@
 
 #include <rclcpp/rclcpp.hpp>
 
+/**
+ * Simple node with two timers, which callbacks will be executed on
+ * different threads.
+ */
 class SMPNode : public rclcpp::Node
 {
 public:
@@ -20,12 +24,15 @@ private:
   rclcpp::TimerBase::SharedPtr timer1_;
   rclcpp::TimerBase::SharedPtr timer2_;
 
+  //! The main difference is the necessity to create callback groups,
+  //! intended as separate queues from which call
   rclcpp::CallbackGroup::SharedPtr clbk_group_1_;
   rclcpp::CallbackGroup::SharedPtr clbk_group_2_;
 
   void timer_clbk_1(void);
   void timer_clbk_2(void);
 
+  // Used in log prints
   unsigned long int count_1_;
   unsigned long int count_2_;
 };
