@@ -42,7 +42,7 @@
             "label": "clean",
             "detail": "Run the clean target",
             "type": "shell",
-            "command": "colcon build --cmake-target clean",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --merge-install --cmake-target clean",
             "problemMatcher": "$gcc"
         },
         {
