@@ -3,22 +3,22 @@
  *
  * Roberto Masocco <robmasocco@gmail.com>
  *
- * November 24, 2021
+ * November 26, 2021
  */
 
 #include <iostream>
 
 #include <rclcpp/rclcpp.hpp>
-#include "../include/smp_example/smp_node.hpp"
+
+#include "../include/smp_example/smp_example.hpp"
 
 int main(int argc, char ** argv)
 {
-  if (argc < 3) {
-    std::cerr << "Usage:\n\tsmp_node T1 T2" << std::endl;
+  if (argc < 2) {
+    std::cerr << "Usage:\n\tsmp_example PERIOD[ms]" << std::endl;
     exit(EXIT_FAILURE);
   }
-  unsigned int T1 = std::atoi(argv[1]);
-  unsigned int T2 = std::atoi(argv[2]);
+  unsigned int T = std::atoi(argv[1]);
 
   rclcpp::init(argc, argv);
 
@@ -26,9 +26,11 @@ int main(int argc, char ** argv)
   //! coming from nodes
   rclcpp::executors::MultiThreadedExecutor smp_executor;
 
-  //! So we explicitly need to add nodes to it, in this case just one
-  auto smp_node = std::make_shared<SMPNode>(T1, T2);
+  //! So we explicitly need to add nodes to it
+  auto smp_node = std::make_shared<SMPNode>();
+  auto pub_node = std::make_shared<PubNode>(T);
   smp_executor.add_node(smp_node);
+  smp_executor.add_node(pub_node);
 
   //! And then call its spin method directly
   smp_executor.spin();

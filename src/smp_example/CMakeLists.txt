@@ -18,18 +18,20 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
-add_executable(smp_node src/smp_node.cpp src/smp_example.cpp)
-target_link_libraries(smp_node pthread) # Required by methods
-target_include_directories(smp_node PUBLIC
+add_executable(smp_example src/smp_node.cpp
+                           src/smp_example.cpp
+                           src/pub_node.cpp)
+target_include_directories(smp_example PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
-  smp_node
+  smp_example
   "rclcpp"
 )
 
-install(TARGETS smp_node
+install(TARGETS smp_example
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
