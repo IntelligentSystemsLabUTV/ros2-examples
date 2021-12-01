@@ -45,7 +45,7 @@ Sub::Sub()
 void Sub::msg_callback(const std_msgs::msg::String::SharedPtr msg)
 {
   //! Get the data simply by accessing the object member as the interface specifies
-  RCLCPP_INFO(this->get_logger(), msg->data);
+  RCLCPP_INFO(this->get_logger(), msg->data.c_str());
 }
 
 int main(int argc, char ** argv)
