@@ -51,7 +51,7 @@ void AddTwoIntsServer::add_two_ints_clbk(
   response->set__sum(request->a + request->b);
 
   RCLCPP_INFO(
-    this->get_logger(), "%d + %d = %d",
+    this->get_logger(), "%ld + %ld = %ld",
     request->a,
     request->b,
     response->sum);

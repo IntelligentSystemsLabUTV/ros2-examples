@@ -65,7 +65,7 @@ void AddTwoIntsClient::call_srv(
     //! To access the value, we must access the future with get()
     //! It would block until the value was available, but the spin call above
     //! ensures us that we'll get here only when it is available
-    RCLCPP_INFO(this->get_logger(), "Result: %d", response.get()->sum);
+    RCLCPP_INFO(this->get_logger(), "Result: %ld", response.get()->sum);
   } else {
     RCLCPP_ERROR(this->get_logger(), "Service call failed");
   }
