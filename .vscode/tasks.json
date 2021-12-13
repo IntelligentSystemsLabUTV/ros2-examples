@@ -6,7 +6,7 @@
             "label": "build",
             "detail": "Build workspace (default)",
             "type": "shell",
-            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
             "group": {
                 "kind": "build",
                 "isDefault": true
@@ -17,7 +17,7 @@
             "label": "build-debug",
             "detail": "Build workspace (debug)",
             "type": "shell",
-            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
             "group": "build",
             "problemMatcher": "$gcc"
         },
@@ -25,7 +25,7 @@
             "label": "build-selected",
             "detail": "Build selected packages",
             "type": "shell",
-            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
+            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
             "group": "build",
             "problemMatcher": "$gcc"
         },
@@ -33,7 +33,7 @@
             "label": "build-selected-debug",
             "detail": "Build selected packages (debug)",
             "type": "shell",
-            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --merge-install --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
+            "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
             "group": "build",
             "problemMatcher": "$gcc"
         },
@@ -42,7 +42,7 @@
             "label": "clean",
             "detail": "Run the clean target",
             "type": "shell",
-            "command": "source /opt/ros/galactic/setup.sh; colcon build --merge-install --cmake-target clean",
+            "command": "source /opt/ros/galactic/setup.sh; colcon build --cmake-target clean",
             "problemMatcher": "$gcc"
         },
         {
