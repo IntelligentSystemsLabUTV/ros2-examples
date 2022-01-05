@@ -19,25 +19,39 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(ros2_examples_interfaces REQUIRED)
+
+# Compilation options
+option(EXAMPLE "Enable other example features" OFF)
 
 add_executable(pub src/pub.cpp)
 target_include_directories(pub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+if(EXAMPLE)
+  message(STATUS "Compiling other example features for pub")
+  target_compile_definitions(pub PUBLIC EXAMPLE)
+endif()
 ament_target_dependencies(
   pub
   "rclcpp"
   "std_msgs"
+  "ros2_examples_interfaces"
 )
 
 add_executable(sub src/sub.cpp)
 target_include_directories(sub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+if(EXAMPLE)
+  message(STATUS "Compiling other example features for sub")
+  target_compile_definitions(sub PUBLIC EXAMPLE)
+endif()
 ament_target_dependencies(
   sub
   "rclcpp"
   "std_msgs"
+  "ros2_examples_interfaces"
 )
 
 install(TARGETS pub

@@ -10,11 +10,20 @@
 #define SIMPLE_SERVICE_HPP
 
 #include <rclcpp/rclcpp.hpp>
+
+#ifndef EXAMPLE
 #include <example_interfaces/srv/add_two_ints.hpp>
+#else
+#include <ros2_examples_interfaces/srv/add_two_ints.hpp>
+#endif
 //! ALWAYS INCLUDE THE INTERFACE .hpp HEADER!
 
 //! Let's make things a little bit simpler here
+#ifndef EXAMPLE
 using namespace example_interfaces::srv;
+#else
+using namespace ros2_examples_interfaces::srv;
+#endif
 
 /**
  * AddTwoInts server node.

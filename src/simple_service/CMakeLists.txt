@@ -19,25 +19,39 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(example_interfaces REQUIRED)
+find_package(ros2_examples_interfaces REQUIRED)
+
+# Compilation options
+option(EXAMPLE "Enable other example features" OFF)
 
 add_executable(server src/server.cpp)
 target_include_directories(server PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+if(EXAMPLE)
+  message(STATUS "Enabled other example features for server")
+  target_compile_definitions(server PUBLIC EXAMPLE)
+endif()
 ament_target_dependencies(
   server
   "rclcpp"
   "example_interfaces"
+  "ros2_examples_interfaces"
 )
 
 add_executable(client src/client.cpp)
 target_include_directories(client PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
+if(EXAMPLE)
+  message(STATUS "Enabled other example features for client")
+  target_compile_definitions(client PUBLIC EXAMPLE)
+endif()
 ament_target_dependencies(
   client
   "rclcpp"
   "example_interfaces"
+  "ros2_examples_interfaces"
 )
 
 install(TARGETS server client

@@ -25,7 +25,11 @@ Sub::Sub()
   //!   CALLBACK_WRAPPER (with captures and argument placeholders)
   //!   (...)
   //! );
+#ifndef EXAMPLE
   subscriber_ = this->create_subscription<std_msgs::msg::String>(
+#else
+  subscriber_ = this->create_subscription<ros2_examples_interfaces::msg::String>(
+#endif
     "/examples/test_topic",
     rclcpp::QoS(10),
     std::bind(
@@ -42,7 +46,11 @@ Sub::Sub()
  *
  * @param msg New message.
  */
+#ifndef EXAMPLE
 void Sub::msg_callback(const std_msgs::msg::String::SharedPtr msg)
+#else
+void Sub::msg_callback(const ros2_examples_interfaces::msg::String::SharedPtr msg)
+#endif
 {
   //! Get the data simply by accessing the object member as the interface specifies
   RCLCPP_INFO(this->get_logger(), msg->data.c_str());

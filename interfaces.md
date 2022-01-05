@@ -65,7 +65,7 @@ Remember to source install scripts to see the new package and compile against it
 
 ## Interface format
 
-Below you can find some notes about how to write interface definition files of various kinds.
+Below you can find some notes about how to write interface definition files of various kinds. For more information about interface files and types see the [ROS 2 documentation](https://docs.ros.org/en/galactic/Concepts/About-ROS-Interfaces.html#about-ros-2-interfaces).
 
 ### Messages
 

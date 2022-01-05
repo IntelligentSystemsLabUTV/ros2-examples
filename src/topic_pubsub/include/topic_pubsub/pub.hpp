@@ -10,7 +10,12 @@
 #define PUB_HPP
 
 #include <rclcpp/rclcpp.hpp> //! rclcpp base library
+
+#ifndef EXAMPLE
 #include <std_msgs/msg/string.hpp> //! interface library that we'll use
+#else
+#include <ros2_examples_interfaces/msg/string.hpp>
+#endif
 
 #define PUB_PERIOD 300 // Publisher transmission time period [ms]
 
@@ -28,7 +33,11 @@ public:
 private:
   //! DDS endpoint, acting as a publisher
   //! Syntax is: rclcpp::Publisher<INTERFACE_TYPE>::SharedPtr OBJ;
+#ifndef EXAMPLE
   rclcpp::Publisher<std_msgs::msg::String>::SharedPtr publisher_;
+#else
+  rclcpp::Publisher<ros2_examples_interfaces::msg::String>::SharedPtr publisher_;
+#endif
 
   //! ROS-2 managed timer: enables one to set up a periodic job
   //! The job is coded in a callback, which better be a private method

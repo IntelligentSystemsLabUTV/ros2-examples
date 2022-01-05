@@ -1,0 +1,12 @@
+# Example ROS 2 service specification.
+# Roberto Masocco <robmasocco@gmail.com>
+# January 5, 2022
+
+# This is totally compatible with the example_interfaces/AddTwoInts service
+# Note that the request could as well be empty, just meant to trigger something!
+# See example_interfaces/Trigger
+
+int64 a
+int64 b
+---
+int64 sum

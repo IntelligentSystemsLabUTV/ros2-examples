@@ -10,7 +10,12 @@
 #define SUB_HPP
 
 #include <rclcpp/rclcpp.hpp> //! rclcpp base library
+
+#ifndef EXAMPLE
 #include <std_msgs/msg/string.hpp> //! interface library that we'll use
+#else
+#include <ros2_examples_interfaces/msg/string.hpp>
+#endif
 
 /**
  * Simple subscriber node: receives and prints strings transmitted on a topic.
@@ -29,8 +34,13 @@ private:
   //! Syntax is: rclcpp::Subscription<INTERFACE_TYPE>::SharedPtr OBJ;
   //! Callback signature must be:
   //!   void FUNC_NAME(const INTERFACE_TYPE::SharedPtr ARG_NAME);
+#ifndef EXAMPLE
   rclcpp::Subscription<std_msgs::msg::String>::SharedPtr subscriber_;
   void msg_callback(const std_msgs::msg::String::SharedPtr msg);
+#else
+  rclcpp::Subscription<ros2_examples_interfaces::msg::String>::SharedPtr subscriber_;
+  void msg_callback(const ros2_examples_interfaces::msg::String::SharedPtr msg);
+#endif
 
   //! Nothing else is necessary to receive messages
 };

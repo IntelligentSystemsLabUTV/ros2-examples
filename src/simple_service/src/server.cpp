@@ -10,8 +10,6 @@
 
 #include "../include/simple_service/simple_service.hpp"
 
-using namespace example_interfaces::srv;
-
 /**
  * @brief AddTwoInts server constructor.
  */
