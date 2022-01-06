@@ -1,0 +1,13 @@
+# Example parameter config file
+# Roberto Masocco <robmasocco@gmail.com>
+# January 6, 2022
+
+# This completely embeds the basic structure of a YAML parameter file.
+# Note that this could be used for multiple nodes at once: just repeat the following block!
+# Eventual namespaces would have to be prepended.
+# A comprehensive guide can be found at: https://roboticsbackend.com/ros2-yaml-params/
+# Don't forget slashes in names, otherwise stuff won't work!
+
+/parametric_pub:
+  ros__parameters:
+    number: 1
