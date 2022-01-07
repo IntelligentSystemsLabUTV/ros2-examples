@@ -28,10 +28,10 @@ def generate_launch_description():
 
   # Create node launch description
   node = Node(
-    package = 'parameters_example',
-    name = 'parametric_pub',
-    executable = 'parametric_pub',
-    parameters = [config] #! We could specify more than one source here
+    package='parameters_example',
+    name='parametric_pub',
+    executable='parametric_pub',
+    parameters=[config] #! We could specify more than one source here
   )
 
   # Finalize launch description
