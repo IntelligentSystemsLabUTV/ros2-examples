@@ -31,3 +31,13 @@ int main(int argc, char ** argv)
   rclcpp::shutdown();
   exit(EXIT_SUCCESS);
 }
+
+//! Note that all the functionalities that CLI tools offer can also be achieved
+//! at runtime by other nodes, which can interact with each other by querying and
+//! setting parameters
+//! Just run "ros2 service list -t" after this application is up to notice that
+//! every node offers specific services to interact with parameters
+//! You can use those services via CLI as well as from another node's code
+//! Alternatively, there's the native "AsyncParametersClient" object that
+//! offers APIs to do more or less that
+
