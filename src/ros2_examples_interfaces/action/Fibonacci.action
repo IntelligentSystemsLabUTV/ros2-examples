@@ -1,0 +1,14 @@
+# Example ROS 2 action to compute the Fibonacci sequence.
+# Roberto Masocco <robmasocco@gmail.com>
+# January 10, 2022
+
+# ref.: https://docs.ros.org/en/foxy/Tutorials/Actions/Creating-an-Action.html
+
+# GOAL
+int32 order              # Compute the sequence up to this
+---
+# RESULT
+int32[] sequence         # Computed sequence
+---
+# FEEDBACK
+int32[] partial_sequence # Computation status

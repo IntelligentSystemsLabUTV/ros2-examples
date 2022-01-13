@@ -5,7 +5,7 @@ Examples were built and tested on ROS 2 Galactic Geochelone and Foxy Fitzroy. Th
 
 The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you use this inside such IDE.
 
-**Currently this repository hosts only C++ examples.**
+**Currently this repository hosts only C++ examples, meant to be developed, built and executed on Linux machines only. Ubuntu 20.04 LTS Focal Fossa was used and is the currently supported and suggested platform.**
 
 ## List of examples
 
@@ -17,6 +17,7 @@ The repository is built around a Visual Studio Code template that you can find [
 - **parameters_example:** This example offers an in-depth coverage of node parameters.
 - **ros2_examples_bringup:** This package shows some conventions and best practices about launch files (see *launch_files.md*).
 - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
+- **actions_example:** This package shows how ROS 2 actions can be implemented, providing two example *client* and *server* nodes that compute the Fibonacci sequence. Its a rework of the official example provided [here](https://docs.ros.org/en/foxy/Tutorials/Actions/Writing-a-Cpp-Action-Server-Client.html).
 
 ## Additional resources
 

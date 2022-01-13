@@ -10,13 +10,14 @@ In order to create an interfaces-only package, you have to do the following:
 
 2. Remove _include/_ and _src/_.
 
-3. Create directories for the kinds of interfaces you want to add: _msg_, _srv_ and so on.
+3. Create directories for the kinds of interfaces you want to add: _msg_, _srv_, _action_.
 
 4. In _package.xml_, add the following lines:
 
    ```xml
-   <build_depend>rosidl_default_generators</build_depend>
+   <buildtool_depend>rosidl_default_generators</buildtool_depend>
    <exec_depend>rosidl_default_runtime</exec_depend>
+   <depend>action_msgs</depend> <!--Only for actions!-->
    <member_of_group>rosidl_interface_packages</member_of_group>
    ```
 
@@ -34,9 +35,15 @@ In order to create an interfaces-only package, you have to do the following:
        ...
        "srv/fileN.srv"
        ...
+       "action/fileM.action"
+       ...
    	# And so on...
    )
    ```
+
+6. **If using actions**, the following dependencies are required:
+    - *rclcpp_action*
+    - Interfaces package where actions are specified.
 
 Then you can build the package with colcon. Generated files will be placed in:
 
@@ -45,6 +52,7 @@ Then you can build the package with colcon. Generated files will be placed in:
   ```python
   from PACKAGE_interfaces.msg import MyInterface
   from PACKAGE_interfaces.srv import MyInterface
+  from PACKAGE_interfaces.action import MyInterface
   # And so on...
   ```
 
@@ -53,14 +61,18 @@ Then you can build the package with colcon. Generated files will be placed in:
   ```c++
   #include "PACKAGE_interfaces/msg/MyInterface.hpp"
   #include "PACKAGE_interfaces/srv/MyInterface.hpp"
+  #include "PACKAGE_interfaces/action/MyInterface.hpp"
   // And so on...
+
+  // Only for actions:
+  #include <rclcpp_action/rclcpp_action.hpp>
   ```
 
 Remember to source install scripts to see the new package and compile against it!
 
 ## Best Practices
 
-- Interface files extensions must be like _.msg_, _.srv_, with uppercase camel notation names.
+- Interface files extensions must be like _.msg_, _.srv_, _.action_, with uppercase camel notation names.
 - Of course, all packages that use your interfaces will depend on the new interfaces package.
 
 ## Interface format
@@ -109,3 +121,17 @@ RESPONSE
 ```
 
 Constants can be specified as above in both the request and the response, and will be available in only one of the two depending on where they were specified.
+
+### Actions
+
+All of the above also applies to action interface files. Actions are provided by the ROS 2 middleware by means of two services, namely *Goal* and *Result*, and a *Feedback* topic. Message formats for all three can be defined in a single *.action* interface file like this:
+
+```
+GOAL
+---
+RESULT
+---
+FEEDBACK
+```
+
+Again, there can be constants appropriately specified in each of the three messages.
