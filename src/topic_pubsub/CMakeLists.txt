@@ -28,6 +28,7 @@ if(EXAMPLE)
   find_package(ros2_examples_interfaces REQUIRED)
 endif()
 
+# publisher
 add_executable(pub src/pub.cpp)
 target_include_directories(pub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -48,6 +49,7 @@ else()
   )
 endif()
 
+# subscriber
 add_executable(sub src/sub.cpp)
 target_include_directories(sub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -68,10 +70,24 @@ else()
   )
 endif()
 
+# periodic subscriber
+add_executable(periodic_sub src/periodic_sub.cpp)
+target_include_directories(periodic_sub PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  periodic_sub
+  "rclcpp"
+  "std_msgs"
+)
+
 install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS sub
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS periodic_sub
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
