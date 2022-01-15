@@ -15,44 +15,58 @@ if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
+# compilation options
+option(EXAMPLE "Enable interfaces example features" OFF)
+#! To enable this when building with colcon, add the following to the command:
+#! --ament-cmake-args "-DEXAMPLE=ON"
+
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
-find_package(ros2_examples_interfaces REQUIRED)
-
-# Compilation options
-option(EXAMPLE "Enable other example features" OFF)
+if(EXAMPLE)
+  find_package(ros2_examples_interfaces REQUIRED)
+endif()
 
 add_executable(pub src/pub.cpp)
 target_include_directories(pub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 if(EXAMPLE)
-  message(STATUS "Compiling other example features for pub")
+  message(STATUS "Compiling interfaces example features for pub")
   target_compile_definitions(pub PUBLIC EXAMPLE)
+  ament_target_dependencies(
+    pub
+    "rclcpp"
+    "ros2_examples_interfaces"
+  )
+else()
+  ament_target_dependencies(
+    pub
+    "rclcpp"
+    "std_msgs"
+  )
 endif()
-ament_target_dependencies(
-  pub
-  "rclcpp"
-  "std_msgs"
-  "ros2_examples_interfaces"
-)
 
 add_executable(sub src/sub.cpp)
 target_include_directories(sub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 if(EXAMPLE)
-  message(STATUS "Compiling other example features for sub")
+  message(STATUS "Compiling interfaces example features for sub")
   target_compile_definitions(sub PUBLIC EXAMPLE)
+  ament_target_dependencies(
+    sub
+    "rclcpp"
+    "ros2_examples_interfaces"
+  )
+else()
+  ament_target_dependencies(
+    sub
+    "rclcpp"
+    "std_msgs"
+  )
 endif()
-ament_target_dependencies(
-  sub
-  "rclcpp"
-  "std_msgs"
-  "ros2_examples_interfaces"
-)
 
 install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})
