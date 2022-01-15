@@ -1,7 +1,7 @@
 /**
  * Fibonacci computation action client main source file.
  *
- * Roberto Masocco
+ * Roberto Masocco <robmasocco@gmail.com>
  *
  * January 10, 2022
  */
@@ -31,7 +31,16 @@ void cancel_goal(
   // Wait for and parse the result
   //! As for this processe's semantics, we don't need to do much more than
   //! print what we got back
+#ifndef ADVANCED
   switch (rclcpp::spin_until_future_complete(node_ptr, cancel_resp)) {
+#else
+  rclcpp::executors::MultiThreadedExecutor smp_executor;
+  switch (rclcpp::executors::spin_node_until_future_complete(
+      smp_executor,
+      node_ptr,
+      cancel_resp))
+  {
+#endif
     case rclcpp::FutureReturnCode::SUCCESS:
       break;
     //! Other codes aren't important in this context
@@ -72,7 +81,16 @@ int main(int argc, char ** argv)
   //! This starts the event-based callback scheme
   std::shared_future<FibonacciGoalHandleSharedPtr> goal_resp =
     client_node->send_goal(order);
+#ifndef ADVANCED
   switch (rclcpp::spin_until_future_complete(client_node, goal_resp)) {
+#else
+  rclcpp::executors::MultiThreadedExecutor smp_executor;
+  switch (rclcpp::executors::spin_node_until_future_complete(
+      smp_executor,
+      client_node,
+      goal_resp))
+  {
+#endif
     case rclcpp::FutureReturnCode::SUCCESS:
       break;
     case rclcpp::FutureReturnCode::INTERRUPTED:
@@ -102,7 +120,15 @@ int main(int argc, char ** argv)
   // Wait for the result to be sent back
   std::shared_future<FibonacciGoalHandle::WrappedResult> result_resp =
     client_node->request_result(goal_handle);
+#ifndef ADVANCED
   switch (rclcpp::spin_until_future_complete(client_node, result_resp)) {
+#else
+  switch (rclcpp::executors::spin_node_until_future_complete(
+      smp_executor,
+      client_node,
+      result_resp))
+  {
+#endif
     case rclcpp::FutureReturnCode::SUCCESS:
       break;
     case rclcpp::FutureReturnCode::INTERRUPTED:

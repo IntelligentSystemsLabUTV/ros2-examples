@@ -1,7 +1,7 @@
 /**
  * Fibonacci computation action client source code.
  *
- * Roberto Masocco
+ * Roberto Masocco <robmasocco@gmail.com>
  *
  * January 10, 2022
  */
