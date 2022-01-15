@@ -10,7 +10,7 @@ The repository is built around a Visual Studio Code template that you can find [
 ## List of examples
 
 - **hello_ros2:** What *ros2 pkg create* generates by default.
-- **topic_pubsub:** Example package with two executables: a publisher and a subscriber for a given topic; this example also shows how to use custom interfaces and how to pass command-line options to CMake when building with colcon.
+- **topic_pubsub:** Example package with two nodes: a publisher and a subscriber for a given topic; this example also shows how to use custom interfaces, how to pass command-line options to CMake when building with colcon, and how to dynamically deactivate and reactivate topic subscriptions.
 - **simple_service:** Classic ROS 2 client/server example.
 - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
 - **ros2_example_interfaces:** Example of an interfaces-only package (see _interfaces.md_).
