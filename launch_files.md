@@ -88,8 +88,8 @@ def generate_launch_description():
     name='NEW_NAME', # This will override the node's name specified in the code
     exec_name='NEW_PROCESS_NAME', # Marks the process in logs/tools instead of the basename
     namespace='NEW_NAMESPACE', # Specifies new ROS namespace for this executable
-    shell=True, # Set to True if executing in a shell, to improve logging
-    emulate_tty=True, # If False, removes/alters many prints assuming there's no TTY
+    shell=True, # If True, the process will be started in a new shell
+    emulate_tty=True, # If False, logs are processed as text only (e.g. removing colors)
     output='both', # Configures logging in files and console, see below
     log_cmd=True, # Prints the final cmd before executing the process in the logs
     arguments=[ # Array of strings/parametric arguments that will end up in process's argv
