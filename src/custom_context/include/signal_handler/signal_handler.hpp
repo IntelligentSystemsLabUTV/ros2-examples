@@ -403,13 +403,13 @@ private:
    */
   static void common_handler(int sig, siginfo_t * info, void * ucontext)
   {
+    // Acquire signal handler lock
+    std::scoped_lock<std::mutex> common_handler_lock(install_lock_);
+
     // Call system handler, if present, bypassing the rest of the system
     if (system_handler_) {
       system_handler_(sig, info, ucontext);
     }
-
-    // Acquire signal handler lock
-    std::scoped_lock<std::mutex> common_handler_lock(install_lock_);
 
     // Check if signal handler is currently valid
     if (!valid_) {
