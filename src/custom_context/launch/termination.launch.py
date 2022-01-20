@@ -1,9 +1,9 @@
 """
-Custom context example launch file.
+Termination example launch file.
 
 Roberto Masocco <robmasocco@gmail.com>
 
-January 14, 2022
+January 20, 2022
 """
 
 from launch import LaunchDescription
@@ -14,10 +14,8 @@ def generate_launch_description():
   ld = LaunchDescription()
   node = Node(
     package='custom_context',
-    executable='custom_context',
-    #! The following options are necessary to see the output on cout
+    executable='termination',
     emulate_tty=True,
-    output='both',
     log_cmd=True
   )
   ld.add_action(node)

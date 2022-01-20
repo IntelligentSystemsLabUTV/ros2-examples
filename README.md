@@ -18,7 +18,7 @@ The repository is built around a Visual Studio Code template that you can find [
 - **ros2_examples_bringup:** This package shows some conventions and best practices about launch files (see *launch_files.md*).
 - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
 - **actions_example:** This package shows how ROS 2 actions can be implemented, providing two example *client* and *server* nodes that compute the Fibonacci sequence. Its a rework of the official example provided [here](https://docs.ros.org/en/foxy/Tutorials/Actions/Writing-a-Cpp-Action-Server-Client.html).
-- **custom_context:** Quick example that shows how an RCL context can be created, initialized, and finally shut down; not using the global context allows one to specify ad-hoc signal handlers and cleanup routines.
+- **custom_context:** Quick example that shows how an RCL context can be created, initialized, and finally shut down; not using the global context allows one to specify ad-hoc signal handlers and cleanup routines but, as is comprehensively explained in the *termination* example, this has to be done keeping in mind how the middleware works and needs to be managed.
 
 ## Additional resources
 

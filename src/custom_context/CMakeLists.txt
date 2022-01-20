@@ -8,6 +8,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(std_msgs REQUIRED)
 
 # custom context example
 add_executable(custom_context src/custom_context.cpp)
@@ -20,6 +21,19 @@ ament_target_dependencies(
   "rclcpp"
 )
 install(TARGETS custom_context
+  DESTINATION lib/${PROJECT_NAME})
+
+# signal handling example
+add_executable(termination src/termination.cpp)
+target_include_directories(termination PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_compile_features(termination PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+ament_target_dependencies(
+  termination
+  "rclcpp"
+)
+install(TARGETS termination
   DESTINATION lib/${PROJECT_NAME})
 
 # launch files
