@@ -26,3 +26,16 @@ The repository is built around a Visual Studio Code template that you can find [
 - **launch_files.md:** Describes best practices and convetions about launch files and their packages.
 - **ros2_debugging.md:** Gives some hints about how a ROS 2 application could be debugged.
 - **ros2_cmds.sh:** Contains many shell commands to ease ROS 2 workspace sourcing and maintenance.
+- **cli_cheats_sheet.pdf:** Quick summary of all CLI introspection tools commands.
+
+## Useful references (links to Galactic docs)
+- [**rqt_console**](https://docs.ros.org/en/galactic/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
+- [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/galactic/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins.
+- [**Efficient intra-process communication**](https://docs.ros.org/en/galactic/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations.
+- [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/galactic/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the ParameterEventHandler class, to monitor and respond to parameter changes taking place in all nodes.
+- [**The ROS_DOMAIN_ID**](https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
+- [**Recording and playing back data**](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
+- [**About composition**](https://docs.ros.org/en/galactic/Concepts/About-Composition.html)**:** Introduction to the components distributed paradigm.
+- [**Composing multiple nodes in a single process**](https://docs.ros.org/en/galactic/Tutorials/Composition.html)**:** Introduction to the components introspection tools and different loading methods, with links to some source code examples.
+- [**Managed nodes**](https://design.ros2.org/articles/node_lifecycle.html)**:** Design document about nodes with lifecycle.
+- [**Lifecycle**](https://github.com/ros2/demos/blob/galactic/lifecycle/README.rst)**:** Quick example that shows how nodes with lifecycle can be created and managed.

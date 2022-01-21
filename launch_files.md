@@ -158,3 +158,9 @@ Logging can be configured via the *output* argument of the *Node* object. When y
 - **'both':** both stdout and stderr are logged to the screen and to launch main log file;
 - **'own_log':** for stdout, stderr and their combination to be logged to their own log files;
 - **'full':** to have stdout and stderr sent to the screen, to the main launch log file, and their own separate and combined log files.
+
+## [Event handlers](https://docs.ros.org/en/galactic/Tutorials/Launch/Using-Event-Handlers.html)
+Launch files let you do much more than starting up your application(s): they can be written as complete Python scripts to perform many different operations during startup, operation, and termination of the various actions they create. See the linked documentation for details.
+
+## [Large projects](https://docs.ros.org/en/galactic/Tutorials/Launch/Using-ROS2-Launch-For-Large-Projects.html)
+Starting single modules and entire architectures with launch files are not the same thing. In the latter case, it is better to reuse launch files that one has already written, to lay down an high-level launch structure and eventually modify the rest. See the linked documentation for details.
