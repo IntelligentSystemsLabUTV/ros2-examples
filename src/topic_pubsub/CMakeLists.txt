@@ -81,6 +81,39 @@ ament_target_dependencies(
   "std_msgs"
 )
 
+# intrapc test
+add_executable(intrapc_test src/intrapc_test.cpp)
+target_include_directories(intrapc_test PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  intrapc_test
+  "rclcpp"
+  "std_msgs"
+)
+
+# intrapc publisher
+add_executable(intrapc_pub src/intrapc_pub.cpp)
+target_include_directories(intrapc_pub PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  intrapc_pub
+  "rclcpp"
+  "std_msgs"
+)
+
+# intrapc subscriber
+add_executable(intrapc_sub src/intrapc_sub.cpp)
+target_include_directories(intrapc_sub PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+ament_target_dependencies(
+  intrapc_sub
+  "rclcpp"
+  "std_msgs"
+)
+
 install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})
 
@@ -88,6 +121,15 @@ install(TARGETS sub
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS periodic_sub
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS intrapc_test
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS intrapc_pub
+  DESTINATION lib/${PROJECT_NAME})
+
+install(TARGETS intrapc_sub
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

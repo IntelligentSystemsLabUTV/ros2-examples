@@ -10,7 +10,11 @@ The repository is built around a Visual Studio Code template that you can find [
 ## List of examples
 
 - **hello_ros2:** What *ros2 pkg create* generates by default.
-- **topic_pubsub:** Example package with two nodes: a publisher and a subscriber for a given topic; this example also shows how to use custom interfaces, how to pass command-line options to CMake when building with colcon, and how to dynamically deactivate and reactivate topic subscriptions.
+- **topic_pubsub:** Examples about topics and messages:
+  - *pub* and *sub* show how a node can subscribe or publish to a topic;
+  - a variation of the above shows how to use custom interfaces and how to pass command-line options to CMake when building with colcon;
+  - *periodic_sub* shows how to dynamically deactivate and reactivate topic subscriptions;
+  - *intrapc_\** tests demonstrate ROS 2 intra-process communication capabilities, showing how nodes must be set up and used to enforce such behaviour.
 - **simple_service:** Classic ROS 2 client/server example.
 - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
 - **ros2_example_interfaces:** Example of an interfaces-only package (see _interfaces.md_).
@@ -31,7 +35,7 @@ The repository is built around a Visual Studio Code template that you can find [
 ## Useful references (links to Galactic docs)
 - [**rqt_console**](https://docs.ros.org/en/galactic/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
 - [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/galactic/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins.
-- [**Efficient intra-process communication**](https://docs.ros.org/en/galactic/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations.
+- [**Efficient intra-process communication**](https://docs.ros.org/en/galactic/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)).
 - [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/galactic/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the ParameterEventHandler class, to monitor and respond to parameter changes taking place in all nodes.
 - [**The ROS_DOMAIN_ID**](https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
 - [**Recording and playing back data**](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
