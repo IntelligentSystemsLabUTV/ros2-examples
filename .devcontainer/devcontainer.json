@@ -1,0 +1,22 @@
+{
+  "context": "../",
+  "dockerFile": "Dockerfile",
+  // Lunch the container as a non-root user
+  "remoteUser" : "ros",
+  "runArgs": [
+      // Use a ptrace-based debugger
+      "--cap-add=SYS_PTRACE",
+      "--security-opt", "seccomp=unconfined",
+      // Use host network stack
+      "--network", "host",
+      // Allow GUI-based apps to run using host's X server
+      "--env=\"DISPLAY\""
+  ],
+  "extensions": [
+      "ms-python.python",
+      "ms-vscode.cpptools",
+      "twxs.cmake",
+      "ms-vscode.cmake-tools",
+      "yzhang.markdown-all-in-one"
+  ]
+}
