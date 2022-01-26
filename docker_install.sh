@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Docker and Docker Compose installation script (updated as of today).
+# Docker Engine and Docker Compose installation script (updated as of today).
 #
 # Roberto Masocco <robmasocco@gmail.com>
 # Alessandro Tenaglia <alessandro.tenaglia42@gmail.com>
