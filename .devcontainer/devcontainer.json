@@ -17,7 +17,10 @@
       "ms-vscode.cpptools",
       "twxs.cmake",
       "ms-vscode.cmake-tools",
-      "yzhang.markdown-all-in-one"
+      "yzhang.markdown-all-in-one",
+      "gruntfuggly.todo-tree",
+      "eamodio.gitlens",
+      "github.vscode-pull-request-github"
   ]
 }
 // TODO Change with multiple containers and docker-compose for different stages
