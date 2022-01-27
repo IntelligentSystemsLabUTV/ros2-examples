@@ -5,6 +5,18 @@
 #
 # January 25, 2022
 
+# RUN THIS WITH:
+# --cap-add=SYS_PTRACE
+# --security-opt seccomp=unconfined
+# --network host
+# --user ros
+# If your terminal emulator supports colors also add:
+# --env TERM=xterm-256color
+# If you want to start GUI-based applications also add:
+# --env="DISPLAY"
+# If you use an Nvidia GPU and want to use the Nvidia runtime also add:
+# --runtime=nvidia
+
 ### BASE UBUNTU 20.04 INSTALLATION ###
 FROM ubuntu:20.04 as base
 

@@ -1,7 +1,7 @@
 {
   "context": "../",
   "dockerFile": "Dockerfile",
-  // Lunch the container as a non-root user
+  // Launch the container as a non-root user
   "remoteUser" : "ros",
   "runArgs": [
       // Use a ptrace-based debugger
@@ -10,7 +10,9 @@
       // Use host network stack
       "--network", "host",
       // Allow GUI-based apps to run using host's X server
-      "--env=\"DISPLAY\""
+      "--env=\"DISPLAY\"",
+      // Allow Zsh prompts to display correctly
+      "--env", "TERM=xterm-256color"
   ],
   "extensions": [
       "ms-python.python",
