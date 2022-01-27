@@ -1,28 +1,41 @@
 {
-  "context": "../",
+  "context": "./",
   "dockerFile": "Dockerfile",
   // Launch the container as a non-root user
-  "remoteUser" : "ros",
+  "remoteUser": "ros",
   "runArgs": [
-      // Use a ptrace-based debugger
-      "--cap-add=SYS_PTRACE",
-      "--security-opt", "seccomp=unconfined",
-      // Use host network stack
-      "--network", "host",
-      // Allow GUI-based apps to run using host's X server
-      "--env=\"DISPLAY\"",
-      // Allow Zsh prompts to display correctly
-      "--env", "TERM=xterm-256color"
+    // Use a ptrace-based debugger
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    // Use host network stack
+    "--network",
+    "host",
+    // Allow GUI-based apps to run using host's X server
+    "--env=\"DISPLAY\"",
+    // Allow Zsh prompts to display correctly
+    "--env",
+    "TERM=xterm-256color"
   ],
   "extensions": [
-      "ms-python.python",
-      "ms-vscode.cpptools",
-      "twxs.cmake",
-      "ms-vscode.cmake-tools",
-      "yzhang.markdown-all-in-one",
-      "gruntfuggly.todo-tree",
-      "eamodio.gitlens",
-      "github.vscode-pull-request-github"
-  ]
+    "ms-python.python",
+    "ms-vscode.cpptools",
+    "twxs.cmake",
+    "ms-vscode.cmake-tools",
+    "yzhang.markdown-all-in-one",
+    "gruntfuggly.todo-tree",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github"
+  ],
+  "settings": {
+    // Use Zsh also in VS Code
+    // "terminal.integrated.shell.linux": "/bin/zsh"
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.profiles.linux": {
+      "zsh": {
+        "path": "/bin/zsh"
+      },
+    }
+  }
 }
 // TODO Change with multiple containers and docker-compose for different stages
