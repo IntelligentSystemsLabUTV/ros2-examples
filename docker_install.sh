@@ -40,3 +40,13 @@ sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 echo "Installing Docker Compose..."
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
+
+# Check if the user wants to install latest Nvidia runtime
+while true; do
+  read -p "Do you wish to install the Nvidia runtime?" yn
+  case $yn in
+    [Yy]* ) sudo apt-get install -y nvidia-docker2; break;;
+    [Nn]* ) break;;
+    * ) echo "Please answer yes or no";;
+  esac
+done

@@ -22,14 +22,14 @@ RUN apt-get update && apt-get install -y \
   curl \
   iproute2 && \
   add-apt-repository universe && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 # Install language and locales
 RUN apt-get update && apt-get install -y \
   locales && \
   locale-gen en_US.UTF-8 && \
   update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8 && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 ENV LANG en_US.UTF-8
 
 # Set up UTC timezone
@@ -37,7 +37,7 @@ RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
   apt-get update && \
   apt-get install -y tzdata && \
   dpkg-reconfigure --frontend noninteractive tzdata && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 # Install ROS 2 base and testing packages
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
@@ -58,7 +58,7 @@ RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o 
   python3-rosdep \
   libasio-dev \
   libtinyxml2-dev && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 RUN yes | pip3 install -U \
   empy \
   pyros-genmsg \
@@ -84,25 +84,46 @@ RUN apt-get update && apt-get install -y \
   minicom \
   neofetch \
   screen && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
-# TODO Install zsh
+# Install Zsh
+RUN apt-get update && apt-get install -y \
+  zsh \
+  zsh-doc \
+  chroma && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# Create a non-root sudo user
+# Cleanup
+RUN apt-get autoclean && \
+  apt-get autoremove && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
+
+# Create a non-root sudo user with Zsh as shell
 RUN groupadd --gid $USER_GID $USERNAME && \
   useradd -s /bin/bash --uid $USER_UID --gid $USER_GID -m $USERNAME && \
   echo $USERNAME ALL=\(root\) NOPASSWD:ALL > /etc/sudoers.d/$USERNAME && \
   chmod 0440 /etc/sudoers.d/$USERNAME
 ENV HOME=/home/$USERNAME
-
-# Cleanup
-RUN apt-get autoclean && \
-  apt-get autoremove && \
-  rm -rf /var/lib/apt/lists/*
+RUN chsh -s /usr/bin/zsh $USERNAME
 
 # Switch to internal user
 USER $USERNAME
 WORKDIR $HOME
+
+# Configure Zsh for internal user
+ENV ZSH=$HOME/.oh-my-zsh
+ARG ZSH_CUSTOM=$ZSH/custom
+RUN wget -qO- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh | zsh || true
+RUN \
+  ZSH_PLUGINS=$ZSH_CUSTOM/plugins \
+  && ZSH_THEMES=$ZSH_CUSTOM/themes \
+  && git clone --single-branch --branch 'master' --depth 1 https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting \
+  && git clone --single-branch --branch 'master' --depth 1 https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions \
+  && git clone --single-branch --depth 1 https://github.com/romkatv/powerlevel10k.git $ZSH_THEMES/powerlevel10k
+COPY --chown=$USER_UID:$USER_GID .zshrc ./
+COPY --chown=$USER_UID:$USER_GID .ros2_cmds.zsh ./
+COPY --chown=$USER_UID:$USER_GID .aliases.zsh ./
+COPY --chown=$USER_UID:$USER_GID .p10k.zsh ./
 
 # Set environment variables
 ENV ROS_DISTRO=galactic
@@ -116,9 +137,11 @@ ENV ROS_VERSION=2
 
 ENV DEBIAN_FRONTEND=dialog
 
+# Set default shell to start
+CMD ["zsh"]
+
 ### ROS 2 DEVELOPMENT ENVIRONMENT ###
 # NOTE: To use this, install nvidia-docker2 and run with nvidia runtime
-# TODO Fix user
 FROM base as dev
 
 ARG USERNAME=ros
@@ -131,12 +154,9 @@ USER root
 RUN apt-get update && apt-get install -y \
   ros-galactic-desktop \
   ros-galactic-gazebo-ros-pkgs && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 USER $USERNAME
-
-# TODO Setup shell aliases (Docker!)
-# TODO Setup ROS 2 aliases
 
 ### NVIDIA-compatible environment ###
 FROM dev as nvidia
@@ -155,7 +175,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   libegl1 \
   libxext6 \
   libx11-6 && \
-  rm -rf /var/lib/apt/lists/*
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 USER $USERNAME
 
