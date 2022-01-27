@@ -1,5 +1,13 @@
+# ROS 2 example development environment Compose file.
+#
+# Roberto Masocco <robmasocco@gmail.com>
+# Alessandro Tenaglia <alessandro.tenaglia42@gmail.com>
+#
+# January 27, 2022
+
 version: "3.9"
 
+# VS Code Development target
 services:
   ros2vsc-dev:
     build:
@@ -22,6 +30,7 @@ services:
         source: ./
         target: /home/ros/workspace
 
+# VS Code Development with Nvidia GPU target
   ros2vsc-nvidia:
     build:
       context: ./config

@@ -122,6 +122,9 @@ RUN chsh -s /usr/bin/zsh $USERNAME
 USER $USERNAME
 WORKDIR $HOME
 
+# Create workspace directory: host workspaces will be mounted here
+RUN mkdir workspace
+
 # Configure Zsh for internal user
 ENV ZSH=$HOME/.oh-my-zsh
 ARG ZSH_CUSTOM=$ZSH/custom

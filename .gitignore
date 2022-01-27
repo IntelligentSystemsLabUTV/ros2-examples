@@ -5,3 +5,6 @@ log/*
 
 # Uncomment the following to avoid pushing personal configurations
 # .vscode/
+
+# Created if VS Code containers don't terminate correctly
+core
