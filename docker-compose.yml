@@ -1,0 +1,51 @@
+version: "3.9"
+
+services:
+  ros2vsc-dev:
+    build:
+      context: ./config
+      network: host
+      target: dev
+    network_mode: "host"
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      TERM: xterm-256color
+      DISPLAY:
+    cap_add:
+      - SYS_PTRACE
+    user: ros
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: ./
+        target: /home/ros/workspace
+
+  ros2vsc-nvidia:
+    build:
+      context: ./config
+      network: host
+      target: nvidia
+    network_mode: "host"
+    security_opt:
+      - seccomp:unconfined
+    environment:
+      TERM: xterm-256color
+      DISPLAY:
+    cap_add:
+      - SYS_PTRACE
+    user: ros
+    stdin_open: true
+    tty: true
+    volumes:
+      - type: bind
+        source: ./
+        target: /home/ros/workspace
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
