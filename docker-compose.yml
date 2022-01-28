@@ -23,14 +23,14 @@ services:
     cap_add:
       - SYS_PTRACE
     user: ros
-    stdin_open: true
+    stdin_open: false
     tty: true
     volumes:
       - type: bind
         source: ./
         target: /home/ros/workspace
 
-# VS Code Development with Nvidia GPU target
+  # VS Code Development with Nvidia GPU target
   ros2vsc-nvidia:
     build:
       context: ./config
@@ -45,7 +45,7 @@ services:
     cap_add:
       - SYS_PTRACE
     user: ros
-    stdin_open: true
+    stdin_open: false
     tty: true
     volumes:
       - type: bind
@@ -57,4 +57,4 @@ services:
           devices:
             - driver: nvidia
               count: all
-              capabilities: [gpu]
+              capabilities: [ gpu ]

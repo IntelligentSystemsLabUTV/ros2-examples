@@ -1,10 +1,14 @@
 {
   // Development environment with Nvidia GPU target configuration
   "name": "ros2vsc-nvidia",
-  "dockerComposeFile": ["../docker-compose.yml"],
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
   "service": "ros2vsc-nvidia",
   // Start only this service
-  "runServices": ["ros2vsc-nvidia"],
+  "runServices": [
+    "ros2vsc-nvidia"
+  ],
   // Stop container if VS Code is shut down
   "shutdownAction": "stopCompose",
   "extensions": [
@@ -29,5 +33,7 @@
     }
   },
   // Start the VS Code instance in the container's workspace
-  "workspaceFolder": "/home/ros/workspace"
+  "workspaceFolder": "/home/ros/workspace",
+  // Creates a sleeping process that VSC uses to stop the container
+  "overrideCommand": true
 }

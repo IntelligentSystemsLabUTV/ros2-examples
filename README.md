@@ -58,7 +58,7 @@ The `config` directory contains a multi-stage `Dockerfile` and some other config
 2. `dev` adds a full desktop ROS 2 installation;
 3. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
 
-You can build such containers manually from inside the `config` folder and manage them manually through the Docker Engine, they are fully functional and allow to test ROS 2 capabilities without installing anything on the host system. In both containers, the default shell is Zsh with some custom prompts and plugins preinstalled.
+You can build such containers manually from inside the `config` folder and manage them manually through the Docker Engine, they are fully functional and allow to test ROS 2 capabilities without installing anything on the host system. In both containers, the default shell is Zsh with some custom prompts and plugins preinstalled. The command line arguments necessary to run them correctly are specified in the Dockerfile header for convenience.
 
 ### Docker Compose and Visual Studio Code
 
@@ -75,7 +75,7 @@ In `docker-compose.yml`, containers are configured as follows:
 - capabilities and security policies are relaxed to allow for some debugging inside the container;
 - the terminal is supposed to handle colors;
 - the non-root internal user is selected;
-- an interactive shell is allocated for the container;
+- an interactive shell is allocated for the container, allowing for signals to be passed, but `stdin` is closed;
 - **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
 
 In this way no change is lost since everything is written on the host file system, builds are preserved even if the image is not saved, and `git` integrations work from both inside and outside the container.
@@ -98,4 +98,4 @@ docker exec -it $(docker ps -q -f "name=dev") zsh
 
 assuming that there are no name conflicts.
 
-Once you close the remote connection or the VS Code window, the container should be stopped automatically as is specified in the `.devcontainer.json` files.
+Once you close the remote connection or the VS Code window, the container should be stopped automatically as is specified in the `.devcontainer.json` files, which are adequately commented.
