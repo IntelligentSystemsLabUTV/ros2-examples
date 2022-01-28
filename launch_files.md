@@ -1,42 +1,30 @@
 # ROS 2 Launch Files
-
 ROS launch files are Python scripts used to fully interact with the ROS Launch System. A launch file specifies which modules and nodes should be started and how, configuring their input arguments and many aspects of their processes. For an initial description of what launch files can do please see the [official documentation](https://docs.ros.org/en/galactic/Tutorials/Launch/Launch-Main.html).
 
 What follows is a thorough description of launch files syntax, functionalities, and related conventions and best practices.
 
 ## Launch files packages
-
-A common best practice is to centralize all launch files for a project in a single package, which we'll commonly refer to as a *bringup package*. It can be created in the following way inside a ROS 2 workspace:
-
-- create a new package with *ament_cmake* build type, **its name should end with _\_bringup_ to state that this package consists only of launch files**;
-
-- remove *include* and *src* directories;
-
-- create a new *launch* directory;
-
-- in *CMakeLists.txt* remove C/C++ standards directives, linters and testers directives, compiler directives, leaving only ament-related stuff, then add the following lines to install (symbolic links to) the whole launch files folder:
-
+A common best practice is to centralize all launch files for a project in a single package, which we'll commonly refer to as a `bringup` package. It can be created in the following way inside a ROS 2 workspace:
+- create a new package with `ament_cmake` build type, **its name should end with `_bringup` to state that this package consists only of launch files**;
+- remove `include` and `src` directories;
+- create a new `launch` directory;
+- in `CMakeLists.txt` remove C/C++ standards directives, linters and testers directives, compiler directives, leaving only ament-related stuff, then add the following lines to install (symbolic links to) the whole launch files folder:
   ```cmake
   install(DIRECTORY launch
   	DESTINATION share/${PROJECT_NAME})
   ```
-
-- in the *package.xml* file, add lines like the following for each package of which you want to start nodes:
-
+- in the `package.xml` file, add lines like the following for each package of which you want to start nodes:
   ```xml
   <exec_depend>OTHER_PACKAGE</exec_depend>
   ```
-
-  after the *<buildtool_depend>* line; this states a dependency only at execution time, so it's not necessary in the *CMakeLists.txt* file.
+  after the `<buildtool_depend>` line; this states a dependency only at execution time, so it's not necessary in the `CMakeLists.txt` file.
 
 ## Launch file structure
-
 Launch files are essentially Python files, not scripts but modules which must provide some functions that the ROS 2 Launch System, written in Python, will call instead of its own to launch your executables and nodes. The names and structure of these functions must follow a convention that the Launch System expects, but the rest is up to you.
 
-Each launch file must be placed inside the *launch/* directory of your package, and end with the *.launch.py* extension. It must also be executable to allow for the *--symlink-install* flag of *colcon build* to work; it is suggested to use such flag since it removes the necessity to rebuild the package any more time if a launch file is modified.
+Each launch file must be placed inside the `launch/` directory of your package, and end with the `.launch.py` extension. The usage of the `--symlink-install` flag of `colcon build` is suggested since it removes the necessity to rebuild the package any more time if a launch file is modified.
 
 The most basic and minimal structure of a launch file is as follows (except for explanatory comments):
-
 ```python
 from launch import LaunchDescription # ROS object that tells how a module should be started
 from launch_ros.actions import Node # ROS object that represents a Node to start
@@ -57,7 +45,6 @@ def generate_launch_description():
 ```
 
 But many more configurations can be done in such an environment, even accepting parameters from the command line:
-
 ```python
 from launch import LaunchDescription
 from launch_ros.actions import Node
@@ -112,8 +99,7 @@ def generate_launch_description():
   return ld
 ```
 
-To build the YAML parameters file path, especially if this follows some kind of conventions like the *share/config* one, you could do something like this:
-
+To build the YAML parameters file path, especially if this follows some kind of conventions like the `share/config` one, you could do something like this:
 ```python
 import os
 from ament_index_python.packages import get_package_share_directory
@@ -132,32 +118,28 @@ def generate_launch_description():
   # ...
 ```
 
-See the *parameters_example/launch/launch_param_example.launch.py* launch file for more details.
+See the `parameters_example/launch/launch_param_example.launch.py` launch file for more details.
 
 For more information about what each argument to the object constructors does please see code documentation of the following ROS 2 Launch System modules:
-
-- launch_ros/actions/node.py;
-- launch/actions/execute_process.py (here there's actually a lot more stuff that allows one to customize the process environment, startup, termination by signals, debugging prefixes, logging and respawning).
+- `launch_ros/actions/node.py`;
+- `launch/actions/execute_process.py` (here there's actually a lot more stuff that allows one to customize the process environment, startup, termination by signals, debugging prefixes, logging and respawning).
 
 ## Starting modules with launch files
-
-After having built and sourced a package with a launch file, the command to start it is *ros2 launch*. Have a look at its helper for its syntax and all its options. Eventual command line arguments specified in the launch file can be set with:
-
+After having built and sourced a package with a launch file, the command to start it is `ros2 launch`. Have a look at its helper for its syntax and all its options. Eventual command line arguments specified in the launch file can be set with:
 ```bash
 ros2 launch PACKAGE_NAME LAUNCH_FILE_NAME arg1:=value1 arg2:=value2 [...]
 ```
 
-As soon as the Launch System starts the executables specified in the launch file, you'll start to see some output in the console: by default, it will be the combined output of all the nodes started by the launch file. Also, if running in a shell or terminal, stdin will be combined too and if CTRL+C is pressed then SIGTERM is delivered to all processes simultaneously, making them all terminate.
+As soon as the Launch System loads and starts the executables specified in the launch file, you'll start to see some output in the console: by default, it will be the combined output of all the nodes started by the launch file. Also, if running in a shell or terminal, stdin will be combined too and if CTRL+C is pressed then SIGTERM is delivered to all processes simultaneously, making them all terminate.
 
-**Even if you specify no particular configuration for a node, e.g. as in the first code example above, the Launch System is still going to add _--ros-args_ to the process's command line, hence to its argv (not knowing this caused the writer quite many headaches when checking argc).**
+**Even if you specify no particular configuration for a node, e.g. as in the first code example above, the Launch System is still going to add `--ros-args` to the process's command line, hence to its argv (not knowing this caused the writer quite many headaches when checking argc).**
 
-Logging can be configured via the *output* argument of the *Node* object. When you use *ros2 run* to start an executable it doesn't redirect process output, so you're going to see stdout and stderr in your console, and no log files will be generated. If you use *ros2 launch* instead, output will be redirected: by default it will be reduced to stderr only in the console while everything goes in a log *.txt* file, usually written in a subdirectory of *~/.ros/*. Options for the *output* argument, taken from the Rolling documentation of *launch/logging/\_\_init\_\_.py*, are as follows:
-
-- **'screen':** stdout and stderr are logged to the screen;
-- **'log':** stdout and stderr are logged to launch log file and stderr to the screen;
-- **'both':** both stdout and stderr are logged to the screen and to launch main log file;
-- **'own_log':** for stdout, stderr and their combination to be logged to their own log files;
-- **'full':** to have stdout and stderr sent to the screen, to the main launch log file, and their own separate and combined log files.
+Logging can be configured via the `output` argument of the `Node` object. When you use `ros2 run` to start an executable it doesn't redirect process output, so you're going to see stdout and stderr in your console, and no log files will be generated. If you use `ros2 launch` instead, output will be redirected: by default it will be reduced to stderr only in the console while everything goes in a log `.txt` file, usually written in a subdirectory of `~/.ros/`. Options for the `output` argument, taken from the Rolling documentation of `launch/logging/__init__.py`, are as follows:
+- **`'screen'`:** stdout and stderr are logged to the screen;
+- **`'log'`:** stdout and stderr are logged to launch log file and stderr to the screen;
+- **`'both'`:** both stdout and stderr are logged to the screen and to launch main log file;
+- **`'own_log'`:** for stdout, stderr and their combination to be logged to their own log files;
+- **`'full'`:** to have stdout and stderr sent to the screen, to the main launch log file, and their own separate and combined log files.
 
 ## [Event handlers](https://docs.ros.org/en/galactic/Tutorials/Launch/Using-Event-Handlers.html)
 Launch files let you do much more than starting up your application(s): they can be written as complete Python scripts to perform many different operations during startup, operation, and termination of the various actions they create. See the linked documentation for details.
