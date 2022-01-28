@@ -144,17 +144,17 @@ After having built and sourced a package with a launch file, the command to star
 ros2 launch PACKAGE_NAME LAUNCH_FILE_NAME arg1:=value1 arg2:=value2 [...]
 ```
 
-As soon as the Launch System loads and starts the executables specified in the launch file, you'll start to see some output in the console: by default, it will be the combined output of all the nodes started by the launch file. Also, if running in a shell or terminal, stdin will be combined too and if CTRL+C is pressed then SIGTERM is delivered to all processes simultaneously, making them all terminate.
+As soon as the Launch System loads and starts the executables specified in the launch file, you'll start to see some output in the console: by default, it will be the combined output of all the nodes started by the launch file. Also, if running in a shell or terminal, `stdin` will be combined too and if CTRL+C is pressed then SIGTERM is delivered to all processes simultaneously, making them all terminate.
 
 **Even if you specify no particular configuration for a node, e.g. as in the first code example above, the Launch System is still going to add `--ros-args` to the process's command line, hence to its argv (not knowing this caused the writer quite many headaches when checking argc).**
 
-Logging can be configured via the `output` argument of the `Node` object. When you use `ros2 run` to start an executable it doesn't redirect process output, so you're going to see stdout and stderr in your console, and no log files will be generated. If you use `ros2 launch` instead, output will be redirected: by default it will be reduced to stderr only in the console while everything goes in a log `.txt` file, usually written in a subdirectory of `~/.ros/`. Options for the `output` argument, taken from the Rolling documentation of `launch/logging/__init__.py`, are as follows:
+Logging can be configured via the `output` argument of the `Node` object. When you use `ros2 run` to start an executable it doesn't redirect process output, so you're going to see `stdout` and `stderr` in your console, and no log files will be generated. If you use `ros2 launch` instead, output will be redirected: by default it will be reduced to `stderr` only in the console while everything goes in a log `.txt` file, usually written in a subdirectory of `~/.ros/`. Options for the `output` argument, taken from the Rolling documentation of `launch/logging/__init__.py`, are as follows:
 
-- **`'screen'`:** stdout and stderr are logged to the screen;
-- **`'log'`:** stdout and stderr are logged to launch log file and stderr to the screen;
-- **`'both'`:** both stdout and stderr are logged to the screen and to launch main log file;
-- **`'own_log'`:** for stdout, stderr and their combination to be logged to their own log files;
-- **`'full'`:** to have stdout and stderr sent to the screen, to the main launch log file, and their own separate and combined log files.
+- **`'screen'`:** `stdout` and `stderr` are logged to the screen;
+- **`'log'`:** `stdout` and `stderr` are logged to launch log file and `stderr` to the screen;
+- **`'both'`:** both `stdout` and `stderr` are logged to the screen and to launch main log file;
+- **`'own_log'`:** for `stdout`, `stderr` and their combination to be logged to their own log files;
+- **`'full'`:** to have `stdout` and `stderr` sent to the screen, to the main launch log file, and their own separate and combined log files.
 
 ## [Event handlers](https://docs.ros.org/en/galactic/Tutorials/Launch/Using-Event-Handlers.html)
 
