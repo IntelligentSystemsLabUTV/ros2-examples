@@ -20,7 +20,8 @@
     "gruntfuggly.todo-tree",
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
-    "davidanson.vscode-markdownlint"
+    "davidanson.vscode-markdownlint",
+    "dotjoshjohnson.xml"
   ],
   "settings": {
     // Use Zsh also in VS Code
