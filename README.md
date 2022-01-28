@@ -71,7 +71,7 @@ It is incredibly easy to develop inside running containers with Visual Studio Co
 In `docker-compose.yml`, containers are configured as follows:
 
 - build context is moved to the `config` directory;
-- host network is used at both build and run time;
+- host network is used at both build and run-time;
 - capabilities and security policies are relaxed to allow for some debugging inside the container;
 - the terminal is supposed to handle colors;
 - the non-root internal user is selected;
@@ -79,6 +79,8 @@ In `docker-compose.yml`, containers are configured as follows:
 - **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
 
 In this way no change is lost since everything is written on the host file system, builds are preserved even if the image is not saved, and `git` integrations work from both inside and outside the container.
+
+**Host network must be used at least at run-time to be able to communicate with ROS 2 nodes running inside the container from outside.**
 
 To speed up the development process once the container is up and running, the use of VS Code's integrated terminal is highly suggested. To improve its usage, you may want to have a look at the following keyboard shorcuts:
 
