@@ -76,6 +76,7 @@ In `docker-compose.yml`, containers are configured as follows:
 - the terminal is supposed to handle colors;
 - the non-root internal user is selected;
 - an interactive shell is allocated for the container, allowing for signals to be passed, but `stdin` is closed;
+- **configuration files and command history files are mounted inside the container**, where they are expected to be, in order to allow for changes to be implemented quickly and for command history to be preserved;
 - **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
 
 In this way no change is lost since everything is written on the host file system, builds are preserved even if the image is not saved, and `git` integrations work from both inside and outside the container.

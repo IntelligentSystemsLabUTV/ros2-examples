@@ -10,6 +10,11 @@
 # --security-opt seccomp=unconfined
 # --network host
 # --user ros
+# -v .aliases.zsh:/home/$USERNAME/.aliases.zsh
+# -v .p10k.zsh:/home/$USERNAME/.p10k.zsh
+# -v .ros2_cmds.zsh:/home/$USERNAME/.ros2_cmds.zsh
+# -v .zshrc:/home/$USERNAME/.zshrc
+# -v zsh_history:/home/$USERNAME/zsh_history
 # If your terminal emulator supports colors also add:
 # --env TERM=xterm-256color
 # If you want to start GUI-based applications also add:
@@ -95,6 +100,7 @@ RUN apt-get update && apt-get install -y \
   xclip \
   minicom \
   neofetch \
+  htop \
   screen && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 

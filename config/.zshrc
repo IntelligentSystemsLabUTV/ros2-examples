@@ -11,6 +11,10 @@
 # Uncomment the following line to use case-sensitive completion.
 CASE_SENSITIVE="true"
 
+# This is where command history will be saved on the host
+export HISTFILE=~/zsh_history/.zsh_history
+touch $HISTFILE
+
 # If this is a login shell just set the prompt, basic stuff and get out
 if [[ "$TERM" == "linux" ]]; then
   export LANG=en_US.UTF-8
