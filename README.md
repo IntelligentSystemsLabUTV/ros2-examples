@@ -75,7 +75,7 @@ In `docker-compose.yml`, containers are configured as follows:
 - capabilities and security policies are relaxed to allow for some debugging inside the container;
 - the terminal is supposed to handle colors;
 - the non-root internal user is selected;
-- an interactive shell is allocated for the container!;
+- an interactive shell is allocated for the container;
 - **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
 
 In this way no change is lost since everything is written on the host file system, builds are preserved even if the image is not saved, and `git` integrations work from both inside and outside the container.
