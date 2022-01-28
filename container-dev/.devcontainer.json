@@ -1,0 +1,39 @@
+{
+  // Development environment target configuration
+  "name": "ros2vsc-dev",
+  "dockerComposeFile": [
+    "../docker-compose.yml"
+  ],
+  "service": "ros2vsc-dev",
+  // Only start this service
+  "runServices": [
+    "ros2vsc-dev"
+  ],
+  // Stop container if VS Code is shut down
+  "shutdownAction": "stopCompose",
+  "extensions": [
+    "ms-python.python",
+    "ms-vscode.cpptools",
+    "twxs.cmake",
+    "ms-vscode.cmake-tools",
+    "yzhang.markdown-all-in-one",
+    "gruntfuggly.todo-tree",
+    "eamodio.gitlens",
+    "github.vscode-pull-request-github",
+    "davidanson.vscode-markdownlint"
+  ],
+  "settings": {
+    // Use Zsh also in VS Code
+    // "terminal.integrated.shell.linux": "/bin/zsh"
+    "terminal.integrated.defaultProfile.linux": "zsh",
+    "terminal.integrated.profiles.linux": {
+      "zsh": {
+        "path": "/bin/zsh"
+      },
+    }
+  },
+  // Start the VS Code instance in the container's workspace
+  "workspaceFolder": "/home/ros/workspace",
+  // Creates a sleeping process that VSC uses to stop the container
+  "overrideCommand": true
+}
