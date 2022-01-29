@@ -21,7 +21,8 @@
     "eamodio.gitlens",
     "github.vscode-pull-request-github",
     "davidanson.vscode-markdownlint",
-    "dotjoshjohnson.xml"
+    "dotjoshjohnson.xml",
+    "timonwong.shellcheck"
   ],
   "settings": {
     // Use Zsh also in VS Code
