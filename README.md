@@ -32,6 +32,7 @@ The repository is built around a Visual Studio Code template that you can find [
 - **ros2_debugging.md:** Gives some hints about how a ROS 2 application could be debugged.
 - **ros2_cmds.sh:** Contains many shell commands to ease ROS 2 workspace sourcing and maintenance.
 - **cli_cheats_sheet.pdf:** Quick summary of all CLI introspection tools commands.
+- **vscode_cheat_sheet_linux.pdf:** Quick summary of useful Visual Studio Code keyboard commands on Linux.
 
 ## Useful references (links to Galactic docs)
 
