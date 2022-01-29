@@ -26,6 +26,7 @@ services:
     stdin_open: false
     tty: true
     volumes:
+      - ~/.ssh:/home/ros/.ssh:ro
       - ./config/.aliases.zsh:/home/ros/.aliases.zsh
       - ./config/.p10k.zsh:/home/ros/.p10k.zsh
       - ./config/.ros2_cmds.zsh:/home/ros/.ros2_cmds.zsh
@@ -53,6 +54,7 @@ services:
     stdin_open: false
     tty: true
     volumes:
+      - ~/.ssh:/home/ros/.ssh:ro
       - ./config/.aliases.zsh:/home/ros/.aliases.zsh
       - ./config/.p10k.zsh:/home/ros/.p10k.zsh
       - ./config/.ros2_cmds.zsh:/home/ros/.ros2_cmds.zsh
