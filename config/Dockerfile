@@ -129,6 +129,10 @@ RUN chsh -s /usr/bin/zsh $USERNAME
 USER $USERNAME
 WORKDIR $HOME
 
+# Copy user configuration files
+COPY --chown=$USER_UID:$USER_GID .nanorc ./
+COPY --chown=$USER_UID:$USER_GID .vimrc ./
+
 # Create user SSH directory
 RUN mkdir .ssh
 
