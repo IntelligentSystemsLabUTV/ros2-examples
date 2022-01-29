@@ -7,6 +7,18 @@
 #
 # January 26, 2022
 
+# Routine to install Nvidia runtime
+function nvidia_runtime {
+  echo "Setting up the stable repository..."
+  distribution=$(. /etc/os-release; echo $ID$VERSION_ID) \
+    && curl -s -L https://nvidia.github.io/nvidia-docker/gpgkey | sudo apt-key add - \
+    && curl -s -L https://nvidia.github.io/nvidia-docker/$distribution/nvidia-docker.list | sudo tee /etc/apt/sources.list.d/nvidia-docker.list
+   echo "Installing the Nvidia runtime..."
+   sudo apt-get update && sudo apt-get install -y nvidia-docker2
+   echo "Restarting the Docker daemon..."
+   sudo systemctl restart docker
+}
+
 # Purge preexisting (i.e. not forward-compatible) Docker installations
 echo "Purging old installations..."
 sudo apt-get remove -y docker docker-engine docker.io containerd runc
@@ -43,9 +55,9 @@ sudo chmod +x /usr/local/bin/docker-compose
 
 # Check if the user wants to install latest Nvidia runtime
 while true; do
-  read -p "Do you wish to install the Nvidia runtime?" yn
+  read -p "Do you wish to install the Nvidia runtime? (Requires Nvidia drivers >= 418.81) " yn
   case $yn in
-    [Yy]* ) sudo apt-get install -y nvidia-docker2; break;;
+    [Yy]* ) nvidia_runtime; break;;
     [Nn]* ) break;;
     * ) echo "Please answer yes or no";;
   esac
