@@ -10,6 +10,7 @@
 # --security-opt seccomp=unconfined
 # --network host
 # --user ros
+# -v ~/.ssh:/home/$USERNAME/.ssh:ro
 # -v .aliases.zsh:/home/$USERNAME/.aliases.zsh
 # -v .p10k.zsh:/home/$USERNAME/.p10k.zsh
 # -v .ros2_cmds.zsh:/home/$USERNAME/.ros2_cmds.zsh
@@ -127,6 +128,9 @@ RUN chsh -s /usr/bin/zsh $USERNAME
 # Switch to internal user
 USER $USERNAME
 WORKDIR $HOME
+
+# Create user SSH directory
+RUN mkdir .ssh
 
 # Create workspace directory: host workspaces will be mounted here
 RUN mkdir workspace
