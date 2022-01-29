@@ -53,6 +53,12 @@ echo "Installing Docker Compose..."
 sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 sudo chmod +x /usr/local/bin/docker-compose
 
+# Create docker group and add user to it
+echo "Creating new group for Docker users and adding $USER to it..."
+sudo groupadd docker
+sudo usermod -aG docker $USER
+echo "You need to log off and on again to see this change!"
+
 # Check if the user wants to install latest Nvidia runtime
 while true; do
   read -p "Do you wish to install the Nvidia runtime? (Requires Nvidia drivers >= 418.81) " yn
