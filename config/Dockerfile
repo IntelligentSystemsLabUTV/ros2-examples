@@ -97,6 +97,7 @@ RUN apt-get update && apt-get install -y \
   manpages-posix-dev \
   wget \
   valgrind \
+  uncrustify \
   tree \
   xclip \
   minicom \
