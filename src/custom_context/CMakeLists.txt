@@ -9,6 +9,7 @@ endif()
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
+find_package(ros2_examples_headers REQUIRED)
 
 # custom context example
 add_executable(custom_context src/custom_context.cpp)
@@ -32,6 +33,8 @@ target_compile_features(termination PUBLIC c_std_99 cxx_std_17)  # Require C99 a
 ament_target_dependencies(
   termination
   "rclcpp"
+  "std_msgs"
+  "ros2_examples_headers"
 )
 install(TARGETS termination
   DESTINATION lib/${PROJECT_NAME})

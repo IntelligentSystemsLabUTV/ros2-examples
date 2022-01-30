@@ -8,6 +8,7 @@
                 "/opt/ros/galactic/include/**",
                 "${workspaceFolder}/install/**",
                 "${workspaceFolder}/install/ros2_examples_interfaces/include/**",
+                "${workspaceFolder}/install/ros2_examples_headers/include/**",
                 "/usr/local/include"
             ],
             "defines": [],

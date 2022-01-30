@@ -13,9 +13,8 @@
 #include <signal.h>
 
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/string.hpp>
 
-#include <signal_handler/signal_handler.hpp>
+#include <ros2_examples_headers/signal_handler/signal_handler.hpp>
 
 #include <custom_context/listener_node.hpp>
 

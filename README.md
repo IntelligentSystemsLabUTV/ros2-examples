@@ -18,7 +18,8 @@ The repository is built around a Visual Studio Code template that you can find [
   - `intrapc_*` tests demonstrate ROS 2 intra-process communication capabilities, showing how nodes must be set up and used to enforce such behaviour.
 - **simple_service:** Classic ROS 2 client/server example.
 - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
-- **ros2_example_interfaces:** Example of an interfaces-only package (see `interfaces.md`).
+- **ros2_examples_interfaces:** Example of an interfaces-only package (see `interfaces.md`).
+- **ros2_examples_headers:** Example of an headers-only package, to provide to other packages in the same workspace, that will depend on this.
 - **parameters_example:** This example offers an in-depth coverage of node parameters.
 - **ros2_examples_bringup:** This package shows some conventions and best practices about launch files (see `launch_files.md`).
 - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
