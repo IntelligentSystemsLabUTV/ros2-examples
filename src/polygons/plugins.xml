@@ -1,0 +1,11 @@
+<!--Define your libraries here for pluginlib-->
+<library path="triangle">
+  <class type="Polygons::Triangle" base_class_type="PolygonBase::Polygon">
+    <description>This is a triangle plugin.</description>
+  </class>
+</library>
+<library path="square">
+  <class type="Polygons::Square" base_class_type="PolygonBase::Polygon">
+    <description>This is a square plugin.</description>
+  </class>
+</library>

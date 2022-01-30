@@ -24,6 +24,12 @@ The repository is built around a Visual Studio Code template that you can find [
 - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
 - **actions_example:** This package shows how ROS 2 actions can be implemented, providing two example `client` and `server` nodes that compute the Fibonacci sequence. Its a rework of the official example provided [here](https://docs.ros.org/en/galactic/Tutorials/Actions/Writing-a-Cpp-Action-Server-Client.html).
 - **custom_context:** Quick example that shows how an RCL context can be created, initialized, and finally shut down; not using the global context allows one to specify ad-hoc signal handlers and cleanup routines but, as is comprehensively explained in the `termination` example, this has to be done keeping in mind how the middleware works and needs to be managed.
+- **polygon_base, polygons and polygons_tester:** These three packages form a variation of the official example about plugins and `pluginlib` (see the reference below), with the main differences being that:
+  - optimal dynamic shared objects generation is enforced through the use of CMake target properties and GCC visibility macros;
+  - the set of packages reflects what could happen in a common use-case scenario, where a ROS 2 plugin enables the developer to define different implementations of a same object or algorithm, or simply separate the implementation from the code that actually uses it; in particular:
+    - **polygon_base** contains only headers that define a base class, so a common interface to all plugins that application code should use;
+    - **polygons** uses those headers to create two shared libraries, which represent two different implementations of a same object, and registers them with `pluginlib`;
+    - **polygons_tester** is an example of a package that uses plugins, including base class headers and loading specialized shared libraries through `pluginlib`.
 
 ## Additional resources
 
