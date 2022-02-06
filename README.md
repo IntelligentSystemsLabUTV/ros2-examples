@@ -2,7 +2,7 @@
 
 Collection of examples about the main ROS 2 features and core subsystems. These are meant to be used as tutorials or class materials. The format is simple: all code is thoroughly documented, and comments marked with an exclamation mark are meant to explain what is happening in detail.
 
-Examples were built and tested on ROS 2 Galactic Geochelone, and are also supplied for Foxy Fitzroy. The repository offers also an installation script for Galactic and a shell file that wraps many useful ROS 2 shell commands in a simpler format (also solving some sourcing path problems, especially for Galactic). Other useful notes are available in the additional Markdown files. Where it is deemed necessary, links to official documentation pages are provided.
+Examples were built and tested on ROS 2 Galactic Geochelone, and are also supplied for Foxy Fitzroy. The repository offers also installation scripts for both and a shell file that wraps many useful ROS 2 commands in a simpler format (also solving some sourcing path problems, especially for Galactic). Other useful notes are available in the additional Markdown files. Where it is deemed necessary, links to official documentation pages are provided.
 
 The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you use this inside such IDE.
 
