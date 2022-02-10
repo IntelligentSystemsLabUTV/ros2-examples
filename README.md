@@ -43,16 +43,19 @@ The repository is built around a Visual Studio Code template that you can find [
 
 ## Useful references (links to Galactic docs)
 
-- [**rqt_console**](https://docs.ros.org/en/galactic/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
+- [**`rqt_console`**](https://docs.ros.org/en/galactic/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
 - [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/galactic/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins.
 - [**Efficient intra-process communication**](https://docs.ros.org/en/galactic/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)).
 - [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/galactic/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the `ParameterEventHandler` class, to monitor and respond to parameter changes taking place in all nodes.
-- [**The ROS_DOMAIN_ID**](https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
+- [**The `ROS_DOMAIN_ID`**](https://docs.ros.org/en/galactic/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
 - [**Recording and playing back data**](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/galactic/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
 - [**About composition**](https://docs.ros.org/en/galactic/Concepts/About-Composition.html)**:** Introduction to the components distributed paradigm.
 - [**Composing multiple nodes in a single process**](https://docs.ros.org/en/galactic/Tutorials/Composition.html)**:** Introduction to the components introspection tools and different loading methods, with links to some source code examples.
 - [**Managed nodes**](https://design.ros2.org/articles/node_lifecycle.html)**:** Design document about nodes with lifecycle.
 - [**Lifecycle**](https://github.com/ros2/demos/blob/galactic/lifecycle/README.rst)**:** Quick example that shows how nodes with lifecycle can be created and managed.
+- [**`image_transport`**](http://wiki.ros.org/image_transport)**:** Useful package that optimizes middleware communications when handling images, which would easily cause streams of large packets to occur (linked docs are still about ROS, but the interface is almost the same in ROS 2).
+- [**`image_pipeline`**](http://wiki.ros.org/image_pipeline)**:** Useful package to perform basic tasks on images (linked docs are still about ROS, but the interface is almost the same in ROS 2).
+- [**`message_filters`**](http://wiki.ros.org/message_filters)**:** A message filter is defined as something which a message arrives into and may or may not be spit back out of at a later point in time; this package is a collection of algorithms fully integrated in the middleware that solve common synchronization issues involving multiple different topics (linked docs are still about ROS, but the interface is almost the same in ROS 2) (suggested read: the [`ApproximateTime`](http://wiki.ros.org/message_filters/ApproximateTime) adaptive algorithm).
 
 ## Docker Containers
 
