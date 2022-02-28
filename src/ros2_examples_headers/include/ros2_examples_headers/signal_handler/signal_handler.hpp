@@ -72,7 +72,7 @@ public:
 
     // Initialize semaphores
     if (sem_init(&sig_prod_, 0, 0) || sem_init(&sig_cons_, 0, 1)) {
-      perror("sem_init");
+      std::perror("sem_init");
       throw std::runtime_error("SignalHandler::init: failed to initialize sempahores");
     }
 
@@ -109,7 +109,7 @@ public:
     // Prepare sigaction
     struct sigaction new_act;
     if (sigfillset(&(new_act.sa_mask))) {
-      perror("sigfillset");
+      std::perror("sigfillset");
       throw std::runtime_error("SignalHandler::install: failed to set blocked signals mask");
     }
     new_act.sa_flags = SA_SIGINFO;
@@ -120,7 +120,7 @@ public:
 
     // Install handler
     if (sigaction(sig, &new_act, NULL)) {
-      perror("sigaction");
+      std::perror("sigaction");
       throw std::runtime_error(
               "SignalHandler::install: failed to install handler for signal (" +
               std::to_string(sig) + ")"
@@ -161,7 +161,7 @@ public:
     // Prepare sigaction
     struct sigaction new_act;
     if (sigemptyset(&(new_act.sa_mask))) {
-      perror("sigfillset");
+      std::perror("sigfillset");
       throw std::runtime_error("SignalHandler::ignore: failed to set blocked signals mask");
     }
     new_act.sa_flags = 0;
@@ -172,7 +172,7 @@ public:
 
     // Install ignore handler
     if (sigaction(sig, &new_act, NULL)) {
-      perror("sigaction");
+      std::perror("sigaction");
       throw std::runtime_error(
               "SignalHandler::ignore: failed to install handler for signal (" +
               std::to_string(sig) + ")"
@@ -229,7 +229,7 @@ public:
 
     // Destroy semaphores
     if (sem_destroy(&sig_prod_) || sem_destroy(&sig_cons_)) {
-      perror("sem_destroy");
+      std::perror("sem_destroy");
       throw std::runtime_error("SignalHandler::fini: failed to destroy semaphores");
     }
 
@@ -288,7 +288,7 @@ private:
   static void sem_post_(sem_t * sem)
   {
     if (sem_post(sem)) {
-      perror("sem_post");
+      std::perror("sem_post");
       throw std::runtime_error("SignalHandler::sem_post_: failed to post semaphore");
     }
   }
@@ -301,7 +301,7 @@ private:
   static void sem_wait_(sem_t * sem)
   {
     if (sem_wait(sem)) {
-      perror("sem_wait");
+      std::perror("sem_wait");
       throw std::runtime_error("SignalHandler::sem_wait_: failed to wait sempahore");
     }
   }
@@ -319,7 +319,7 @@ private:
     // Prepare sigaction
     struct sigaction new_act;
     if (sigemptyset(&(new_act.sa_mask))) {
-      perror("sigfillset");
+      std::perror("sigfillset");
       throw std::runtime_error("SignalHandler::uninstall_: failed to set blocked signals mask");
     }
     new_act.sa_flags = 0;
@@ -337,7 +337,7 @@ private:
 
     // Install default handler
     if (sigaction(sig, &new_act, NULL)) {
-      perror("sigaction");
+      std::perror("sigaction");
       throw std::runtime_error(
               "SignalHandler::uninstall_: failed to install handler for signal (" +
               std::to_string(sig) + ")"
