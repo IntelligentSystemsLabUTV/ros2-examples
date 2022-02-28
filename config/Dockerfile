@@ -33,12 +33,13 @@ ARG USER_GID=$USER_UID
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Install basic utilities
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   apt-utils \
+  curl \
+  iproute2 \
   python3-pip \
   software-properties-common \
-  curl \
-  iproute2 && \
+  sudo && \
   add-apt-repository universe && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
@@ -53,29 +54,28 @@ ENV LANG en_US.UTF-8
 # Set up UTC timezone
 RUN ln -fs /usr/share/zoneinfo/UTC /etc/localtime && \
   apt-get update && \
-  apt-get install -y tzdata && \
+  apt-get install -y --no-install-recommends tzdata && \
   dpkg-reconfigure --frontend noninteractive tzdata && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 # Install ROS 2 base and testing packages
 RUN curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key -o /usr/share/keyrings/ros-archive-keyring.gpg && \
   echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/ros2.list > /dev/null && \
-  apt-get update && apt-get install -y \
+  apt-get update && apt-get install -y --no-install-recommends \
   gnupg2 \
+  libasio-dev \
+  libtinyxml2-dev \
   lsb-release \
-  sudo \
-  ros-galactic-ros-base \
-  ros-galactic-eigen3-cmake-module \
-  ros-galactic-ament-lint \
-  ros-galactic-launch-testing \
-  ros-galactic-launch-testing-ament-cmake \
-  ros-galactic-launch-testing-ros \
   python3-argcomplete \
   python3-colcon-argcomplete \
   python3-colcon-common-extensions \
   python3-rosdep \
-  libasio-dev \
-  libtinyxml2-dev && \
+  ros-galactic-ament-lint \
+  ros-galactic-eigen3-cmake-module \
+  ros-galactic-launch-testing \
+  ros-galactic-launch-testing-ament-cmake \
+  ros-galactic-launch-testing-ros \
+  ros-galactic-ros-base && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 RUN yes | pip3 install -U \
   empy \
@@ -84,33 +84,34 @@ RUN yes | pip3 install -U \
   testresources
 
 # Install development tools
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   cmake \
   gdb \
   git \
+  htop \
+  less \
+  manpages-posix-dev \
+  minicom \
+  nano \
+  neofetch \
   pylint3 \
   python3-vcstool \
   python3-autopep8 \
-  vim \
-  nano \
-  manpages-posix-dev \
-  wget \
-  valgrind \
-  uncrustify \
+  screen \
   tree \
-  xclip \
-  minicom \
-  neofetch \
-  htop \
-  screen && \
+  uncrustify \
+  valgrind \
+  vim \
+  wget \
+  xclip && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
 
 # Install Zsh
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  chroma \
   zsh \
-  zsh-doc \
-  chroma && \
+  zsh-doc && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Cleanup
@@ -181,7 +182,7 @@ ARG USER_GID=$USER_UID
 USER root
 
 # Install remaining ROS 2 packages
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   ros-galactic-desktop \
   ros-galactic-gazebo-ros-pkgs && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
@@ -199,10 +200,10 @@ USER root
 
 # Install Nvidia dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
+  libegl1 \
   libglvnd0 \
   libgl1 \
   libglx0 \
-  libegl1 \
   libxext6 \
   libx11-6 && \
   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
