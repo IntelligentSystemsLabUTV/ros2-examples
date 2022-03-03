@@ -43,6 +43,7 @@ The repository is built around a Visual Studio Code template that you can find [
 
 ## Useful references (links to Galactic docs)
 
+- [**ROS/Patterns/Conventions**](http://wiki.ros.org/ROS/Patterns/Conventions)**:** Naming and measurement units conventions to respect when developing ROS 2 applications (the article is about ROS but still meaningful).
 - [**`rqt_console`**](https://docs.ros.org/en/galactic/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
 - [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/galactic/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins.
 - [**Efficient intra-process communication**](https://docs.ros.org/en/galactic/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)).
