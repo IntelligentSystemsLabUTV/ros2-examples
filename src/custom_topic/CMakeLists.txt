@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.5)
-project(topic_pubsub)
+project(custom_topic)
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -18,7 +18,7 @@ endif()
 # find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(std_msgs REQUIRED)
+find_package(ros2_examples_interfaces REQUIRED)
 
 # publisher
 add_executable(pub src/pub.cpp)
@@ -28,7 +28,7 @@ target_include_directories(pub PUBLIC
 ament_target_dependencies(
   pub
   "rclcpp"
-  "std_msgs"
+  "ros2_examples_interfaces"
 )
 
 # subscriber
@@ -39,69 +39,13 @@ target_include_directories(sub PUBLIC
 ament_target_dependencies(
   sub
   "rclcpp"
-  "std_msgs"
-)
-
-# periodic subscriber
-add_executable(periodic_sub src/periodic_sub.cpp)
-target_include_directories(periodic_sub PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  periodic_sub
-  "rclcpp"
-  "std_msgs"
-)
-
-# intrapc test
-add_executable(intrapc_test src/intrapc_test.cpp)
-target_include_directories(intrapc_test PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  intrapc_test
-  "rclcpp"
-  "std_msgs"
-)
-
-# intrapc publisher
-add_executable(intrapc_pub src/intrapc_pub.cpp)
-target_include_directories(intrapc_pub PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  intrapc_pub
-  "rclcpp"
-  "std_msgs"
-)
-
-# intrapc subscriber
-add_executable(intrapc_sub src/intrapc_sub.cpp)
-target_include_directories(intrapc_sub PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  intrapc_sub
-  "rclcpp"
-  "std_msgs"
+  "ros2_examples_interfaces"
 )
 
 install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})
 
 install(TARGETS sub
-  DESTINATION lib/${PROJECT_NAME})
-
-install(TARGETS periodic_sub
-  DESTINATION lib/${PROJECT_NAME})
-
-install(TARGETS intrapc_test
-  DESTINATION lib/${PROJECT_NAME})
-
-install(TARGETS intrapc_pub
-  DESTINATION lib/${PROJECT_NAME})
-
-install(TARGETS intrapc_sub
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

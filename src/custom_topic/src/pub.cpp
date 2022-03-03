@@ -26,7 +26,7 @@ Pub::Pub()
   //!   ...
   //! );
   //! This object will be used later on to publish messages
-  publisher_ = this->create_publisher<std_msgs::msg::String>(
+  publisher_ = this->create_publisher<ros2_examples_interfaces::msg::String>(
     "/examples/test_topic",
     rclcpp::QoS(10));
 
@@ -55,7 +55,7 @@ void Pub::pub_timer_callback(void)
 
   //! Create a new message of the specific interface type
   //! It is better to initialize it as empty as below
-  std_msgs::msg::String new_msg{};
+  ros2_examples_interfaces::msg::String new_msg{};
 
   //! Populate the data field of the message using its setter method
   new_msg.set__data(new_data);
