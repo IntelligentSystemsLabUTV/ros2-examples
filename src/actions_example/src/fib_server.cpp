@@ -45,7 +45,7 @@ FibonacciComputer::FibonacciComputer()
   //! Create the action server by specifying the node that handles it,
   //! and the three handler routines for the three computation stages
   //! You could pass other arguments:
-  //! - rcl_action_server_options_t struct to hold QoS policies and mroe
+  //! - rcl_action_server_options_t struct to hold QoS policies and more
   //! - Callback group (i.e. thread) on which the server's back-end will run
 #ifndef ADVANCED
   fib_server_ = rclcpp_action::create_server<Fibonacci>(
