@@ -60,7 +60,7 @@ The repository is built around a Visual Studio Code template that you can find [
 
 ## Docker Containers
 
-The `docker` branch is where example containers for development are tested. The `docker_install.sh` script automates the installation of the Docker Engine, Docker Compose utility and Nvidia runtime on systems running Ubuntu 20.04.
+The `docker_install.sh` script automates the installation of the Docker Engine, Docker Compose utility and Nvidia runtime on systems running Ubuntu 20.04.
 
 **Results of such tests will be published in the `galactic` branch only, so example development containers will be provided only for the Galactic Geochelone ROS 2 distribution.**
 
