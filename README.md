@@ -64,11 +64,10 @@ The `docker_install.sh` script automates the installation of the Docker Engine, 
 
 **Results of such tests will be published in the `galactic` branch only, so example development containers will be provided only for the Galactic Geochelone ROS 2 distribution.**
 
-The `config` directory contains a multi-stage `Dockerfile` and some other configuration files necessary for the builds. Containers are built upon standard Ubuntu 20.04 images, and the provided targets are as follows:
+The `config` directory contains a `Dockerfile` and some other configuration files necessary for the builds. Containers are built from generic development images found in [IntelligentSystemsLabUTV/ros2-env](https://github.com/IntelligentSystemsLabUTV/ros2-env), and the provided targets are as follows:
 
-1. `base` configures the system, installs some system utilities, dependencies, and `ros2-galactic-ros-base`, adding a non-root user (currently named `ros`) to the container;
-2. `dev` adds a full desktop ROS 2 installation;
-3. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
+1. `dev` contains some system utilities and full desktop ROS 2 installation;
+2. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
 
 You can build such containers manually from inside the `config` folder and manage them manually through the Docker Engine, they are fully functional and allow to test ROS 2 capabilities without installing anything on the host system. In both containers, the default shell is Zsh with some custom prompts and plugins preinstalled. The command line arguments necessary to run them correctly are specified in the Dockerfile header for convenience.
 
@@ -88,7 +87,7 @@ In `docker-compose.yml`, containers are configured as follows:
 - the terminal is supposed to handle colors;
 - the non-root internal user is selected;
 - an interactive shell is allocated for the container, allowing for signals to be passed, but `stdin` is closed;
-- **current user's `.ssh` directory is mounted inside the container internal user's home directory as read-only**, to allow for remote services such as GitHub repositories to be used from inside the container too;
+- **current user's `.ssh` directory is mounted inside the container internal user's home directory**, to allow for remote services such as GitHub repositories to be used from inside the container too;
 - **configuration files and command history files are mounted inside the container**, where they are expected to be, in order to allow for changes to be implemented quickly and for command history to be preserved;
 - **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
 
