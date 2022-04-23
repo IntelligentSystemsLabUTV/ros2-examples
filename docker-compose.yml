@@ -13,7 +13,8 @@ services:
     build:
       context: ./config
       network: host
-      target: dev
+      args:
+        TARGET: dev
     network_mode: "host"
     security_opt:
       - seccomp:unconfined
@@ -41,7 +42,8 @@ services:
     build:
       context: ./config
       network: host
-      target: nvidia
+      args:
+        TARGET: nvidia
     network_mode: "host"
     security_opt:
       - seccomp:unconfined
