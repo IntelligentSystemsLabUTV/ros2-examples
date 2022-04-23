@@ -23,9 +23,9 @@
 # If you use an Nvidia GPU and want to use the Nvidia runtime also add:
 # --runtime=nvidia
 
-# Choose the container to build from (see README.md)
+# Choose the container to build from
 ARG TARGET=dev
-FROM intelligentsystemslabutv/ros2env:$TARGET
+FROM intelligentsystemslabutv/ros2-env:$TARGET
 
 ARG USER_UID=1000
 
