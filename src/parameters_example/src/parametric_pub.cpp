@@ -40,4 +40,3 @@ int main(int argc, char ** argv)
 //! You can use those services via CLI as well as from another node's code
 //! Alternatively, there's the native "AsyncParametersClient" object that
 //! offers APIs to do more or less that
-
