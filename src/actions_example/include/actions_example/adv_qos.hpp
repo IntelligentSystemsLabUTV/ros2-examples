@@ -15,8 +15,8 @@
  * Status topic QoS profile.
  */
 static const rmw_qos_profile_t status_qos_profile = {
-  RMW_QOS_POLICY_HISTORY_KEEP_ALL,
-  0,
+  RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+  5,
   RMW_QOS_POLICY_RELIABILITY_RELIABLE,
   RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL,
   RMW_QOS_DEADLINE_DEFAULT,
@@ -26,13 +26,12 @@ static const rmw_qos_profile_t status_qos_profile = {
   false
 };
 
-
 /**
  * Feedback topic QoS profile.
  */
 static const rmw_qos_profile_t feedback_qos_profile = {
-  RMW_QOS_POLICY_HISTORY_KEEP_ALL,
-  0,
+  RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+  1,
   RMW_QOS_POLICY_RELIABILITY_RELIABLE,
   RMW_QOS_POLICY_DURABILITY_VOLATILE,
   RMW_QOS_DEADLINE_DEFAULT,
