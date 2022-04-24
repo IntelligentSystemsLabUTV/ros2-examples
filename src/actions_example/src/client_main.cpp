@@ -29,7 +29,7 @@ void cancel_goal(
     node_ptr->request_cancel(goal_handle);
 
   // Wait for and parse the result
-  //! As for this processe's semantics, we don't need to do much more than
+  //! As for this process' semantics, we don't need to do much more than
   //! print what we got back
 #ifndef ADVANCED
   switch (rclcpp::spin_until_future_complete(node_ptr, cancel_resp)) {
