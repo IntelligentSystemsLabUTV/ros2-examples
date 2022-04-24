@@ -16,7 +16,7 @@
 AddTwoIntsClient::AddTwoIntsClient()
 : Node("add_two_ints_client")
 {
-  //! Craete a client object with create_client from the base class:
+  //! Create a client object with create_client from the base class:
   //! this->create_client<INTERFACE_TYPE>(
   //!   SERVICE_NAME [string],
   //!   ...
