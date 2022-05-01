@@ -35,10 +35,10 @@ Each launch file must be placed inside the `launch/` directory of your package, 
 The most basic and minimal structure of a launch file is as follows (except for explanatory comments):
 
 ```python
-from launch import LaunchDescription # ROS object that tells how a module should be started
+from launch import LaunchDescription # ROS object that embeds a launch configuration
 from launch_ros.actions import Node # ROS object that represents a Node to start
 
-"""Generates a launch description for the given module"""
+"""Builds a launch description."""
 def generate_launch_description():
   ld = LaunchDescription()
   # Without the following the Launch System would just spawn a process
@@ -63,7 +63,7 @@ from launch_ros.actions import Node
 from launch.actions import DeclareLaunchArgument
 from launch.substitutions import LaunchConfiguration
 
-"""Generates a launch description for the given module."""
+"""Builds a launch description."""
 def generate_launch_description():
   # Set command line arguments
   arg_1 = DeclareLaunchArgument(
