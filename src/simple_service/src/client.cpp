@@ -7,6 +7,7 @@
  */
 
 #include <iostream>
+#include <stdexcept>
 
 #include "../include/simple_service/simple_service.hpp"
 
@@ -31,6 +32,8 @@ AddTwoIntsClient::AddTwoIntsClient()
  *
  * @param a Request a.
  * @param b Request b.
+ *
+ * @throws RuntimeError
  */
 void AddTwoIntsClient::call_srv(
   int a,
@@ -39,6 +42,13 @@ void AddTwoIntsClient::call_srv(
 {
   //! Wait for the service to become available
   while (!client_->wait_for_service(std::chrono::seconds(1))) {
+    //! It is always good to check the status of the middleware while waiting
+    //! for the service (bad things may happen otherwise)
+    if (!rclcpp::ok()) {
+      //! Best thing is to throw an exception, since middleware APIs cannot
+      //! be called reliably if things are not ok
+      throw std::runtime_error("Middleware crashed while waiting for service");
+    }
     RCLCPP_WARN(this->get_logger(), "Service not available");
   }
 
