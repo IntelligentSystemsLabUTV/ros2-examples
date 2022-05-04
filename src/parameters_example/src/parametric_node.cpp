@@ -80,7 +80,7 @@ ParametricPub::ParametricPub()
   //! Declare each parameter
   //! Simplest syntax is, for any type:
   //! declare_parameter(NAME_STRING, DEFAULT_VALUE, DESCRIPTOR);
-  this->declare_parameter("number", 0, param_descriptor_);
+  this->declare_parameter("number", 1, param_descriptor_);
 
   //! Update internal data with new parameter (note the cast!)
   pub_num_ = this->get_parameter("number").as_int();
