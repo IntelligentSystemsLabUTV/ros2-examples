@@ -9,9 +9,6 @@
 #ifndef POLYGONS__SQUARE_HPP_
 #define POLYGONS__SQUARE_HPP_
 
-//! Necessary to register plugin classes with pluginlib
-#include <pluginlib/class_list_macros.hpp>
-
 //! Include base class header and visibility control macros
 #include <polygon_base/polygon.hpp>
 #include <polygons/visibility_control.h>
@@ -42,6 +39,9 @@ protected:
 }  // namespace Polygons
 
 #endif  // POLYGONS__SQUARE_HPP_
+
+//! Necessary to register plugin classes with pluginlib
+#include <pluginlib/class_list_macros.hpp>
 
 //! Register this class for pluginlib, providing derived and base fully
 //! qualified names
