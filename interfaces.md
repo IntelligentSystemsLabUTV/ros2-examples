@@ -35,6 +35,7 @@ In order to create an interfaces-only package, you have to do the following:
         "action/fileM.action"
         ...
         # And so on...
+        DEPENDENCIES ... # This is necessary if you embed messages from other packages into yours
     )
     ```
 
@@ -118,7 +119,7 @@ Constants can be specified as above in both the request and the response, and wi
 
 ### Actions
 
-All of the above also applies to action interface files. Actions are provided by the ROS 2 middleware by means of two services, namely *Goal* and *Result*, and a *Feedback* topic. Message formats for all three can be defined in a single `.action` interface file like this:
+All of the above also applies to action interface files. Actions are provided by the ROS 2 middleware by means of two services, namely _Goal_ and _Result_, and a _Feedback_ topic. Message formats for all three can be defined in a single `.action` interface file like this:
 
 ```action
 GOAL
