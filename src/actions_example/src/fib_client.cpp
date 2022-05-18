@@ -6,7 +6,9 @@
  * January 10, 2022
  */
 
+#include <chrono>
 #include <sstream>
+#include <stdexcept>
 
 #include "../include/actions_example/fib_client.hpp"
 
@@ -207,6 +209,14 @@ std::shared_future<FibonacciGoalHandleSharedPtr> FibonacciClient::send_goal(
   //! Initialize goal request object
   Fibonacci::Goal goal_request{};
   goal_request.set__order(order);
+
+  //! Wait for the server to become available
+  while (!client_->wait_for_action_server(std::chrono::seconds(1))) {
+    RCLCPP_WARN(this->get_logger(), "Server not available...");
+    if (!rclcpp::ok()) {
+      throw std::runtime_error("Middleware crashed");
+    }
+  }
 
   //! Send goal to goal server, setting callbacks for this request, and
   //! return the related future
