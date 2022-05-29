@@ -33,6 +33,7 @@ services:
       - ./config/.ros2_cmds.zsh:/home/ros/.ros2_cmds.zsh
       - ./config/.zshrc:/home/ros/.zshrc
       - ./config/zsh_history:/home/ros/zsh_history
+      - /etc/localtime:/etc/localtime:ro
       - type: bind
         source: ./
         target: /home/ros/workspace
@@ -62,6 +63,7 @@ services:
       - ./config/.ros2_cmds.zsh:/home/ros/.ros2_cmds.zsh
       - ./config/.zshrc:/home/ros/.zshrc
       - ./config/zsh_history:/home/ros/zsh_history
+      - /etc/localtime:/etc/localtime:ro
       - type: bind
         source: ./
         target: /home/ros/workspace
