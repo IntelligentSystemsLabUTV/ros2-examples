@@ -34,11 +34,11 @@
     "redhat.vscode-yaml",
     "dan-c-underwood.arm",
     "formulahendry.auto-close-tag",
-    "formulahendry.auto-rename-tag"
+    "formulahendry.auto-rename-tag",
+    "ms-iot.vscode-ros"
   ],
   "settings": {
     // Use Zsh also in VS Code
-    // "terminal.integrated.shell.linux": "/bin/zsh"
     "terminal.integrated.defaultProfile.linux": "zsh",
     "terminal.integrated.profiles.linux": {
       "zsh": {

@@ -1,22 +1,25 @@
 {
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${default}",
-                "${workspaceFolder}/**",
-                "/opt/ros/galactic/include/**",
-                "${workspaceFolder}/install/**",
-                "${workspaceFolder}/install/ros2_examples_interfaces/include/**",
-                "${workspaceFolder}/install/ros2_examples_headers/include/**",
-                "/usr/local/include"
-            ],
-            "defines": [],
-            "compilerPath": "/usr/bin/g++",
-            "cStandard": "c99",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "linux-gcc-x64"
-        }
-    ],
-    "version": 4
+  "configurations": [
+    {
+      "name": "Linux",
+      "browse": {
+        "databaseFilename": "${workspaceFolder}/.vscode/browse.vc.db",
+        "limitSymbolsToIncludedHeaders": false
+      },
+      "includePath": [
+        "${default}",
+        "/opt/ros/galactic/include/**",
+        "${workspaceFolder}/install/**",
+        "${workspaceFolder}/install/ros2_examples_interfaces/include/**",
+        "${workspaceFolder}/install/ros2_examples_headers/include/**",
+        "/usr/local/include"
+      ],
+      "defines": [],
+      "compilerPath": "/usr/bin/g++",
+      "cStandard": "c99",
+      "cppStandard": "c++17",
+      "intelliSenseMode": "linux-gcc-x64"
+    }
+  ],
+  "version": 4
 }
