@@ -7,7 +7,6 @@
 
 # RUN THIS WITH:
 # --cap-add=SYS_PTRACE
-# --security-opt seccomp=unconfined
 # --network host
 # --user ros
 # -v ~/.ssh:/home/ros/.ssh:ro

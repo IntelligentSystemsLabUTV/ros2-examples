@@ -16,8 +16,6 @@ services:
       args:
         TARGET: dev
     network_mode: "host"
-    security_opt:
-      - seccomp:unconfined
     environment:
       TERM: xterm-256color
       DISPLAY:
@@ -46,8 +44,6 @@ services:
       args:
         TARGET: nvidia
     network_mode: "host"
-    security_opt:
-      - seccomp:unconfined
     environment:
       TERM: xterm-256color
       DISPLAY:
