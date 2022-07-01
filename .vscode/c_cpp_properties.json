@@ -8,6 +8,7 @@
       },
       "includePath": [
         "${default}",
+        "${workspaceFolder}/**",
         "/opt/ros/galactic/include/**",
         "${workspaceFolder}/install/**",
         "${workspaceFolder}/install/ros2_examples_interfaces/include/**",
