@@ -68,12 +68,13 @@ The `config` directory contains a `Dockerfile` and some other configuration file
 
 1. `dev` contains some system utilities and full desktop ROS 2 installation;
 2. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
+3. `rpi` is a full development container aimed at Raspberry Pi boards.
 
 You can build such containers manually from inside the `config` folder and manage them manually through the Docker Engine, they are fully functional and allow to test ROS 2 capabilities without installing anything on the host system. In both containers, the default shell is Zsh with some custom prompts and plugins preinstalled. The command line arguments necessary to run them correctly are specified in the Dockerfile header for convenience.
 
 ### Docker Compose and Visual Studio Code
 
-It is incredibly easy to develop inside running containers with Visual Studio Code, and this repository is already configured for that by default. The `docker-compose.yml` file specifies how to build and run containers for the two development targets described above. Such targets can also be embedded in a VS Code-enabled container if one installs the required extensions to work with containers and choses to `Open Folder in Container`, then selects one of `container-dev` and `container-nvidia`. Those two folders each refer to the aforementioned targets, and contain only a `.devcontainer.json` file that instructs VS Code on how the container must be built on top of what the `docker-compose.yml` says:
+It is incredibly easy to develop inside running containers with Visual Studio Code, and this repository is already configured for that by default. The `docker-compose.yml` file specifies how to build and run containers for the two development targets described above. Such targets can also be embedded in a VS Code-enabled container if one installs the required extensions to work with containers and choses to `Open Folder in Container`, then selects one of `container-dev`, `container-nvidia`, and `container-rpi`. Those folders each refer to the aforementioned targets, and contain only a `.devcontainer.json` file that instructs VS Code on how the container must be built on top of what the `docker-compose.yml` says:
 
 - which extensions to install and load in the remote VS Code instance;
 - which folder to open once the container is up and running;
@@ -89,7 +90,9 @@ In `docker-compose.yml`, containers are configured as follows:
 - an interactive shell is allocated for the container, allowing for signals to be passed, but `stdin` is closed;
 - **current user's `.ssh` directory is mounted inside the container internal user's home directory**, to allow for remote services such as GitHub repositories to be used from inside the container too;
 - **configuration files and command history files are mounted inside the container**, where they are expected to be, in order to allow for changes to be implemented quickly and for command history to be preserved;
-- **the current host workspace folder is mounted inside the container**, to be reopened by VS Code.
+- **the current host workspace folder is mounted inside the container**, to be reopened by VS Code;
+- **for `nvidia` containers**, the GPU is exposed to processes running inside the container, and the `nvidia` runtime is used;
+- **for `rpi` containers**, the hardware is fully exposed, to allow access to GPIO and similar devices.
 
 In this way no change is lost since everything is written on the host file system, builds are preserved even if the image is not saved, and `git` integrations work from both inside and outside the container.
 
