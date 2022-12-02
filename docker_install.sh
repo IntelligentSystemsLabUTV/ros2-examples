@@ -48,20 +48,24 @@ sudo apt-get update
 echo "Installing Docker Engine..."
 sudo apt-get install -y docker-ce docker-ce-cli containerd.io
 
-# Install the current stable release of Docker Compose
-echo "Installing Docker Compose..."
-sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-sudo chmod +x /usr/local/bin/docker-compose
+# Install Docker Compose V2
+echo "Installing Compose V2 and Compose Switch..."
+sudo mkdir -p /usr/local/lib/docker/cli-plugins
+sudo curl -SL "https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-linux-$(uname -s)" -o /usr/local/lib/docker/cli-plugins/docker-compose
+sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
+sudo curl -fL "https://github.com/docker/compose-switch/releases/download/v1.0.5/docker-compose-linux-$(dpkg --print-architecture)" -o /usr/local/bin/compose-switch
+sudo chmod +x /usr/local/bin/compose-switch
+sudo ln -s /usr/local/bin/compose-switch /usr/local/bin/docker-compose
 
 # Create docker group and add user to it
 echo "Creating new group for Docker users and adding $USER to it..."
 sudo groupadd docker
-sudo usermod -aG docker $USER
+sudo usermod -aG docker "$USER"
 echo "You need to log off and on again to see this change!"
 
 # Check if the user wants to install latest Nvidia runtime
 while true; do
-  read -p "Do you wish to install the Nvidia runtime? (Requires Nvidia drivers >= 418.81) " yn
+  read -r -p "Do you wish to install the Nvidia runtime? (Requires Nvidia drivers >= 418.81) " yn
   case $yn in
     [Yy]* ) nvidia_runtime; break;;
     [Nn]* ) break;;
