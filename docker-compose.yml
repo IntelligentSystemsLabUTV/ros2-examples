@@ -25,6 +25,7 @@ services:
     user: ros
     stdin_open: false
     tty: true
+    command: ["/bin/bash", "-c", "trap 'exit 0' TERM; sleep infinity & wait"]
     volumes:
       - /dev:/dev
       - /sys:/sys
