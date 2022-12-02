@@ -1,4 +1,4 @@
-# ROS 2 Galactic Geochelone development container.
+# ROS 2 development container.
 #
 # Roberto Masocco <robmasocco@gmail.com>
 # Alessandro Tenaglia <alessandro.tenaglia42@gmail.com>
@@ -27,6 +27,7 @@ ARG TARGET=dev
 FROM intelligentsystemslabutv/ros2-env:$TARGET
 
 ARG USER_UID=1000
+ARG USER_GID=1000
 
 # Create a non-root sudo user with Zsh as shell
 RUN useradd -s /bin/bash --uid $USER_UID -m ros && \
@@ -71,7 +72,7 @@ COPY --chown=$USER_UID:$USER_GID .p10k.zsh ./
 LABEL author.name="Roberto Masocco"
 LABEL author.email="robmasocco@gmail.com"
 LABEL organization="Intelligent Systems Lab"
-LABEL description="ROS 2 Galactic Geochelone example development container"
+LABEL description="ROS 2 example development container"
 
 # Start shell in container
 CMD ["zsh"]
