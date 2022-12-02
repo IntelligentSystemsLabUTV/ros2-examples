@@ -14,10 +14,7 @@
   "extensions": [
     "ms-python.python",
     "ms-vscode.cpptools",
-    "twxs.cmake",
-    "eamodio.gitlens",
-    "zachflower.uncrustify",
-    "ms-iot.vscode-ros"
+    "twxs.cmake"
   ],
   "settings": {
     // Use Zsh also in VS Code
