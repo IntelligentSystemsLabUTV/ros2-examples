@@ -7,14 +7,14 @@
 
 version: "3.9"
 
-# Development target for Raspberry Pi boards
 services:
+  # Development target for Raspberry Pi boards
   ros2vsc-rpi:
     build:
       context: ./config
       network: host
       args:
-        TARGET: rpi
+        TARGET: armv8
     network_mode: "host"
     environment:
       TERM: xterm-256color
@@ -25,7 +25,12 @@ services:
     user: ros
     stdin_open: false
     tty: true
-    command: ["/bin/bash", "-c", "trap 'exit 0' TERM; sleep infinity & wait"]
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "trap 'exit 0' TERM; sleep infinity & wait"
+      ]
     volumes:
       - /dev:/dev
       - /sys:/sys
@@ -47,6 +52,34 @@ services:
       network: host
       args:
         TARGET: dev
+    network_mode: "host"
+    environment:
+      TERM: xterm-256color
+      DISPLAY:
+    cap_add:
+      - SYS_PTRACE
+    user: ros
+    stdin_open: false
+    tty: true
+    volumes:
+      - ~/.ssh:/home/ros/.ssh:ro
+      - ./config/.aliases.zsh:/home/ros/.aliases.zsh
+      - ./config/.p10k.zsh:/home/ros/.p10k.zsh
+      - ./config/.ros2_cmds.zsh:/home/ros/.ros2_cmds.zsh
+      - ./config/.zshrc:/home/ros/.zshrc
+      - ./config/zsh_history:/home/ros/zsh_history
+      - /etc/localtime:/etc/localtime:ro
+      - type: bind
+        source: ./
+        target: /home/ros/workspace
+
+  # VS Code Development target for ARM devices
+  ros2vsc-armv8:
+    build:
+      context: ./config
+      network: host
+      args:
+        TARGET: armv8
     network_mode: "host"
     environment:
       TERM: xterm-256color
