@@ -67,8 +67,9 @@ The `docker_install.sh` script automates the installation of the Docker Engine, 
 The `config` directory contains a `Dockerfile` and some other configuration files necessary for the builds. Containers are built from generic development images found in [IntelligentSystemsLabUTV/ros2-env](https://github.com/IntelligentSystemsLabUTV/ros2-env), and the provided targets are as follows:
 
 1. `dev` contains some system utilities and full desktop ROS 2 installation;
-2. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
-3. `rpi` is a full development container aimed at Raspberry Pi boards.
+2. `armv8` is like `dev`, but aimed at ARM devices;
+3. `nvidia` adds correct support for Nvidia GPUs, in order to run GUI-based tools and GPU-enabled programs inside the container (this also requires the Nvidia runtime to be installed on the host system, on Ubuntu 20.04 this can be done by installing the `nvidia-docker2` package with `apt`).
+4. `rpi` is a full development container aimed at Raspberry Pi boards.
 
 You can build such containers manually from inside the `config` folder and manage them manually through the Docker Engine, they are fully functional and allow to test ROS 2 capabilities without installing anything on the host system. In both containers, the default shell is Zsh with some custom prompts and plugins preinstalled. The command line arguments necessary to run them correctly are specified in the Dockerfile header for convenience.
 
