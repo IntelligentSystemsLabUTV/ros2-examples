@@ -46,7 +46,7 @@ function nvidia_runtime {
 
 # Purge preexisting (i.e. not forward-compatible) Docker installations
 echo "Purging old installations..."
-sudo apt-get remove -y docker docker-engine docker.io containerd runc
+sudo apt-get remove -y docker docker-engine docker.io containerd runc || true
 if [[ -d /var/lib/docker ]]; then
   sudo rm -rf /var/lib/docker
 fi
@@ -79,7 +79,6 @@ while true; do
   case $yn in
   [Yy]*)
     # Install Compose V2
-    echo "Installing Compose V2 and Compose Switch..."
     echo "Installing Compose V2 and Compose Switch..."
     sudo mkdir -p /usr/local/lib/docker/cli-plugins
     sudo curl -SL "https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-linux-$(uname -s)" -o /usr/local/lib/docker/cli-plugins/docker-compose
@@ -121,9 +120,9 @@ while true; do
 done
 
 # Create docker group and add user to it
-echo "Creating new group for Docker users and adding $USER to it..."
-sudo groupadd docker
-sudo usermod -aG docker "$USER"
+echo "Creating new group for Docker users and adding user $USER to it..."
+sudo groupadd docker || true
+sudo usermod -aG docker "$USER" || true
 echo "You need to log off and on again to see this change!"
 
 # Check if the user wants to install latest Nvidia runtime
