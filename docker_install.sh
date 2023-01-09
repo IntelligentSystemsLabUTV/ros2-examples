@@ -81,7 +81,7 @@ while true; do
     # Install Compose V2
     echo "Installing Compose V2 and Compose Switch..."
     sudo mkdir -p /usr/local/lib/docker/cli-plugins
-    sudo curl -SL "https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-linux-$(uname -s)" -o /usr/local/lib/docker/cli-plugins/docker-compose
+    sudo curl -SL "https://github.com/docker/compose/releases/download/v2.13.0/docker-compose-linux-$(uname -m)" -o /usr/local/lib/docker/cli-plugins/docker-compose
     sudo chmod +x /usr/local/lib/docker/cli-plugins/docker-compose
     sudo curl -fL "https://github.com/docker/compose-switch/releases/download/v1.0.5/docker-compose-linux-$(dpkg --print-architecture)" -o /usr/local/bin/compose-switch
     sudo chmod +x /usr/local/bin/compose-switch
