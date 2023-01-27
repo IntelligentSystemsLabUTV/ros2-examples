@@ -1,0 +1,26 @@
+# ROS 2 Galactic Geochelone development containers build specification.
+#
+# Roberto Masocco <robmasocco@gmail.com>
+#
+# April 23, 2022
+
+version: '3.9'
+
+services:
+  armv8:
+    build:
+      context: .
+      dockerfile: Dockerfile.armv8
+    image: intelligentsystemslabutv/ros2-env:armv8
+
+  dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    image: intelligentsystemslabutv/ros2-env:dev
+
+  nvidia:
+    build:
+      context: .
+      dockerfile: Dockerfile.nvidia
+    image: intelligentsystemslabutv/ros2-env:nvidia

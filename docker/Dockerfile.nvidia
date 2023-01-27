@@ -1,0 +1,35 @@
+# ROS 2 Galactic Geochelone development environment for Nvidia GPUs.
+#
+# Roberto Masocco <robmasocco@gmail.com>
+# Alessandro Tenaglia <alessandro.tenaglia42@gmail.com>
+#
+# January 25, 2022
+
+# Start from generic develompent environment
+FROM intelligentsystemslabutv/ros2-env:dev
+
+# Install Nvidia dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
+  libegl1 \
+  libglvnd0 \
+  libgl1 \
+  libglx0 \
+  libxext6 \
+  libx11-6 && \
+  rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*/apt/lists/*
+
+# Env vars for the nvidia-container-runtime
+ENV NVIDIA_VISIBLE_DEVICES \
+  ${NVIDIA_VISIBLE_DEVICES:-all}
+ENV NVIDIA_DRIVER_CAPABILITIES \
+  ${NVIDIA_DRIVER_CAPABILITIES:+$NVIDIA_DRIVER_CAPABILITIES,}graphics
+ENV QT_X11_NO_MITSHM 1
+
+# Add image information
+LABEL author.name="Roberto Masocco"
+LABEL author.email="robmasocco@gmail.com"
+LABEL organization="Intelligent Systems Lab"
+LABEL description="ROS 2 Galactic Geochelone development container with support for NVIDIA GPU"
+
+# Start shell in container
+CMD ["bash"]

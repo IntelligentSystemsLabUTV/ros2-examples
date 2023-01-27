@@ -64,7 +64,7 @@ The `docker_install.sh` script automates the installation of the Docker Engine, 
 
 **Results of such tests will be published in the `galactic` branch only, so example development containers will be provided only for the Galactic Geochelone ROS 2 distribution.**
 
-The `config` directory contains a `Dockerfile` and some other configuration files necessary for the builds. Containers are built from generic development images found in [IntelligentSystemsLabUTV/ros2-env](https://github.com/IntelligentSystemsLabUTV/ros2-env), and the provided targets are as follows:
+The `config` directory contains a `Dockerfile` and some other configuration files necessary for the builds. Containers are built from generic development images found in the `docker` folder, and the provided targets are as follows:
 
 1. `dev` contains some system utilities and full desktop ROS 2 installation;
 2. `armv8` is like `dev`, but aimed at ARM devices;
