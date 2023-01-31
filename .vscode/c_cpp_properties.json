@@ -9,10 +9,13 @@
       "includePath": [
         "${default}",
         "${workspaceFolder}/**",
-        "/opt/ros/galactic/include/**",
+        "/opt/ros/humble/include/**",
         "${workspaceFolder}/install/**",
         "${workspaceFolder}/install/ros2_examples_interfaces/include/**",
         "${workspaceFolder}/install/ros2_examples_headers/include/**",
+        // Add subdirectories of install here to include interfaces,
+        // headers, plugin base headers and everything else you need
+        "/usr/local/**",
         "/usr/local/include"
       ],
       "defines": [],

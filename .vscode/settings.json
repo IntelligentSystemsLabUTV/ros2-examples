@@ -1,7 +1,7 @@
 {
   "editor.tabSize": 2,
   "editor.rulers": [
-    80
+    100
   ],
   "files.associations": {
     "*.repos": "yaml",
@@ -91,23 +91,27 @@
     "*.cpp": "cpp",
     "*.hpp": "cpp"
   },
+  // Use Pylance as language server
+  "python.languageServer": "Pylance",
   "python.analysis.extraPaths": [
-    "/opt/ros/galactic/lib/python3.8/site-packages/"
+    "/opt/ros/humble/lib/python3.10/site-packages/"
+    // Add your own paths here!
   ],
   // Autocomplete from ros python packages
   "python.autoComplete.extraPaths": [
-    "/opt/ros/galactic/lib/python3.8/site-packages/"
+    "/opt/ros/humble/lib/python3.10/site-packages/"
+    // Add your own paths here!
   ],
   // Environment file lets vscode find python files within workspace
   "python.envFile": "${workspaceFolder}/.env",
   // Use the system installed version of autopep8
   "python.formatting.autopep8Path": "/usr/bin/autopep8",
   "python.formatting.autopep8Args": [
-    "--max-line-length=80"
+    "--max-line-length=100"
   ],
   "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
-  "C_Cpp.formatting": "Disabled",
-  "uncrustify.configPath.linux": "/opt/ros/galactic/lib/python3.8/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
+  "C_Cpp.formatting": "disabled",
+  "uncrustify.configPath.linux": "/opt/ros/humble/lib/python3.10/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
   "[cpp]": {
     "editor.defaultFormatter": "zachflower.uncrustify"
   },
@@ -150,5 +154,33 @@
     ".vscode",
     ".vscode-insiders"
   ],
-  "ros.distro": "galactic"
+  "shellcheck.enable": true,
+  "shellcheck.enableQuickFix": true,
+  "shellcheck.run": "onType",
+  "shellcheck.executablePath": "/usr/bin/shellcheck",
+  "shellcheck.exclude": [
+    "1091"
+  ],
+  "shellcheck.customArgs": [],
+  "shellcheck.ignorePatterns": {
+    "**/*.xonshrc": true,
+    "**/*.xsh": true,
+    "**/*.zsh": true,
+    "**/*.zshrc": true,
+    "**/zshrc": true,
+    "**/*.zprofile": true,
+    "**/zprofile": true,
+    "**/*.zlogin": true,
+    "**/zlogin": true,
+    "**/*.zlogout": true,
+    "**/zlogout": true,
+    "**/*.zshenv": true,
+    "**/zshenv": true,
+    "**/*.zsh-theme": true
+  },
+  "shellcheck.ignoreFileSchemes": [
+    "git",
+    "gitfs"
+  ],
+  "ros.distro": "humble"
 }

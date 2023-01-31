@@ -6,7 +6,7 @@
       "label": "build",
       "detail": "Build workspace (default)",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
+      "command": "source /opt/ros/humble/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On'",
       "group": {
         "kind": "build",
         "isDefault": true
@@ -17,7 +17,7 @@
       "label": "build-debug",
       "detail": "Build workspace (debug)",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
+      "command": "source /opt/ros/humble/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug'",
       "group": "build",
       "problemMatcher": "$gcc"
     },
@@ -25,7 +25,7 @@
       "label": "build-selected",
       "detail": "Build selected packages",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
+      "command": "source /opt/ros/humble/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=RelWithDebInfo' '-DCMAKE_EXPORT_COMPILE_COMMANDS=On' --packages-select ${input:selectedPackages}",
       "group": "build",
       "problemMatcher": "$gcc"
     },
@@ -33,7 +33,7 @@
       "label": "build-selected-debug",
       "detail": "Build selected packages (debug)",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
+      "command": "source /opt/ros/humble/setup.sh; source install/setup.sh; colcon build --event-handlers console_direct+ --symlink-install --ament-cmake-args '-DCMAKE_BUILD_TYPE=Debug' --packages-select ${input:selectedPackages}",
       "group": "build",
       "problemMatcher": "$gcc"
     },
@@ -42,7 +42,7 @@
       "label": "clean",
       "detail": "Run the clean target",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; colcon build --cmake-target clean",
+      "command": "source /opt/ros/humble/setup.sh; colcon build --cmake-target clean",
       "problemMatcher": "$gcc"
     },
     {
@@ -57,14 +57,14 @@
       "label": "fix",
       "detail": "Reformat files with uncrustify",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_uncrustify --reformat src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_uncrustify --reformat src/",
       "problemMatcher": []
     },
     {
       "label": "uncrustify",
       "detail": "Lint files with uncrustify",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_uncrustify src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_uncrustify src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -91,7 +91,7 @@
       "label": "cpplint",
       "detail": "Lint files with cpplint",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_cpplint src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_cpplint src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -118,7 +118,7 @@
       "label": "cppcheck",
       "detail": "Run static code checker cppcheck",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_cppcheck src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_cppcheck src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -143,7 +143,7 @@
       "label": "lint_cmake",
       "detail": "Run lint on cmake files",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_lint_cmake src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_lint_cmake src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -168,7 +168,7 @@
       "label": "flake8",
       "detail": "Run flake8 on python files",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_flake8 src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_flake8 src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -195,7 +195,7 @@
       "label": "pep257",
       "detail": "Run pep257 on python files",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_pep257 src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_pep257 src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -221,7 +221,7 @@
       "label": "xmllint",
       "detail": "Run xmllint on xml files",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ament_xmllint src/",
+      "command": "source /opt/ros/humble/setup.sh; ament_xmllint src/",
       "presentation": {
         "panel": "dedicated",
         "reveal": "silent",
@@ -263,35 +263,28 @@
       "label": "new cpp package",
       "detail": "Create a new ROS C++ package from a template",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
+      "command": "source /opt/ros/humble/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
       "problemMatcher": []
     },
     {
       "label": "new python package",
       "detail": "Create a new ROS Python package from a template",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_python --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
+      "command": "source /opt/ros/humble/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_python --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --node-name ${input:nodeName} ${input:package}",
       "problemMatcher": []
     },
     {
       "label": "new plugin/library package",
       "detail": "Create a new ROS C++ package from a template",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --library-name ${input:libName} ${input:package}",
+      "command": "source /opt/ros/humble/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" --library-name ${input:libName} ${input:package}",
       "problemMatcher": []
     },
     {
       "label": "new plugin base package",
       "detail": "Create a new ROS C++ package from a template",
       "type": "shell",
-      "command": "source /opt/ros/galactic/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" ${input:package}",
-      "problemMatcher": []
-    },
-    {
-      "label": "install dependencies",
-      "detail": "Install all dependencies specified in the workspaces package.xml files",
-      "type": "shell",
-      "command": "sudo apt-get update && rosdep update && rosdep install --from-paths src --ignore-src -y",
+      "command": "source /opt/ros/humble/setup.sh; ros2 pkg create --package-format 3 --description \"${input:description}\" --license \"${input:license}\" --destination-directory src --build-type ament_cmake --dependencies ${input:dependencies} --maintainer-name \"${input:maintainerName}\" --maintainer-email \"${input:maintainerEmail}\" ${input:package}",
       "problemMatcher": []
     }
   ],
