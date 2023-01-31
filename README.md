@@ -1,12 +1,14 @@
 # ROS 2 Examples
 
+**This branch is currently under active development and is not ready for actual use.**
+
 Collection of examples about the main ROS 2 features and core subsystems. These are meant to be used as tutorials or class materials. The format is simple: all code is thoroughly documented, and comments marked with an exclamation mark are meant to explain what is happening in detail.
 
-Examples were built and tested on ROS 2 Galactic Geochelone. The repository offers also installation scripts and a shell file that wraps many useful ROS 2 commands in a simpler format (also solving some sourcing path problems, especially for Galactic). Other useful notes are available in the additional Markdown files. Where it is deemed necessary, links to official documentation pages are provided.
+Examples were built and tested on ROS 2 Humble Hawksbill. The repository offers also installation scripts and a shell file that wraps many useful ROS 2 commands in a simpler format (also solving some sourcing path problems). Other useful notes are available in the additional Markdown files. Where it is deemed necessary, links to official documentation pages are provided.
 
-The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you use this inside such IDE.
+The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you play with this repository inside VS Code.
 
-**Currently this repository hosts only C++ examples, meant to be developed, built and executed on Linux machines only. Ubuntu 20.04 LTS Focal Fossa was used and is the currently supported and suggested platform.**
+**Ubuntu 22.04 LTS is the currently supported and suggested platform.**
 
 ## List of examples
 
@@ -60,9 +62,7 @@ The repository is built around a Visual Studio Code template that you can find [
 
 ## Docker Containers
 
-The `docker_install.sh` script automates the installation of the Docker Engine, Docker Compose utility and Nvidia runtime on systems running Ubuntu 20.04.
-
-**Results of such tests will be published in the `galactic` branch only, so example development containers will be provided only for the Galactic Geochelone ROS 2 distribution.**
+The `docker_install.sh` script automates the installation of the Docker Engine, Docker Compose V2 and Nvidia runtime on systems running Ubuntu 22.04.
 
 The `config` directory contains a `Dockerfile` and some other configuration files necessary for the builds. Containers are built from generic development images found in the `docker` folder, and the provided targets are as follows:
 
