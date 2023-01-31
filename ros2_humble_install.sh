@@ -1,11 +1,23 @@
 #!/bin/bash
 
-# ROS 2 Galactic Geochelone installation script
+# ROS 2 Humble Hawksbill installation script.
 # Roberto Masocco <robmasocco@gmail.com>
-# November 28, 2021
+# January 31, 2023
+# Copyright (c) 2023 Roberto Masocco
+
+set -o errexit
+set -o nounset
+set -o pipefail
+if [[ "${TRACE-0}" == "1" ]]; then set -o xtrace; fi
+
+if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
+  echo >&2 "Usage:"
+  echo >&2 "    ros2_humble_install.sh"
+  exit 1
+fi
 
 echo "Checking Universe repository..."
-if [[ -z "$(apt-cache policy | grep universe)" ]]; then
+if ! apt-cache policy | grep -q 'universe'; then
 	sudo apt install software-properties-common
 	sudo add-apt-repository universe
 fi
@@ -16,8 +28,11 @@ sudo curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -
 echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
 sudo apt update
 
+echo "Upgrading system..."
+sudo apt upgrade
+
 echo "Installing ROS 2 main packages..."
-sudo apt install -y ros-galactic-desktop ros-galactic-eigen3-cmake-module ros-galactic-gazebo-ros-pkgs
+sudo apt install -y ros-humble-desktop ros-humble-eigen3-cmake-module ros-humble-gazebo-ros-pkgs
 
 echo "Installing secondary packages and tools..."
 sudo apt install -y python3-colcon-argcomplete
@@ -41,4 +56,3 @@ LINES=$(sudo cat /etc/ufw/before.rules | wc -l)
 ADD_LINE=$((LINES-2))
 sudo sed -i "$ADD_LINE a # allow IGMP\n-A ufw-before-input -p igmp -d 224.0.0.0/4 -j ACCEPT\n-A ufw-before-output -p igmp -d 224.0.0.0/4 -j ACCEPT\n" /etc/ufw/before.rules
 sudo ufw reload
-
