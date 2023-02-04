@@ -8,6 +8,10 @@ The repository is built around a Visual Studio Code template that you can find [
 
 **Currently this repository hosts only C++ examples, meant to be developed, built and executed on Linux machines only. Ubuntu 20.04 LTS Focal Fossa was used and is the currently supported and suggested platform.**
 
+## Support notice
+
+**As of February 4, 2023, this version of the repository is no longer maintained. Further updates to the collection of examples and their development environments will be published in the `humble` branch. Please refer to that version once it is no longer listed as WIP. To ensure better compatibility across Linux distributions and environments, usage of Docker containers (see below) is strongly recommended.**
+
 ## List of examples
 
 - **hello_ros2:** What `ros2 pkg create` generates by default.
