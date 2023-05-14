@@ -1,0 +1,9 @@
+# Set options to configure colcon build environments for the current target
+{
+  "build": {
+    "packages-ignore": []
+  },
+  "test": {
+    "packages-ignore": []
+  }
+}

@@ -1,0 +1,52 @@
+# DUA environment container management settings.
+#
+# Roberto Masocco <robmasocco@gmail.com>
+# Intelligent Systems Lab <isl.torvergata@gmail.com>
+#
+# April 5, 2023
+
+version: "3.9"
+
+services:
+  SERVICE:
+    build:
+      context: ../
+      network: host
+      dockerfile: Dockerfile
+      args:
+        - USER_UID=1000
+    image: NAME:TARGET
+    environment:
+      TERM: xterm-256color
+      DISPLAY: host.docker.internal:0
+      SHELL: /usr/bin/zsh
+    user: neo
+    network_mode: "host"
+    privileged: true
+    ipc: host
+    stdin_open: false
+    tty: true
+    working_dir: /home/neo/workspace
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "trap 'exit 0' TERM; sleep infinity & wait"
+      ]
+    volumes:
+      - ../../../:/home/neo/workspace
+      - ../aliases.sh:/home/neo/.aliases.sh:rw
+      - ../bashrc:/home/neo/.bashrc:re
+      - ../colcon-defaults.yaml:/home/neo/.colcon/defaults.yaml:rw
+      - ../commands.sh:/home/neo/.commands.sh:rw
+      - ../p10k.zsh:/home/neo/.p10k.zsh:rw
+      - ../ros2.sh:/home/neo/.ros2.sh:rw
+      - ../zshrc:/home/neo/.zshrc:rw
+      - ../zsh_history:/home/neo/zsh_history
+      - ~/.ssh:/home/neo/.ssh
+      - ~/.gitconfig:/home/neo/.gitconfig
+      - ~/.Xauthority:/home/neo/.Xauthority:rw
+      - /dev:/dev
+      - /sys:/sys
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro

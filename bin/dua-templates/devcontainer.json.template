@@ -1,0 +1,80 @@
+{
+  "name": "SERVICE",
+  "dockerComposeFile": [
+    "docker-compose.yaml"
+  ],
+  // Only start this service
+  "service": "SERVICE",
+  "runServices": [
+    "SERVICE"
+  ],
+  // Stop container if VS Code is shut down
+  "shutdownAction": "stopCompose",
+  // Configure the container's IDE
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "vscode-icons-team.vscode-icons",
+        "github.copilot",
+        "ms-python.python",
+        "njpwerner.autodocstring",
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "ms-vscode.makefile-tools",
+        "ms-iot.vscode-ros",
+        "ms-azuretools.vscode-docker",
+        "timonwong.shellcheck",
+        "redhat.vscode-yaml",
+        "dotjoshjohnson.xml",
+        "formulahendry.auto-close-tag",
+        "formulahendry.auto-rename-tag",
+        "yzhang.markdown-all-in-one",
+        "davidanson.vscode-markdownlint",
+        "aaron-bond.better-comments",
+        "jeff-hykin.better-syntax",
+        "gruntfuggly.todo-tree",
+        "eamodio.gitlens",
+        "donjayamanne.githistory",
+        "zachflower.uncrustify",
+        "shardulm94.trailing-spaces"
+      ],
+      "settings": {
+        // Set Zsh as the default shell
+        "terminal.integrated.defaultProfile.linux": "zsh",
+        "terminal.integrated.profiles.linux": {
+          "zsh": {
+            "path": "/bin/zsh"
+          }
+        },
+        // Integrated terminal settings
+        "terminal.integrated.fontFamily": "MesloLGS NF",
+        "terminal.integrated.cursorStyle": "underline",
+        "terminal.integrated.cursorBlinking": true,
+        "workbench.colorCustomizations": {
+          "terminal.background": "#111111",
+          "terminal.foreground": "#FFFFFF",
+          "terminal.ansiBlack": "#000000",
+          "terminal.ansiBrightBlack": "#333333",
+          "terminal.ansiBlue": "#4040ff",
+          "terminal.ansiBrightBlue": "#1799f0",
+          "terminal.ansiCyan": "#00FFFF",
+          "terminal.ansiBrightCyan": "#00ffffde",
+          "terminal.ansiGreen": "#00FF00",
+          "terminal.ansiBrightGreen": "#36a10f",
+          "terminal.ansiMagenta": "#FF00FF",
+          "terminal.ansiBrightMagenta": "#9c4f7f",
+          "terminal.ansiRed": "#FF0000",
+          "terminal.ansiBrightRed": "#ff5640",
+          "terminal.ansiWhite": "#FFFFFF",
+          "terminal.ansiBrightWhite": "#FDF4C1",
+          "terminal.ansiYellow": "#FFFF00",
+          "terminal.ansiBrightYellow": "#FAC03B"
+        }
+      }
+    }
+  },
+  // Start the VS Code instance in the container's workspace
+  "workspaceFolder": "/home/neo/workspace",
+  // Creates a sleeping process that VSC uses to stop the container
+  "overrideCommand": true
+}
