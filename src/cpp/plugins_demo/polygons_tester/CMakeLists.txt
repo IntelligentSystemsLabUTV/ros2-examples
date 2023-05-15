@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.8)
 project(polygons_tester)
 
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
@@ -17,9 +19,8 @@ target_include_directories(polygons_tester PUBLIC
 target_compile_features(polygons_tester PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 ament_target_dependencies(
   polygons_tester
-  "pluginlib"
-  "polygon_base"
-)
+  pluginlib
+  polygon_base)
 
 install(TARGETS polygons_tester
   DESTINATION lib/${PROJECT_NAME})

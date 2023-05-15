@@ -10,11 +10,19 @@ find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rosidl_default_generators REQUIRED)
 
+set(MSG_DIR "${CMAKE_CURRENT_SOURCE_DIR}/msg")
+file(GLOB MSG_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${MSG_DIR}/*.msg")
+
+set(SRV_DIR "${CMAKE_CURRENT_SOURCE_DIR}/srv")
+file(GLOB SRV_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${SRV_DIR}/*.srv")
+
+set(ACT_DIR "${CMAKE_CURRENT_SOURCE_DIR}/action")
+file(GLOB ACT_FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${ACT_DIR}/*.action")
+
 rosidl_generate_interfaces(${PROJECT_NAME}
-  msg/String.msg
-  srv/AddTwoInts.srv
-  action/Fibonacci.action
-)
+  ${MSG_FILES}
+  ${SRV_FILES}
+  ${ACT_FILES})
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)

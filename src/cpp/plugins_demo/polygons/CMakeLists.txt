@@ -1,10 +1,12 @@
 cmake_minimum_required(VERSION 3.8)
 project(polygons)
 
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+
 #! it's highly suggested to generate this with colcon by specifying --library-name
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
-  add_compile_options(-Wall -Wextra -Wpedantic)
+  add_compile_options(-Wall -Wextra -Wpedantic -fvisibility=hidden) #! notice the last flag, for DSOs
 endif()
 
 # find dependencies
@@ -16,49 +18,34 @@ find_package(polygon_base REQUIRED)
 # triangle library
 add_library(triangle src/triangle.cpp)
 target_compile_features(triangle PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_definitions(triangle PRIVATE "POLYGONS_BUILDING_LIBRARY")
 target_include_directories(triangle PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   triangle
-  "pluginlib"
-  "polygon_base"
-)
+  pluginlib
+  polygon_base)
 
 # square library
 add_library(square src/square.cpp)
 target_compile_features(square PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_compile_definitions(square PRIVATE "POLYGONS_BUILDING_LIBRARY")
 target_include_directories(square PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   square
-  "pluginlib"
-  "polygon_base"
-)
+  pluginlib
+  polygon_base)
 
-#! hidden visibility must be the default when building DSOs
-set_target_properties(
-  triangle
-  square
-  PROPERTIES
-  CXX_VISIBILITY_PRESET hidden
-  VISIBILITY_INLINES_HIDDEN ON
-)
-
-# link plugins with base class for pluginlib
+#! link plugins with base class for pluginlib
 pluginlib_export_plugin_description_file(polygon_base plugins.xml)
-
-# Causes the visibility macros to use dllexport rather than dllimport,
-# which is appropriate when building the dll but not consuming it.
-target_compile_definitions(triangle PRIVATE "POLYGONS_BUILDING_LIBRARY")
-target_compile_definitions(square PRIVATE "POLYGONS_BUILDING_LIBRARY")
 
 # install library headers
 install(
   DIRECTORY include/
-  DESTINATION include
-)
+  DESTINATION include)
 
 # install library binaries
 install(
@@ -66,15 +53,13 @@ install(
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
+  RUNTIME DESTINATION bin)
 install(
   TARGETS square
   EXPORT export_${PROJECT_NAME}
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin
-)
+  RUNTIME DESTINATION bin)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
@@ -89,14 +74,11 @@ endif()
 
 #! export headers and binaries for ament
 ament_export_include_directories(
-  include
-)
+  include)
 ament_export_libraries(
   triangle
-  square
-)
+  square)
 ament_export_targets(
-  export_${PROJECT_NAME}
-)
+  export_${PROJECT_NAME})
 
 ament_package()

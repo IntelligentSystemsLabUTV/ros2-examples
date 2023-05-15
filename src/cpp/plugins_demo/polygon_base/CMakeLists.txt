@@ -1,9 +1,16 @@
 cmake_minimum_required(VERSION 3.8)
 project(polygon_base)
 
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
+
+# install base headers
+#! this package exists just for this
+install(DIRECTORY include/
+  DESTINATION include)
 
 # find dependencies
 find_package(ament_cmake REQUIRED)
@@ -20,14 +27,7 @@ if(BUILD_TESTING)
   ament_lint_auto_find_test_dependencies()
 endif()
 
-# install base headers
-#! this package exists just for this
-install(DIRECTORY include/
-  DESTINATION include)
-
 # export headers for ament
-ament_export_include_directories(
-  include
-)
+ament_export_include_directories(include)
 
 ament_package()
