@@ -27,6 +27,20 @@ Collection of examples about the main features and core subsystems of the [Robot
 - **Visual Studio Code** (optional, other IDEs should work but the repository is built around VS Code)
 - **Docker** (optional)
 
+To clone this repository once you have Git installed, either use a GUI client or (better) run the following command in a terminal:
+
+```bash
+git clone https://github.com/IntelligentSystemsLabUTV/ros2-examples.git
+```
+
+and the repository will be cloned in the current directory, in a new directory called `ros2-examples`.
+
+To update the repository's contents, make sure to be in the `humble` branch (rember: `git checkout` enables you to switch branches) and run:
+
+```bash
+git pull
+```
+
 The contents of this repository were tested on a system running **Ubuntu Linux 22.04**, which is the officially supported host OS. You may as well be able to install ROS 2 on Windows and macOS, and thus run the examples on those platforms, but this is not guaranteed. Support for Windows is encouraged by means of the [Windows Subsystem for Linux 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL 2), which allows you to run a Linux kernel on Windows hosts; the `Ubuntu-22.04` distribution would be the best choice.
 
 The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you play with this repository inside VS Code.
