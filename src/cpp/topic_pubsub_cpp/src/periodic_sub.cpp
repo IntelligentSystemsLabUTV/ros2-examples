@@ -51,7 +51,7 @@ public:
         }
       }
     );
-  
+
     RCLCPP_INFO(this->get_logger(), "Node initialized");
   }
 

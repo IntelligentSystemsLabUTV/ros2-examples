@@ -11,8 +11,9 @@
 
 #include <rclcpp/rclcpp.hpp> //! rclcpp base library
 
-#include <std_msgs/msg/string.hpp> //! interface library that we'll use
+#include <std_msgs/msg/string.hpp> //! Interface library that we'll use
 
+//! We'll see how to properly manage this kind of "parameters"
 #define PUB_PERIOD 300 // Publisher transmission time period [ms]
 
 /**

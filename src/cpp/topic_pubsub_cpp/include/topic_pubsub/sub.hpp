@@ -11,7 +11,7 @@
 
 #include <rclcpp/rclcpp.hpp> //! rclcpp base library
 
-#include <std_msgs/msg/string.hpp> //! interface library that we'll use
+#include <std_msgs/msg/string.hpp> //! Interface library that we'll use
 
 /**
  * Simple subscriber node: receives and prints strings transmitted on a topic.
