@@ -1,17 +1,29 @@
 cmake_minimum_required(VERSION 3.8)
-project(actions_example)
+project(actions_example_cpp)
+
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
+
+# Default to C99
+if(NOT CMAKE_C_STANDARD)
+  set(CMAKE_C_STANDARD 99)
+endif()
+
+# Default to C++17
+if(NOT CMAKE_CXX_STANDARD)
+  set(CMAKE_CXX_STANDARD 17)
+endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(rclcpp_action REQUIRED)
 find_package(ros2_examples_interfaces REQUIRED)
 
-# server nodes
+# Server
 add_executable(fib_server src/fib_server.cpp src/server_main.cpp)
 target_include_directories(fib_server PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -19,28 +31,11 @@ target_include_directories(fib_server PUBLIC
 target_compile_features(fib_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
 ament_target_dependencies(
   fib_server
-  "rclcpp"
-  "rclcpp_action"
-  "ros2_examples_interfaces"
-)
-install(TARGETS fib_server
-  DESTINATION lib/${PROJECT_NAME})
-add_executable(fib_adv_server src/fib_server.cpp src/server_main.cpp)
-target_include_directories(fib_adv_server PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_compile_definitions(fib_adv_server PUBLIC ADVANCED)
-target_compile_features(fib_adv_server PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-ament_target_dependencies(
-  fib_adv_server
-  "rclcpp"
-  "rclcpp_action"
-  "ros2_examples_interfaces"
-)
-install(TARGETS fib_adv_server
-  DESTINATION lib/${PROJECT_NAME})
+  rclcpp
+  rclcpp_action
+  ros2_examples_interfaces)
 
-# client nodes
+# Client
 add_executable(fib_client src/fib_client.cpp src/client_main.cpp)
 target_include_directories(fib_client PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
@@ -48,25 +43,14 @@ target_include_directories(fib_client PUBLIC
 target_compile_features(fib_client PUBLIC c_std_99 cxx_std_17)
 ament_target_dependencies(
   fib_client
-  "rclcpp"
-  "rclcpp_action"
-  "ros2_examples_interfaces"
-)
-install(TARGETS fib_client
+  rclcpp
+  rclcpp_action
+  ros2_examples_interfaces)
+
+# Install executables
+install(TARGETS fib_server
   DESTINATION lib/${PROJECT_NAME})
-add_executable(fib_adv_client src/fib_client.cpp src/client_main.cpp)
-target_include_directories(fib_adv_client PUBLIC
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>)
-target_compile_definitions(fib_adv_client PUBLIC ADVANCED)
-target_compile_features(fib_adv_client PUBLIC c_std_99 cxx_std_17)
-ament_target_dependencies(
-  fib_adv_client
-  "rclcpp"
-  "rclcpp_action"
-  "ros2_examples_interfaces"
-)
-install(TARGETS fib_adv_client
+install(TARGETS fib_client
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

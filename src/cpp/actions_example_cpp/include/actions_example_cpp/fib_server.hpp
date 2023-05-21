@@ -41,14 +41,6 @@ private:
   //! Action server (like for services)
   rclcpp_action::Server<Fibonacci>::SharedPtr fib_server_;
 
-#ifdef ADVANCED
-  rclcpp::CallbackGroup::SharedPtr server_clbk_group_;
-  rcl_action_server_options_t server_opts_{};
-  rclcpp::TimerBase::SharedPtr work_timer_;
-  void work_activation_clbk();
-  FibonacciGoalHandleSharedPtr new_goal_ = nullptr;
-#endif
-
   //! Following 3 routines are required by the API, first 2 return from enums
   //! Goal request handler routine
   rclcpp_action::GoalResponse handle_goal(

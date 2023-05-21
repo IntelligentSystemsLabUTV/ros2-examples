@@ -36,7 +36,7 @@ public:
   FibonacciClient();
   std::string get_result_str();
 
-  //! These are required to wrap operations on the (private) back-end
+  //! These are just for us, to wrap operations on the (private) back-end
   std::shared_future<FibonacciGoalHandleSharedPtr> send_goal(int order);
   std::shared_future<FibonacciGoalHandle::WrappedResult> request_result(
     FibonacciGoalHandleSharedPtr goal_handle);
@@ -46,19 +46,13 @@ public:
 private:
   std::stringstream result_ss_;
 
-#ifdef ADVANCED
-  rclcpp::CallbackGroup::SharedPtr client_clbk_group_;
-  rcl_action_client_options_t action_client_opts_{};
-#endif
-
   //! Client goes with options needed to send goal requests
   rclcpp_action::Client<Fibonacci>::SharedPtr client_;
   rclcpp_action::Client<Fibonacci>::SendGoalOptions client_opts_;
 
   //! Name of the following callbacks says it all, but pay attention to their
   //! signatures and argument types!
-  void goal_response_clbk(
-    std::shared_future<FibonacciGoalHandleSharedPtr> future_resp);
+  void goal_response_clbk(FibonacciGoalHandleSharedPtr goal_handle);
   void feedback_callback(
     FibonacciGoalHandleSharedPtr goal_handle,
     const std::shared_ptr<const Fibonacci::Feedback> feedback);
