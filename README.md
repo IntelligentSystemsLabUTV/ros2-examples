@@ -126,6 +126,7 @@ The following is a list of all the examples that are currently available in this
     - **namespaces_examples:** This package contains some examples to show what remapping rules are and which features they offer.
     - **ros2_examples_headers:** Example of an headers-only package, to provide to other packages in the same workspace, that will depend on this.
     - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
+    - **complete_actions_cpp:** This package adds to the nodes developed in the actions_example_cpp package some functionalities that make full use of the ROS 2 action features in realistic contexts, such as the deferred goal transition from the `ACCEPT` to the `EXECUTING` state, and the use of multithreaded executors.
 
 - **Python examples**
 

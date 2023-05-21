@@ -10,9 +10,22 @@
 #include <sstream>
 #include <stdexcept>
 
-#include <actions_example_cpp/fib_client.hpp>
+#include <complete_actions_cpp/fib_client.hpp>
 
 #define UNUSED(arg) (void)(arg)
+
+//! Status topic (hidden) has transient local durability!
+static const rmw_qos_profile_t status_qos_profile = {
+  RMW_QOS_POLICY_HISTORY_KEEP_LAST,
+  5,
+  RMW_QOS_POLICY_RELIABILITY_RELIABLE,
+  RMW_QOS_POLICY_DURABILITY_TRANSIENT_LOCAL,
+  RMW_QOS_DEADLINE_DEFAULT,
+  RMW_QOS_LIFESPAN_DEFAULT,
+  RMW_QOS_POLICY_LIVELINESS_SYSTEM_DEFAULT,
+  RMW_QOS_LIVELINESS_LEASE_DURATION_DEFAULT,
+  false
+};
 
 /**
  * @brief Creates a new FibonacciClient node.
@@ -20,10 +33,22 @@
 FibonacciClient::FibonacciClient()
 : Node("fibonacci_client")
 {
+  //! Set client options (i.e. topics QoS profiles) and callback group
+  client_clbk_group_ = this->create_callback_group(
+    rclcpp::CallbackGroupType::MutuallyExclusive);
+  action_client_opts_.allocator = rcl_get_default_allocator();
+  action_client_opts_.goal_service_qos = rmw_qos_profile_services_default;
+  action_client_opts_.result_service_qos = rmw_qos_profile_services_default;
+  action_client_opts_.cancel_service_qos = rmw_qos_profile_services_default;
+  action_client_opts_.feedback_topic_qos = rmw_qos_profile_default;
+  action_client_opts_.status_topic_qos = status_qos_profile;
+
   //! Create the action client like a service client
   client_ = rclcpp_action::create_client<Fibonacci>(
     this,
-    "/fibonacci_computer/fibonacci");
+    "/fibonacci_computer/fibonacci",
+    client_clbk_group_,
+    action_client_opts_);
 
   //! Initialize client options: bind all callbacks
   client_opts_.goal_response_callback = std::bind(
@@ -175,8 +200,7 @@ std::shared_future<FibonacciGoalHandleSharedPtr> FibonacciClient::send_goal(
   //! Note that since this whole system relies entirely on callbacks, this
   //! just has to send the goal, everything else will happen automatically
   //! afterwards!
-  //! I.e. actions induce event-based asynchronous programming, which you can
-  //! make synchronous by waiting explicitly on futures and similar objects
+  //! I.e. actions induce event-based programming
 
   // Initialize result
   result_ss_.str("");
