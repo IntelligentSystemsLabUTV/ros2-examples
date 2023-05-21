@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "../include/simple_service/simple_service.hpp"
+#include <simple_service_cpp/simple_service.hpp>
 
 /**
  * @brief AddTwoInts server constructor.
@@ -22,6 +22,7 @@ AddTwoIntsServer::AddTwoIntsServer()
   //!   CALLBACK_WRAPPER,
   //!   ...
   //! );
+  //! Note: we could have a '~' here, too, we just omit it for the sake of this example
   server_ = this->create_service<AddTwoInts>(
     "/examples/add_two_ints",
     //! Why do we need two placeholders this time? ...

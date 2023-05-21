@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.5)
-project(simple_service)
+project(simple_service_cpp)
+
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -8,53 +10,41 @@ endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
-find_package(example_interfaces REQUIRED)
 find_package(ros2_examples_interfaces REQUIRED)
 
-# Compilation options
-option(EXAMPLE "Enable other example features" OFF)
-
+# Server
 add_executable(server src/server.cpp)
 target_include_directories(server PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-if(EXAMPLE)
-  message(STATUS "Enabled other example features for server")
-  target_compile_definitions(server PUBLIC EXAMPLE)
-endif()
 ament_target_dependencies(
   server
-  "rclcpp"
-  "example_interfaces"
-  "ros2_examples_interfaces"
-)
+  rclcpp
+  ros2_examples_interfaces)
 
+# Client
 add_executable(client src/client.cpp)
 target_include_directories(client PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-if(EXAMPLE)
-  message(STATUS "Enabled other example features for client")
-  target_compile_definitions(client PUBLIC EXAMPLE)
-endif()
 ament_target_dependencies(
   client
-  "rclcpp"
-  "example_interfaces"
-  "ros2_examples_interfaces"
-)
+  rclcpp
+  ros2_examples_interfaces)
 
-install(TARGETS server client
+install(TARGETS server
+  DESTINATION lib/${PROJECT_NAME})
+install(TARGETS client
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)

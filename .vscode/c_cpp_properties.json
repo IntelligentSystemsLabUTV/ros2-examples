@@ -17,7 +17,8 @@
         "/usr/local/**",
         "/usr/local/include",
         "${workspaceFolder}/src/cpp/topic_pubsub_cpp/include/**",
-        "${workspaceFolder}/src/cpp/custom_topic_cpp/include/**"
+        "${workspaceFolder}/src/cpp/custom_topic_cpp/include/**",
+        "${workspaceFolder}/src/cpp/simple_service_cpp/include/**"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/g++",

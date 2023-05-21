@@ -11,19 +11,11 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-#ifndef EXAMPLE
-#include <example_interfaces/srv/add_two_ints.hpp>
-#else
 #include <ros2_examples_interfaces/srv/add_two_ints.hpp>
-#endif
 //! ALWAYS INCLUDE THE INTERFACE .hpp HEADER!
 
 //! Let's make things a little bit simpler here
-#ifndef EXAMPLE
-using namespace example_interfaces::srv;
-#else
 using namespace ros2_examples_interfaces::srv;
-#endif
 
 /**
  * AddTwoInts server node.
@@ -57,7 +49,7 @@ class AddTwoIntsClient : public rclcpp::Node
 public:
   AddTwoIntsClient();
 
-  //! This is just for us, not ROS-related
+  //! This is just for us, not ROS-related, i.e. we could do without it (see below)
   void call_srv(int a, int b, AddTwoIntsClient::SharedPtr node_ptr);
 
 private:
@@ -67,6 +59,8 @@ private:
   //! rclcpp::Client<INTERFACE_TYPE>::SharedPtr OBJ;
   rclcpp::Client<AddTwoInts>::SharedPtr client_;
 };
-//! We could do without this! Explain why: ...
+//! We could do without this: if our only intent is to call a ROS 2 service from an application,
+//! we could just create a node, a service client, and call the service synchronously from
+//! our 'main' function or wherever else we want
 
 #endif

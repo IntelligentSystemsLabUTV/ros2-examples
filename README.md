@@ -112,7 +112,7 @@ The following is a list of all the examples that are currently available in this
   - **topic_pubsub_cpp:** Examples about topics and messages:
     - `pub` and `sub` show how a node can subscribe or publish to a topic;
     - `periodic_sub` shows how to dynamically deactivate and reactivate topic subscriptions.
-  - **custom_topic_cpp:** Similar to the above's `pub` and `sub`, the only difference is that they now use custom interfaces for messages defined in `ros2_examples_interfaces`.
+  - **custom_topic_cpp:** Similar to the above's `pub` and `sub`, the only difference is that they now use custom interfaces for messages defined in `ros2_examples_interfaces` and a 'best effort' QoS policy.
   - **simple_service_cpp:** Classic ROS 2 client/server example.
   - **parameters_example_cpp:** This example offers an in-depth coverage of node parameters.
   - **actions_example_cpp:** This package shows how ROS 2 actions can be implemented, providing two example `client` and `server` nodes that compute the Fibonacci sequence.

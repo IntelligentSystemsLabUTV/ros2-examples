@@ -9,13 +9,13 @@
 #include <iostream>
 #include <stdexcept>
 
-#include "../include/simple_service/simple_service.hpp"
+#include <simple_service_cpp/simple_service.hpp>
 
 /**
  * @brief Client node constructor.
  */
 AddTwoIntsClient::AddTwoIntsClient()
-: Node("add_two_ints_client")
+: Node("client")
 {
   //! Create a client object with create_client from the base class:
   //! this->create_client<INTERFACE_TYPE>(
@@ -60,7 +60,7 @@ void AddTwoIntsClient::call_srv(
   //! Send the request, then wait for the response to come back
   //! Never, NEVER use sync'ed I/O for this (because of underlying threads)
   auto response = client_->async_send_request(request);
-  //! Note: it's a future
+  //! Note: it's a FutureAndRequestId object
 
   //! And because of underlying jobs to do, since this is a single-threaded program,
   //! relinquish control to the middleware while waiting for the response to arrive
@@ -75,6 +75,8 @@ void AddTwoIntsClient::call_srv(
     //! ensures us that we'll get here only when it is available
     RCLCPP_INFO(this->get_logger(), "Result: %ld", response.get()->sum);
   } else {
+    //! Some cleanup is required to avoid memory leaks
+    client_->remove_pending_request(response);
     RCLCPP_ERROR(this->get_logger(), "Service call failed");
   }
 }
