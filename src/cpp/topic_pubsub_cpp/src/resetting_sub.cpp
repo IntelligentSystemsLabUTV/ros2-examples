@@ -19,11 +19,11 @@ using namespace std::chrono_literals;
  * Run this alongside this package's publisher.
  */
 //! For the sake of simplicity we'll write everything in here this time
-class PeriodicSub : public rclcpp::Node
+class ResettingSub : public rclcpp::Node
 {
 public:
-  PeriodicSub()
-  : Node("periodic_subscriber")
+  ResettingSub()
+  : Node("resetting_subscriber")
   {
     //! We just have to initialize the timer
     sub_timer_ = this->create_wall_timer(
@@ -44,13 +44,11 @@ public:
             rclcpp::QoS(10),
             [this](String::SharedPtr msg) -> void {
               RCLCPP_INFO(this->get_logger(), msg->data.c_str());
-            }
-          );
+            });
           //! And that's it. The same could be done with a Publisher,
           //! but being it asynchronous by default it's usually less important
         }
-      }
-    );
+      });
 
     RCLCPP_INFO(this->get_logger(), "Node initialized");
   }
@@ -64,7 +62,7 @@ private:
 
 int main(int argc, char ** argv) {
   rclcpp::init(argc, argv);
-  auto sub_node = std::make_shared<PeriodicSub>();
+  auto sub_node = std::make_shared<ResettingSub>();
   rclcpp::spin(sub_node);
   rclcpp::shutdown();
   exit(EXIT_SUCCESS);

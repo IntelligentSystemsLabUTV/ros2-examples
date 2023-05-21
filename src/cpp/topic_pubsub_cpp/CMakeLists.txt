@@ -44,14 +44,14 @@ ament_target_dependencies(
   rclcpp
   std_msgs)
 
-# Periodic subscriber
-add_executable(periodic_sub src/periodic_sub.cpp)
-target_compile_features(periodic_sub PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
-target_include_directories(periodic_sub PUBLIC
+# Resetting subscriber
+add_executable(resetting_sub src/resetting_sub.cpp)
+target_compile_features(resetting_sub PUBLIC c_std_99 cxx_std_17)  # Require C99 and C++17
+target_include_directories(resetting_sub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
-  periodic_sub
+  resetting_sub
   rclcpp
   std_msgs)
 
@@ -60,7 +60,7 @@ install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})
 install(TARGETS sub
   DESTINATION lib/${PROJECT_NAME})
-install(TARGETS periodic_sub
+install(TARGETS resetting_sub
   DESTINATION lib/${PROJECT_NAME})
 
 if(BUILD_TESTING)
