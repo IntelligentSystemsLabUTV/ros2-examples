@@ -1,5 +1,7 @@
-cmake_minimum_required(VERSION 3.5)
-project(custom_topic)
+cmake_minimum_required(VERSION 3.8)
+project(custom_topic_cpp)
+
+set(CMAKE_BUILD_TYPE "RelWithDebInfo")
 
 # Default to C99
 if(NOT CMAKE_C_STANDARD)
@@ -8,39 +10,37 @@ endif()
 
 # Default to C++14
 if(NOT CMAKE_CXX_STANDARD)
-  set(CMAKE_CXX_STANDARD 14)
+  set(CMAKE_CXX_STANDARD 17)
 endif()
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
 endif()
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
 find_package(ros2_examples_interfaces REQUIRED)
 
-# publisher
+# Publisher
 add_executable(pub src/pub.cpp)
 target_include_directories(pub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   pub
-  "rclcpp"
-  "ros2_examples_interfaces"
-)
+  rclcpp
+  ros2_examples_interfaces)
 
-# subscriber
+# Subscriber
 add_executable(sub src/sub.cpp)
 target_include_directories(sub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 ament_target_dependencies(
   sub
-  "rclcpp"
-  "ros2_examples_interfaces"
-)
+  rclcpp
+  ros2_examples_interfaces)
 
 install(TARGETS pub
   DESTINATION lib/${PROJECT_NAME})

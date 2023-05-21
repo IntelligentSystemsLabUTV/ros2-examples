@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "../include/topic_pubsub/sub.hpp"
+#include <custom_topic_cpp/sub.hpp>
 
 /**
  * @brief Creates a Sub node.
@@ -18,6 +18,14 @@
 Sub::Sub()
 : Node("subscriber_node")
 {
+  //! This time we use an explicit QoS policy by creaitng a QoS object
+  //! Syntax is: rclcpp::QoS obj_name(QUEUE_DEPTH)
+  //! Then, we modify the individual parameters using the setter methods and the enums
+  //! For a complete reference see the qos.hpp header from rclcpp (try to open it via VS Code!)
+  rclcpp::QoS topic_qos(rclcpp::KeepLast(1));
+  topic_qos.best_effort(); //! Equivalenty: topic_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+  topic_qos.durability_volatile(); //! Equivalenty: topic_qos.durability(rclcpp::DurabilityPolicy::Volatile);
+
   //! Initialize a subscriber with create_subscription from the base class:
   //! this->create_subscription<INTERFACE_TYPE>(
   //!   TOPIC_NAME [string],
@@ -26,8 +34,8 @@ Sub::Sub()
   //!   (...)
   //! );
   subscriber_ = this->create_subscription<ros2_examples_interfaces::msg::String>(
-    "/examples/test_topic",
-    rclcpp::QoS(10),
+    "/publisher_node/examples/test_topic",
+    topic_qos,
     std::bind(
       &Sub::msg_callback,
       this,

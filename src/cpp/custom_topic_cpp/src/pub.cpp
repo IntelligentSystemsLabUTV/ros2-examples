@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "../include/topic_pubsub/pub.hpp"
+#include <custom_topic_cpp/pub.hpp>
 
 /**
  * @brief Creates a Pub node.
@@ -19,16 +19,24 @@ Pub::Pub()
 : Node("publisher_node"),
   pub_cnt_(0)
 {
+  //! This time we use an explicit QoS policy by creaitng a QoS object
+  //! Syntax is: rclcpp::QoS obj_name(QUEUE_DEPTH)
+  //! Then, we modify the individual parameters using the setter methods and the enums
+  //! For a complete reference see the qos.hpp header from rclcpp (try to open it via VS Code!)
+  rclcpp::QoS topic_qos(rclcpp::KeepLast(1));
+  topic_qos.best_effort(); //! Equivalenty: topic_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+  topic_qos.durability_volatile(); //! Equivalenty: topic_qos.durability(rclcpp::DurabilityPolicy::Volatile);
+
   //! Initialize a publisher with create_publisher from the base class:
   //! this->create_publisher<INTERFACE_TYPE>(
-  //!   TOPIC_NAME [string],
+  //!   TOPIC_NAME [string], // Pay attention to the '~' prefix!
   //!   PUBLISH_QoS (...),
   //!   ...
   //! );
   //! This object will be used later on to publish messages
   publisher_ = this->create_publisher<ros2_examples_interfaces::msg::String>(
-    "/examples/test_topic",
-    rclcpp::QoS(10));
+    "~/examples/test_topic",
+    topic_qos);
 
   //! Create and activate a timer with create_wall_timer from the base class
   //! providing an std::chrono::duration as the period and a call wrapper for
