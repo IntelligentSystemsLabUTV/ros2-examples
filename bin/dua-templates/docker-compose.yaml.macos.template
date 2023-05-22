@@ -36,7 +36,7 @@ services:
     volumes:
       - ../../../:/home/neo/workspace
       - ../aliases.sh:/home/neo/.aliases.sh:rw
-      - ../bashrc:/home/neo/.bashrc:re
+      - ../bashrc:/home/neo/.bashrc:rw
       - ../colcon-defaults.yaml:/home/neo/.colcon/defaults.yaml:rw
       - ../commands.sh:/home/neo/.commands.sh:rw
       - ../p10k.zsh:/home/neo/.p10k.zsh:rw
