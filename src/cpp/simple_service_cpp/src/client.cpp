@@ -65,7 +65,8 @@ void AddTwoIntsClient::call_srv(
   //! And because of underlying jobs to do, since this is a single-threaded program,
   //! relinquish control to the middleware while waiting for the response to arrive
   //! (this creates a new single-threaded executor, adds the node to it, ...)
-  //! In a multithreaded environment, we could just call get() and trace exceptions
+  //! In a multithreaded environment, we could just call get() on the future embedded in 'response'
+  //! and trace exceptions
   //! Note: we could specify a timeout
   if (rclcpp::spin_until_future_complete(node_ptr, response) ==
     rclcpp::FutureReturnCode::SUCCESS)
