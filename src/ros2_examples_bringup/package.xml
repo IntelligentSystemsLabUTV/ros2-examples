@@ -9,6 +9,7 @@
 
   <buildtool_depend>ament_cmake</buildtool_depend>
 
+  <exec_depend>custom_topic_cpp</exec_depend>
   <exec_depend>simple_service_cpp</exec_depend>
   <exec_depend>parameters_example_cpp</exec_depend>
   <exec_depend>topic_pubsub_py</exec_depend>

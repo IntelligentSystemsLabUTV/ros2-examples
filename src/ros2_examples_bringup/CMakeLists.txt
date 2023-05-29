@@ -1,10 +1,10 @@
 cmake_minimum_required(VERSION 3.8)
 project(ros2_examples_bringup)
 
-# find dependencies
+# Find dependencies
 find_package(ament_cmake REQUIRED)
 
-# install launch files
+# Install launch files
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
 

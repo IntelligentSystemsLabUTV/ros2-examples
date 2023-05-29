@@ -21,17 +21,17 @@ def generate_launch_description():
 
     # Build config file path
     config = os.path.join(
-      get_package_share_directory('parameters_example_cpp'),
-      'config',
-      'node_parameters.yaml'
+        get_package_share_directory('parameters_example_cpp'),
+        'config',
+        'node_parameters.yaml'
     )
 
     # Create node launch description
     node = Node(
-      package='parameters_example_cpp',
-      name='parametric_pub',
-      executable='parametric_pub',
-      parameters=[config] #! We could specify more than one source here
+        package='parameters_example_cpp',
+        name='parametric_pub',
+        executable='parametric_pub',
+        parameters=[config] #! We could specify more than one source here
     )
 
     # Finalize launch description
