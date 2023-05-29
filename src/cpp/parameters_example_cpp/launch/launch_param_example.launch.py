@@ -17,23 +17,23 @@ from launch import LaunchDescription
 from launch_ros.actions import Node
 
 def generate_launch_description():
-  ld = LaunchDescription()
+    ld = LaunchDescription()
 
-  # Build config file path
-  config = os.path.join(
-    get_package_share_directory('parameters_example'),
-    'config',
-    'node_parameters.yaml'
-  )
+    # Build config file path
+    config = os.path.join(
+      get_package_share_directory('parameters_example_cpp'),
+      'config',
+      'node_parameters.yaml'
+    )
 
-  # Create node launch description
-  node = Node(
-    package='parameters_example',
-    name='parametric_pub',
-    executable='parametric_pub',
-    parameters=[config] #! We could specify more than one source here
-  )
+    # Create node launch description
+    node = Node(
+      package='parameters_example_cpp',
+      name='parametric_pub',
+      executable='parametric_pub',
+      parameters=[config] #! We could specify more than one source here
+    )
 
-  # Finalize launch description
-  ld.add_action(node)
-  return ld
+    # Finalize launch description
+    ld.add_action(node)
+    return ld
