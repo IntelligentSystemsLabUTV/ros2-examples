@@ -13,7 +13,7 @@
 //! See topic callback below!
 #include <rclcpp/node_interfaces/node_parameters.hpp>
 
-#include "../include/parameters_example/parametric_node.hpp"
+#include <parameters_example/parametric_node.hpp>
 
 /**
  * Creates a parametric publisher using the value of the parameter.
@@ -22,29 +22,24 @@ ParametricPub::ParametricPub()
 : Node("parametric_pub")
 {
   // Create publisher
-  num_publisher_ = this->create_publisher<Int32>(
+  num_publisher_ = this->create_publisher<Int64>(
     "/ros2_examples/parameter",
-    rclcpp::QoS(10)
-  );
+    rclcpp::QoS(10));
 
   // Create timer
   pub_timer_ = this->create_wall_timer(
     std::chrono::milliseconds(500),
     std::bind(
       &ParametricPub::pub_routine,
-      this
-    )
-  );
+      this));
 
-  // Create subscriber
-  param_set_sub_ = this->create_subscription<Int32>(
-    "/ros2_examples/set_parameter",
-    rclcpp::QoS(10),
+  // Register parameter set callback
+  //! This traces all ROS APIs too, so must be registered first
+  param_clbk_handle_ = this->add_on_set_parameters_callback(
     std::bind(
-      &ParametricPub::param_set_clbk,
+      &ParametricPub::param_clbk,
       this,
-      std::placeholders::_1)
-  );
+      std::placeholders::_1));
 
   //! Create descriptors for each parameter
   //! This is not mandatory, but improves readability when inspecting the system
@@ -68,22 +63,11 @@ ParametricPub::ParametricPub()
   param_descriptor_.set__dynamic_typing(false);
   param_descriptor_.set__integer_range({param_range});
 
-  // Register parameter set callback
-  //! This traces all ROS APIs too, so must be registered first
-  param_clbk_handle_ = this->add_on_set_parameters_callback(
-    std::bind(
-      &ParametricPub::param_clbk,
-      this,
-      std::placeholders::_1)
-  );
-
   //! Declare each parameter
   //! Simplest syntax is, for any type:
   //! declare_parameter(NAME_STRING, DEFAULT_VALUE, DESCRIPTOR);
   this->declare_parameter("number", 1, param_descriptor_);
 
-  //! Update internal data with new parameter (note the cast!)
-  pub_num_ = this->get_parameter("number").as_int();
   //! This happens to be a best practice: subsequent accesses will be faster
   //! since it is now a class member, and we don't need to call the middleware
   //! to retrieve the value it stores each time
@@ -96,42 +80,10 @@ ParametricPub::ParametricPub()
 void ParametricPub::pub_routine()
 {
   // Publish new message
-  Int32 new_msg{};
+  Int64 new_msg{};
   new_msg.set__data(pub_num_);
   num_publisher_->publish(new_msg);
-  RCLCPP_INFO(this->get_logger(), "Published: %d", new_msg.data);
-}
-
-/**
- * Sets a new value for the parameter read from the topic.
- *
- * @param msg Int32 message to parse.
- */
-void ParametricPub::param_set_clbk(const Int32::SharedPtr msg)
-{
-  // Create a new Parameter object to pass to the API
-  rclcpp::node_interfaces::ParameterInfo new_param_info = { //! It's a struct
-    rclcpp::ParameterValue(msg->data), //! This member must be of this type!
-    param_descriptor_
-  };
-  rclcpp::Parameter new_param(new_param_info);
-  //! This way it shall inherit name, type, ranges and so on
-
-  // Try to set the new parameter and publish the result of the operation
-  rcl_interfaces::msg::SetParametersResult res = this->set_parameter(new_param);
-  //! Prepare to a template hell to extract values from Parameter objects,
-  //! or use the as_TYPE methods, your choice
-  if (res.successful) {
-    RCLCPP_INFO_STREAM(
-      this->get_logger(),
-      "Succesfully set parameter to: " << new_param.get_value<rclcpp::ParameterType::PARAMETER_INTEGER>() << " (" << res.reason <<
-        ")");
-  } else {
-    RCLCPP_ERROR_STREAM(
-      this->get_logger(),
-      "Failed to set parameter to: " << new_param.get_value<rclcpp::ParameterType::PARAMETER_INTEGER>() << " (" << res.reason <<
-        ")");
-  }
+  RCLCPP_INFO(this->get_logger(), "Published: %ld", new_msg.data);
 }
 
 //! THIS IS CALLED AFTER THE INTERNAL PARAMETER UPDATE IS PERFORMED!
@@ -157,10 +109,15 @@ rcl_interfaces::msg::SetParametersResult ParametricPub::param_clbk(
   // Look for valid parameters to update, and populate result accordingly
   for (const rclcpp::Parameter & p : params) {
     if ((p.get_name() == "number") && (p.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)) {
-      RCLCPP_INFO_STREAM(
+      RCLCPP_INFO(
         this->get_logger(),
-        "Requested parameter change to: " << p.value_to_string());
+        "Requested parameter change to: %ld",
+        p.as_int());
       int new_val = p.as_int();
+      //! This happens to be a best practice: subsequent accesses will be faster
+      //! since it is now a class member, and we don't need to call the middleware
+      //! to retrieve the value it stores each time
+      //! This also needs in-house callbacks for setting it at runtime, see below
       //! To prove that this is executed after ROS internals we add an additional
       //! condition; try to set the parameter to 0
       if (new_val == 0)

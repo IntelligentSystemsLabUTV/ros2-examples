@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
-  <name>parameters_example</name>
+  <name>parameters_example_cpp</name>
   <version>0.0.0</version>
   <description>Simple node parameters example.</description>
   <maintainer email="robmasocco@gmail.com">Roberto Masocco</maintainer>

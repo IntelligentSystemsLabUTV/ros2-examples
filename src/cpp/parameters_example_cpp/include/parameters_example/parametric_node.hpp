@@ -1,5 +1,5 @@
 /**
- * Parametric node structure.
+ * Parametric publisher definition.
  *
  * Roberto Masocco <robmasocco@gmail.com>
  *
@@ -10,12 +10,13 @@
 #define PARAMETRIC_PUB_HPP
 
 #include <rclcpp/rclcpp.hpp>
-#include <std_msgs/msg/int32.hpp>
+
+#include <std_msgs/msg/int64.hpp>
 
 using namespace std_msgs::msg;
 
 /**
- * Parametric publisher definition.
+ * Node that publishes a number, which can be set by a parameter.
  */
 class ParametricPub : public rclcpp::Node
 {
@@ -23,13 +24,10 @@ public:
   ParametricPub();
 
 private:
-  int pub_num_; // Number to be published
-  rcl_interfaces::msg::ParameterDescriptor param_descriptor_; // Number parameter descriptor
+  int pub_num_; //! Number to be published
+  rcl_interfaces::msg::ParameterDescriptor param_descriptor_; //! Number parameter descriptor
 
-  rclcpp::Publisher<Int32>::SharedPtr num_publisher_;
-
-  rclcpp::Subscription<Int32>::SharedPtr param_set_sub_;
-  void param_set_clbk(const Int32::SharedPtr msg);
+  rclcpp::Publisher<Int64>::SharedPtr num_publisher_;
 
   //! There has to be, if needed, a single parameter set callback, with this syntax
   OnSetParametersCallbackHandle::SharedPtr param_clbk_handle_;

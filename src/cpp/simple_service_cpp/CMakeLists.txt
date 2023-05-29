@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.8)
 project(simple_service_cpp)
 
 set(CMAKE_BUILD_TYPE "RelWithDebInfo")
@@ -8,7 +8,7 @@ if(NOT CMAKE_C_STANDARD)
   set(CMAKE_C_STANDARD 99)
 endif()
 
-# Default to C++14
+# Default to C++17
 if(NOT CMAKE_CXX_STANDARD)
   set(CMAKE_CXX_STANDARD 17)
 endif()
@@ -42,6 +42,7 @@ ament_target_dependencies(
   rclcpp
   ros2_examples_interfaces)
 
+# Install executables
 install(TARGETS server
   DESTINATION lib/${PROJECT_NAME})
 install(TARGETS client
