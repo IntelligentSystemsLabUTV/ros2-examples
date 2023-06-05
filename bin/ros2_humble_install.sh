@@ -32,7 +32,7 @@ echo "Upgrading system..."
 sudo apt upgrade
 
 echo "Installing ROS 2 main packages..."
-sudo apt install -y ros-humble-desktop ros-humble-eigen3-cmake-module ros-humble-gazebo-ros-pkgs
+sudo apt install -y ros-humble-desktop ros-humble-eigen3-cmake-module ros-humble-gazebo-ros-pkgs ros-humble-image-transport-plugins
 
 # NOTE: To install Ignition Gazebo, also install ros2-humble-ros-gz
 

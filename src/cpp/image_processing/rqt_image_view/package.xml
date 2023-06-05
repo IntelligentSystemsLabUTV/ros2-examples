@@ -1,0 +1,40 @@
+<package format="2">
+  <name>rqt_image_view</name>
+  <version>1.2.0</version>
+  <description>rqt_image_view provides a GUI plugin for displaying images using image_transport.</description>
+  <maintainer email="mabel@openrobotics.org">Mabel Zhang</maintainer>
+
+  <license>BSD</license>
+
+  <url type="website">http://wiki.ros.org/rqt_image_view</url>
+  <url type="repository">https://github.com/ros-visualization/rqt_image_view</url>
+  <url type="bugtracker">https://github.com/ros-visualization/rqt_image_view/issues</url>
+
+  <author email="dthomas@osrfoundation.org">Dirk Thomas</author>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>rclcpp</depend>
+
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>image_transport</build_depend>
+  <build_depend>qtbase5-dev</build_depend>
+  <build_depend>rqt_gui</build_depend>
+  <build_depend>rqt_gui_cpp</build_depend>
+  <build_depend>qt_gui_cpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>image_transport</exec_depend>
+  <exec_depend>rqt_gui</exec_depend>
+  <exec_depend>rqt_gui_cpp</exec_depend>
+  <exec_depend>qt_gui_cpp</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+    <rqt_gui plugin="${prefix}/plugin.xml"/>
+  </export>
+</package>

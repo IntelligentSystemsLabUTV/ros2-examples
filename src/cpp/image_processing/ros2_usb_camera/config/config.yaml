@@ -1,0 +1,26 @@
+/usb_camera_driver:
+  ros__parameters:
+    base_topic_name: camera
+    best_effort_qos: true
+    brightness: 0.0
+    camera_calibration_file: file://config/camera.yaml
+    camera_id: 0
+    camera_name: camera
+    exposure: 0.0
+    fps: 20
+    frame_id: map
+    image_height: 480
+    image_width: 640
+    is_flipped: false
+    wb_temperature: 0.0
+    # image_transport parameters
+    usb_camera_driver:
+      camera:
+        image_color:
+          format: jpeg
+          jpeg_quality: 95
+          png_level: 3
+        image_rect_color:
+          format: jpeg
+          jpeg_quality: 95
+          png_level: 3

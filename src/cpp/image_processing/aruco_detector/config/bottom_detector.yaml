@@ -1,0 +1,13 @@
+/bottom_detector:
+  ros__parameters:
+    aruco_side: 0.15
+    camera_offset: 0.08
+    centering_width: 150
+    compute_position: false
+    error_min: 0.1
+    rotate_image: false
+    target_ids:
+      - 1
+      - 666
+      - 69
+    transport: compressed

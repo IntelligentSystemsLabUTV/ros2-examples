@@ -1,0 +1,10 @@
+/tilted_detector:
+  ros__parameters:
+    centering_width: 150
+    compute_position: false
+    rotate_image: false
+    target_ids:
+      - 15
+      - 42
+      - 666
+    transport: compressed

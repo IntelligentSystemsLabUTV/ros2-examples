@@ -127,6 +127,10 @@ The following is a list of all the examples that are currently available in this
     - **ros2_examples_headers:** Example of an headers-only package, to provide to other packages in the same workspace, that will depend on this.
     - **smp_example:** This example shows what must be done in order to write a multithreaded ROS 2 application.
     - **complete_actions_cpp:** This package adds to the nodes developed in the actions_example_cpp package some functionalities that make full use of the ROS 2 action features in realistic contexts, such as the deferred goal transition from the `ACCEPT` to the `EXECUTING` state, and the use of multithreaded executors.
+  - **Image processing**
+    - **ros2_usb_camera**: This package shows how to use the `image_transport` package to publish images from a USB camera.
+    - **aruco_detector**: This package shows how to use the `image_transport` package to subscribe to images, detect ArUco markers in them, and publish the result of a post-processing step displaying the result of the detection.
+    - **rqt_image_view**: This package shows how to use the `image_transport` package to subscribe to images and display them in a GUI.
 
 - **Python examples**
 

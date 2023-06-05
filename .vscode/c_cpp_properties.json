@@ -20,7 +20,10 @@
         "${workspaceFolder}/src/cpp/custom_topic_cpp/include/**",
         "${workspaceFolder}/src/cpp/simple_service_cpp/include/**",
         "${workspaceFolder}/src/cpp/actions_example_cpp/include/**",
-        "${workspaceFolder}/src/cpp/advanced/complete_actions_cpp/include/**"
+        "${workspaceFolder}/src/cpp/advanced/complete_actions_cpp/include/**",
+        "${workspaceFolder}/src/cpp/image_processing/aruco_detector/include/**",
+        "${workspaceFolder}/src/cpp/image_processing/ros2_usb_camera/include/**",
+        "${workspaceFolder}/src/cpp/image_processing/rqt_image_view/include/**"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/g++",

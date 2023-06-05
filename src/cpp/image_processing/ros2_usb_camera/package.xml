@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>ros2_usb_camera</name>
+  <version>1.0.0</version>
+  <description>Package containing a simple web camera setup</description>
+  <maintainer email="isl.torvergata@gmail.com">Intelligent Systems Lab</maintainer>
+  <license>GNU GPL v3.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <depend>camera_calibration_parsers</depend>
+  <depend>camera_info_manager</depend>
+  <depend>image_transport</depend>
+  <depend>libopencv-dev</depend>
+  <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
+  <depend>sensor_msgs</depend>
+  <depend>std_msgs</depend>
+  <depend>std_srvs</depend>
+
+  <test_depend>ament_lint_auto</test_depend>
+
+  <export>
+    <build_type>ament_cmake</build_type>
+  </export>
+</package>
