@@ -24,6 +24,7 @@ find_package(ament_cmake REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(OpenCV 4 REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_components REQUIRED)
 find_package(sensor_msgs REQUIRED)
 #find_package(stanis_interfaces REQUIRED)
 #find_package(stanis_qos REQUIRED)
@@ -31,32 +32,51 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(Threads REQUIRED)
 
-# Aruco Detector standalone application
-add_executable(aruco_detector
+# Aruco Detector component
+add_library(aruco_detector_component SHARED
   src/aruco_detector/aruco_detector.cpp
   src/aruco_detector/ad_services.cpp
   src/aruco_detector/ad_subscriptions.cpp
-  src/aruco_detector/ad_utils.cpp
-  src/aruco_detector_app.cpp)
-target_include_directories(aruco_detector PUBLIC
+  src/aruco_detector/ad_utils.cpp)
+target_compile_definitions(aruco_detector_component PRIVATE COMPOSITION_BUILDING_DLL)
+target_include_directories(aruco_detector_component PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_link_libraries(
-  aruco_detector
+  aruco_detector_component
   ${OpenCV_LIBS}
   Threads::Threads)
 ament_target_dependencies(
-  aruco_detector
-  "image_transport"
-  "rclcpp"
-  "sensor_msgs"
-  #"stanis_interfaces"
-  #"stanis_qos"
-  "std_msgs"
-  "std_srvs")
+  aruco_detector_component
+  image_transport
+  rclcpp
+  rclcpp_components
+  sensor_msgs
+  #stanis_interfaces
+  #stanis_qos
+  std_msgs
+  std_srvs)
+rclcpp_components_register_nodes(aruco_detector_component "ArucoDetector::ArucoDetectorNode")
+
+# Aruco detector standalone application
+add_executable(aruco_detector_app
+  src/aruco_detector_app.cpp)
+target_include_directories(aruco_detector_app PUBLIC
+  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+  $<INSTALL_INTERFACE:include>)
+target_link_libraries(aruco_detector_app aruco_detector_component)
+ament_target_dependencies(
+  aruco_detector_app
+  rclcpp)
+
+# Aruco Detector component
+install(TARGETS aruco_detector_component
+  ARCHIVE DESTINATION lib
+  LIBRARY DESTINATION lib
+  RUNTIME DESTINATION bin)
 
 # Aruco Detector app
-install(TARGETS aruco_detector
+install(TARGETS aruco_detector_app
   DESTINATION lib/${PROJECT_NAME})
 
 # Config files
@@ -77,5 +97,8 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
+
+# Make sure that the library path is exported even if the library itself is not
+ament_environment_hooks("${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}")
 
 ament_package()

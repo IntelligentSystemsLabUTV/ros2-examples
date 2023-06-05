@@ -91,7 +91,7 @@ class ArucoDetectorNode : public rclcpp::Node
 {
 public:
   ArucoDetectorNode(const rclcpp::NodeOptions & opts = rclcpp::NodeOptions());
-  ~ArucoDetectorNode();
+  virtual ~ArucoDetectorNode();
 
 private:
   /* Node initialization routines */

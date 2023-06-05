@@ -11,6 +11,7 @@
 
   <depend>image_transport</depend>
   <depend>rclcpp</depend>
+  <depend>rclcpp_components</depend>
   <depend>sensor_msgs</depend>
   <!--<depend>stanis_interfaces</depend>
   <depend>stanis_qos</depend>-->
