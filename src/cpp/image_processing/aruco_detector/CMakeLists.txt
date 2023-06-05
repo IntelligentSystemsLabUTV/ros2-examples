@@ -32,6 +32,11 @@ find_package(std_msgs REQUIRED)
 find_package(std_srvs REQUIRED)
 find_package(Threads REQUIRED)
 
+# OpenCV ArUco API changed
+if(NOT OpenCV_VERSION VERSION_EQUAL "4.7.0")
+  add_compile_definitions(ARUCO_API_OLD)
+endif()
+
 # Aruco Detector component
 add_library(aruco_detector_component SHARED
   src/aruco_detector/aruco_detector.cpp

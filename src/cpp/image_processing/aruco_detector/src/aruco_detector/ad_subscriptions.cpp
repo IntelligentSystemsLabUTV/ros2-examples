@@ -55,7 +55,13 @@ void ArucoDetectorNode::camera_callback(const Image::ConstSharedPtr & msg)
   std::vector<std::vector<cv::Point2f>> corners;
   cv::aruco::detectMarkers(
     new_frame,
+#ifdef ARUCO_API_OLD
     cv::aruco::getPredefinedDictionary(cv::aruco::DICT_ARUCO_ORIGINAL),
+#else
+    std::make_shared<cv::aruco::Dictionary>(
+      cv::aruco::getPredefinedDictionary(
+        cv::aruco::PredefinedDictionaryType::DICT_ARUCO_ORIGINAL)),
+#endif
     corners,
     ids);
 
