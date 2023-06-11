@@ -39,9 +39,14 @@ ros2init() {
     source /opt/ros/ros_gz/install/local_setup.zsh
   fi
 
+  # Source our fork of rmw_fastrtps
+  if [[ -f /opt/ros/rmw_fastrtps/install/local_setup.zsh ]]; then
+    source /opt/ros/rmw_fastrtps/install/local_setup.zsh
+  fi
+
   # Source additional DUA stuff
-  if [[ -f /opt/ros/dua-utils/install/setup.zsh ]]; then
-    source /opt/ros/dua-utils/install/setup.zsh
+  if [[ -f /opt/ros/dua-utils/install/local_setup.zsh ]]; then
+    source /opt/ros/dua-utils/install/local_setup.zsh
   fi
 
   # Source workspace if present
