@@ -35,7 +35,7 @@
 #include <pluginlib/class_list_macros.hpp>
 #include <sensor_msgs/image_encodings.hpp>
 
-#include <cv_bridge/cv_bridge.h>
+#include <cv_bridge/cv_bridge.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 
 #include <QFileDialog>

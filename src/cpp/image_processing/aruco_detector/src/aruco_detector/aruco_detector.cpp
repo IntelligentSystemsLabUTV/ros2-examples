@@ -271,9 +271,7 @@ void ArucoDetectorNode::init_services()
       &ArucoDetectorNode::enable_callback,
       this,
       std::placeholders::_1,
-      std::placeholders::_2),
-    rmw_qos_profile_services_default,
-    enable_cgroup_);
+      std::placeholders::_2));
 }
 
 } // namespace ArucoDetector

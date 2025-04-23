@@ -81,13 +81,13 @@ float ArucoDetectorNode::round_space(float num, float prec)
  */
 float ArucoDetectorNode::round_angle(float num, float prec)
 {
-  num = num * 180.0 / M_PIf32;
+  num = num * 180.0 / M_PI;
 
   num *= prec;
   num = floor(num);
   num /= prec;
 
-  return num * M_PIf32 / 180.0;
+  return num * M_PI / 180.0;
 }
 
 /**
