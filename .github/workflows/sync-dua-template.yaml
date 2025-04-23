@@ -1,0 +1,145 @@
+# Workflow to sync local repository with latest version of DUA template.
+#
+# Roberto Masocco <r.masocco@dotxautomation.com>
+#
+# June 13, 2024
+
+# Copyright 2024 dotX Automation s.r.l.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+name: Sync DUA template
+
+on:
+  # Run every day at 00:01
+  schedule:
+    - cron: "1 0 * * *"
+
+  # Run when base branch is updated
+  push:
+    branches:
+      - master
+
+  # Run when manually triggered
+  workflow_dispatch:
+
+env:
+  BASE_BRANCH: master
+  HEAD_BRANCH: chore/sync-dua-template
+  GIT_AUTHOR_NAME: ${{ github.repository_owner }}
+  GIT_AUTHOR_EMAIL: ${{ github.repository_owner }}@users.noreply.github.com
+  REPO_TEMPLATE: dotX-Automation/dua-template
+  THIS_REPO: ${{ github.repository }}
+
+jobs:
+  sync-dua-template:
+    # Do not run on the template repository itself
+    if: github.repository != 'dotX-Automation/dua-template'
+
+    name: Sync DUA template
+    runs-on: ubuntu-latest
+    continue-on-error: false
+
+    steps:
+      # Configure Git to reduce warnings
+      - name: Configure Git to reduce warnings
+        run: git config --global init.defaultBranch master
+
+      # Clone the template repository (we need the full history of this)
+      - name: Check out template repository
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ env.REPO_TEMPLATE }}
+          ref: 'master'
+          token: ${{ github.token }}
+          path: ${{ env.REPO_TEMPLATE }}
+          fetch-depth: 0
+
+      # Clone the target repository
+      - name: Check out ${{ github.repository }}
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ github.repository }}
+          ref: ${{ env.BASE_BRANCH }}
+          token: ${{ github.token }}
+          path: ${{ github.repository }}
+
+      # Checkout a branch
+      - name: Create branch in ${{ env.THIS_REPO }}
+        run: |
+          git -C "${THIS_REPO}" fetch origin "${HEAD_BRANCH}" || true
+          git -C "${THIS_REPO}" branch -a
+          git -C "${THIS_REPO}" checkout -B "${HEAD_BRANCH}" \
+            "remotes/origin/${HEAD_BRANCH}" || \
+          git -C "${THIS_REPO}" checkout -b "${HEAD_BRANCH}"
+
+      # Parse template contents and synchronize changes
+      - name: Parse template contents and synchronize changes
+        run: |
+          _files="$(find ${REPO_TEMPLATE} \
+            ! -path "*/.git/*" \
+            ! -path "*/.github/workflows/*" \
+            ! -path "*/.vscode/*" \
+            ! -name ".gitignore" \
+            ! -name "LICENSE" \
+            ! -name "README.md" \
+            -type f \
+            -print)"
+          _deleted_files="$(git -C ${REPO_TEMPLATE} log \
+            --diff-filter=D \
+            --name-only \
+            --pretty=format: | grep -v '^$')"
+          for _deleted_file in ${_deleted_files}; do
+            _file_path="${THIS_REPO}/${_deleted_file#${REPO_TEMPLATE}/}"
+            if [[ -f "${_file_path}" ]]; then
+              echo "INFO: Deleting ${_file_path}"
+              rm -f "${_file_path}"
+            fi
+          done
+          for _file in ${_files}; do
+            _src="${_file}"
+            _dst="${THIS_REPO}/${_file#${REPO_TEMPLATE}/}"
+            _dst="${_dst%/*}/"
+            mkdir -p "${_dst}"
+            echo "INFO: Copying '${_src}' to '${_dst}'"
+            cp "${_src}" "${_dst}"
+          done
+          git -C "${THIS_REPO}" diff
+
+      # Commit changes, push, and create a pull request
+      - name: Push changes and create a pull request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [[ -n $(git -C "${THIS_REPO}" status --porcelain) ]]; then
+            git -C ${THIS_REPO} config user.name "${GIT_AUTHOR_NAME}"
+            git -C ${THIS_REPO} config user.email "${GIT_AUTHOR_EMAIL}"
+            git -C ${THIS_REPO} add .
+            git -C ${THIS_REPO} commit -m "chore: sync to dua-template@${{ github.sha }}"
+            if [[ -n $(git -C ${THIS_REPO} branch -r --list "origin/${HEAD_BRANCH}") ]]; then
+              git -C ${THIS_REPO} push
+              echo "INFO: Pushed changes to branch ${HEAD_BRANCH}"
+            else
+              git -C ${THIS_REPO} push -u origin "${HEAD_BRANCH}"
+              pushd ${THIS_REPO}
+              gh pr create \
+                --base "${BASE_BRANCH}" \
+                --head "${HEAD_BRANCH}" \
+                --title "Sync to dua-template@${{ github.sha }}" \
+                --body "Sync to dua-template@${{ github.sha }}."
+              popd
+              echo "INFO: Created new pull request from ${HEAD_BRANCH} to ${BASE_BRANCH}"
+            fi
+          else
+            echo "INFO: No changes to commit"
+          fi

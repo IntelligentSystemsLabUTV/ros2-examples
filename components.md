@@ -1,6 +1,6 @@
 # ROS 2 Components
 
-Components, also known as *composable nodes*, or *nodelets* in ROS, are a simple way to manage an entire, distributed control architecture in a simplified and modular way from the host OS point of view. In essence, a component is a shared library that compiles a ROS 2 node class. It can then be loaded and unloaded, at runtime, inside a *container* process, in which runs a *component manager* node. For a description of this framwework, as well as a list of commands, see the [official documentation](https://docs.ros.org/en/humble/Concepts/Intermediate/About-Composition.html).
+Components, also known as *composable nodes*, or *nodelets* in ROS, are a simple way to manage an entire, distributed control architecture in a simplified and modular way from the host OS point of view. In essence, a component is a shared library that compiles a ROS 2 node class. It can then be loaded and unloaded, at runtime, inside a *container* process, in which runs a *component manager* node. For a description of this framwework, as well as a list of commands, see the [official documentation](https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Composition.html).
 
 What follows is a description of the steps to take to enable the use of components in a ROS 2 package. In the following, the terms *component*, *composable nodes*, and *plugin* are used interchangeably.
 
@@ -124,7 +124,7 @@ If you have any questions or suggestions, please open an issue or contact us her
 
 ## License
 
-This work is licensed under the GNU General Public License v3.0. See the [`LICENSE`](LICENSE) file for details.
+This work is licensed under the Apache 2.0 License. See the [`LICENSE`](LICENSE) file for details.
 
 ## Copyright
 

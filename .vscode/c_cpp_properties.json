@@ -9,21 +9,13 @@
       "includePath": [
         "${default}",
         "${workspaceFolder}/**",
-        "/opt/ros/humble/include/**",
+        "/opt/ros/jazzy/include/**",
         "${workspaceFolder}/install/**",
         "/opt/ros/dua-utils/install/**",
         // Add subdirectories of install here to include interfaces,
         // headers, plugin base headers and everything else you need
         "/usr/local/**",
-        "/usr/local/include",
-        "${workspaceFolder}/src/cpp/topic_pubsub_cpp/include/**",
-        "${workspaceFolder}/src/cpp/custom_topic_cpp/include/**",
-        "${workspaceFolder}/src/cpp/simple_service_cpp/include/**",
-        "${workspaceFolder}/src/cpp/actions_example_cpp/include/**",
-        "${workspaceFolder}/src/cpp/advanced/complete_actions_cpp/include/**",
-        "${workspaceFolder}/src/cpp/image_processing/aruco_detector/include/**",
-        "${workspaceFolder}/src/cpp/image_processing/ros2_usb_camera/include/**",
-        "${workspaceFolder}/src/cpp/image_processing/rqt_image_view/include/**"
+        "/usr/local/include"
       ],
       "defines": [],
       "compilerPath": "/usr/bin/g++",

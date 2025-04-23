@@ -2,35 +2,25 @@
 
 # Project-specific shell functions and commands.
 #
-# Roberto Masocco <robmasocco@gmail.com>
-# Intelligent Systems Lab <isl.torvergata@gmail.com>
+# Roberto Masocco <r.masocco@dotxautomation.com>
 #
-# April 4, 2023
+# June 13, 2024
+
+# Copyright 2024 dotX Automation s.r.l.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 # Add yours, some convenient ones are provided below.
 # You can also source other files from sub-units included by this project.
 
-# Routine to convert an angle in degrees [-180° +180°] to radians [-PI +PI]
-function degrad {
-  if [[ $# -ne 1 ]] || [[ $1 -lt -180 ]] || [[ $1 -gt 180 ]]; then
-    echo >&2 "Usage:"
-    echo >&2 "    degrad ANGLE"
-    echo >&2 "ANGLE must be in degrees and in [-180° +180°]"
-    return 1
-  fi
-  local OP
-  local FIRST
-  local SECOND
-  local RES
-  OP="scale=6;$1*3.14159265359/180.0"
-  RES="$(bc <<<"$OP")"
-  FIRST="${RES:0:1}"
-  SECOND="${RES:1:1}"
-  if [[ $FIRST == "." ]]; then
-    RES="0${RES}"
-  fi
-  if [[ $FIRST == "-" ]] && [[ $SECOND == "." ]]; then
-    RES="-0.${RES:2:6}"
-  fi
-  echo "$RES"
-}
+# shellcheck disable=SC1090

@@ -1,9 +1,22 @@
 # Sample Zsh configuration file.
 #
-# Roberto Masocco <robmasocco@gmail.com>
-# Intelligent Systems Lab <isl.torvergata@gmail.com>
+# Roberto Masocco <r.masocco@dotxautomation.com>
 #
-# April 4, 2023
+# June 13, 2024
+
+# Copyright 2024 dotX Automation s.r.l.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 # shellcheck disable=SC2125,SC1090,SC2015
 
@@ -109,6 +122,9 @@ export EDITOR='nano'
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
 
+# Activate DUA Python virtual environment
+source /opt/dua-venv/bin/activate
+
 # Set personal aliases, overriding those provided by oh-my-zsh libs,
 # plugins, and themes. Aliases can be placed here, though oh-my-zsh
 # users are encouraged to define aliases within the ZSH_CUSTOM folder.
@@ -116,12 +132,24 @@ export EDITOR='nano'
 unalias rm
 source ~/.aliases.sh
 source ~/.commands.sh
-source ~/.ros2.sh && ros2init && eval "$(register-python-argcomplete3 ros2)"
+source ~/.ros2.sh && ros2init
+
+# Load commands from DUA subprojects for current target
+if [ -f /etc/dua/target ]; then
+  DUA_TARGET=$(cat /etc/dua/target)
+  if [ -n "$DUA_TARGET" ]; then
+    # Iterate through all directories in workspace/src
+    for DIR in "/home/neo/workspace/src/*/"; do
+      if [ -d "$DIR" ]; then
+        COMMANDS_PATH="${DIR}docker/container-${DUA_TARGET}/commands.sh"
+        if [ -f "$COMMANDS_PATH" ]; then
+          # Source the commands file if it exists
+          source "$COMMANDS_PATH"
+        fi
+      fi
+    done
+  fi
+fi
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# stanis project aliases
-if [[ -f ~/workspace/stanis/config/.gcs_aliases.sh ]]; then
-    source ~/workspace/stanis/config/.gcs_aliases.sh
-fi

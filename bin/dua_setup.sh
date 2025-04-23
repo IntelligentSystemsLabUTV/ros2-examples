@@ -2,10 +2,23 @@
 
 # Setup script for DUA repositories and projects.
 #
-# Roberto Masocco <robmasocco@gmail.com>
-# Intelligent Systems Lab <isl.torvergata@gmail.com>
+# Roberto Masocco <r.masocco@dotxautomation.com>
 #
-# April 5, 2023
+# June 13, 2024
+
+# Copyright 2024 dotX Automation s.r.l.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 # shellcheck disable=SC2207,SC2016
 
@@ -20,7 +33,7 @@ function usage {
   echo >&2 "    dua_setup.sh modify [-a UNIT1,UNIT2,...] [-r UNIT1,UNIT2,...] TARGET"
   echo >&2 "    dua_setup.sh clear TARGET"
   echo >&2 "    dua_setup.sh delete TARGET"
-  echo >&2 "See the README for more info."
+  echo >&2 "See dua-template.md for more info."
 }
 
 if [[ "${1-}" =~ ^-*h(elp)?$ ]]; then
@@ -59,7 +72,7 @@ elif [[ "$OS_NAME" == "Darwin" ]]; then
   NO_GNU=1
   MACOS=1
 else
-  echo >&2 "ERROR: Unsupported operating system"
+  echo >&2 "ERROR: Operating system not supported"
   exit 1
 fi
 
@@ -106,7 +119,7 @@ function units_to_array {
 
 # Function to check that a target is valid.
 function check_target {
-  if [[ "${1-}" =~ ^(x86-base|x86-dev|x86-cudev|armv8-base|armv8-dev|jetson5c7|jetson4c5|jetson4c6)$ ]]; then
+  if [[ "${1-}" =~ ^(x86-base|x86-dev|x86-cudev|armv8-base|armv8-dev|jetson6|jetson5|jetsonnano|jetsontx2)$ ]]; then
     return 0
   else
     echo >&2 "ERROR: Invalid target: ${1-}"
@@ -120,45 +133,66 @@ function add_units {
   local TARGET
   TARGET="${1-}"
 
-  # Add the specified units to a temporary file
-  if [[ -f unitstmp ]]; then
-    rm unitstmp
-  fi
-  for UNIT in "${ADD_UNITS[@]}"; do
-    if grep -q "# ${UNIT} START #" "docker/container-${TARGET}/Dockerfile"; then
-      # If the unit is already present, just copy it to preserve local changes
-      echo "Copying unit ${UNIT} ..."
-      $SED -n \
-        "/^# ${UNIT} START #$/,/^# ${UNIT} END #$/p" \
-        "docker/container-${TARGET}/Dockerfile" >> unitstmp
-    else
-      # If the unit is not present, copy it from the source
-      echo "Adding unit ${UNIT} ..."
-      $SED -n \
-        "/^# ${UNIT} START #$/,/^# ${UNIT} END #$/p" \
-        "src/${UNIT}/docker/container-${TARGET}/Dockerfile" >> unitstmp
-    fi
-  done
+  # Create a temporary file descriptor for our needs
+  exec 3>"$(mktemp)"
+  local tmpfile="/dev/fd/3"
 
-  # Rebuild the target Dockerfile adding the new parts
+  # Create an associative array to track which units we've already added
+  # This prevents duplicate additions in a single operation
+  declare -A added_units
+
+  # Always start by copying everything up to and including IMAGE SETUP START
+  $SED -n '1,/^# IMAGE SETUP START #$/p' "docker/container-${TARGET}/Dockerfile" >&3
+
   if [[ "${#ADD_UNITS[@]}" -gt "1" ]]; then
-    # If more than one unit is added, clear the target first, then copy the new units
-    clear_units "${TARGET}" "0"
-    {
-      $SED -n '1,/^# IMAGE SETUP START #$/p' "docker/container-${TARGET}/Dockerfile"
-      cat unitstmp
-      $SED -n '/^# IMAGE SETUP END #$/,$p' "docker/container-${TARGET}/Dockerfile"
-    } > dockerfiletmp
+    # For multiple units, start fresh after IMAGE SETUP START
+    for UNIT in "${ADD_UNITS[@]}"; do
+      # Skip if we've already added this unit in this operation
+      if [[ ${added_units[$UNIT]+_} ]]; then
+        continue
+      fi
+
+      # Mark this unit as added
+      added_units[$UNIT]=1
+
+      if grep -q "# ${UNIT} START #" "docker/container-${TARGET}/Dockerfile"; then
+        # Copy existing unit configuration to preserve local changes
+        echo "Copying unit ${UNIT} ..."
+        $SED -n "/^# ${UNIT} START #$/,/^# ${UNIT} END #$/p" \
+          "docker/container-${TARGET}/Dockerfile" >&3
+      else
+        # Add new unit from its source
+        echo "Adding unit ${UNIT} ..."
+        $SED -n "/^# ${UNIT} START #$/,/^# ${UNIT} END #$/p" \
+          "src/${UNIT}/docker/container-${TARGET}/Dockerfile" >&3
+      fi
+    done
   else
-    # Copy the new unit's portion in the Dockerfile
-    {
-      $SED -n '/^# IMAGE SETUP END #$/q;p' "docker/container-${TARGET}/Dockerfile"
-      cat unitstmp
-      $SED -n '/^# IMAGE SETUP END #$/,$p' "docker/container-${TARGET}/Dockerfile"
-    } > dockerfiletmp
+    # For a single unit addition, only the version contained in the unit source is considered
+    UNIT="${ADD_UNITS[0]}"
+
+    # First, copy any existing units between IMAGE SETUP START and END
+    # but exclude the unit we're about to add to avoid duplication
+    $SED -n "/^# IMAGE SETUP START #$/,/^# IMAGE SETUP END #$/{
+      /^# IMAGE SETUP/!{
+        /^# ${UNIT} START #$/,/^# ${UNIT} END #$/!p
+      }
+    }" "docker/container-${TARGET}/Dockerfile" >&3
+
+    # Then add the new/updated unit
+    echo "Adding unit ${UNIT} ..."
+    $SED -n "/^# ${UNIT} START #$/,/^# ${UNIT} END #$/p" \
+      "src/${UNIT}/docker/container-${TARGET}/Dockerfile" >&3
   fi
-  mv dockerfiletmp "docker/container-${TARGET}/Dockerfile"
-  rm unitstmp
+
+  # Always end by adding IMAGE SETUP END and everything after it
+  $SED -n '/^# IMAGE SETUP END #$/,$p' "docker/container-${TARGET}/Dockerfile" >&3
+
+  # Replace the original file with our constructed version
+  cat "$tmpfile" > "docker/container-${TARGET}/Dockerfile"
+
+  # Clean up our file descriptor
+  exec 3>&-
 }
 
 # Function to remove units from a target.
@@ -181,15 +215,25 @@ function clear_units {
   TARGET="${1-}"
   VERBOSE="${2-1}"
 
-  # Remove all units with a clever copy-paste
+  # Create a temporary file descriptor for our needs
+  exec 3>"$(mktemp)"
+  local tmpfile="/dev/fd/3"
+
   if [[ "${VERBOSE}" == "1" ]]; then
     echo "Removing all units from target ${TARGET} ..."
   fi
-  {
-    $SED -n '1,/^# IMAGE SETUP START #$/p' "docker/container-${TARGET}/Dockerfile"
-    $SED -n '/^# IMAGE SETUP END #$/,$p' "docker/container-${TARGET}/Dockerfile"
-  } > dockerfiletmp
-  mv dockerfiletmp "docker/container-${TARGET}/Dockerfile"
+
+  # Copy everything up to and including IMAGE SETUP START
+  $SED -n '1,/^# IMAGE SETUP START #$/p' "docker/container-${TARGET}/Dockerfile" >&3
+
+  # Copy IMAGE SETUP END and everything after it
+  $SED -n '/^# IMAGE SETUP END #$/,$p' "docker/container-${TARGET}/Dockerfile" >&3
+
+  # Replace the original file with our constructed version
+  cat "$tmpfile" > "docker/container-${TARGET}/Dockerfile"
+
+  # Clean up our file descriptor
+  exec 3>&-
 }
 
 # Function to create a new target.
@@ -219,14 +263,14 @@ function create_target {
   fi
   if [[ "${NO_MKPASSWD-0}" == "1" ]]; then
     # Use Python 3 with passlib
-    HPSW=$(python3 -c "from passlib.hash import sha512_crypt; print(sha512_crypt.hash('${PASSWORD}', salt='intelsyslab', rounds=5000))")
+    HPSW=$(python3 -c "from passlib.hash import sha512_crypt; print(sha512_crypt.hash('${PASSWORD}', salt='duatemplate', rounds=5000))")
   else
-    HPSW=$(mkpasswd -m sha-512 "${PASSWORD}" intelsyslab)
+    HPSW=$(mkpasswd -m sha-512 "${PASSWORD}" duatemplate)
   fi
 
   SERVICE="${NAME}-${TARGET}"
   echo "Project name: ${NAME}"
-  echo "Servcice name: ${SERVICE}"
+  echo "Service name: ${SERVICE}"
   echo "Creating target ${TARGET} (password hash: ${HPSW}) ..."
 
   # Create the folder corresponding to the requested target
@@ -237,6 +281,8 @@ function create_target {
   cp "bin/dua-templates/context/bashrc" "docker/container-${TARGET}/"
   cp "bin/dua-templates/context/colcon-defaults.yaml.template" "docker/container-${TARGET}/colcon-defaults.yaml"
   cp "bin/dua-templates/context/commands.sh" "docker/container-${TARGET}/"
+  cp "bin/dua-templates/context/dua_submod.sh" "docker/container-${TARGET}/"
+  cp "bin/dua-templates/context/dua_subtree.sh" "docker/container-${TARGET}/"
   cp "bin/dua-templates/context/nanorc" "docker/container-${TARGET}/"
   cp "bin/dua-templates/context/p10k.zsh" "docker/container-${TARGET}/"
   cp "bin/dua-templates/context/ros2.sh" "docker/container-${TARGET}/"
@@ -252,16 +298,38 @@ function create_target {
   $SED -i "s/SERVICE/${SERVICE}/g" "docker/container-${TARGET}/.devcontainer/devcontainer.json"
 
   # Copy and configure docker-compose.yml
-  if [[ "${TARGET}" == "x86-cudev" ]] || [[ "${TARGET}" == "jetson4c5" ]] || [[ "${TARGET}" == "jetson4c6" ]]; then
+  if [[ "${TARGET}" == "x86-cudev" ]] || [[ "${TARGET}" == "jetsonnano" ]] || [[ "${TARGET}" == "jetsontx2" ]]; then
+    # Compose file for Nvidia devices (including 1st gen. legacy targets)
     cp "bin/dua-templates/docker-compose.yaml.nvidia.template" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   elif [[ "${TARGET}" == "armv8-dev" ]] && [[ "${MACOS-0}" == "1" ]]; then
+    # Compose file for macOS ARM64
     cp "bin/dua-templates/docker-compose.yaml.macos.template" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+  elif [[ "${TARGET}" == "jetson6" ]] || [[ "${TARGET}" == "jetson5" ]]; then
+    # Compose file for Jetson devices with JetPack 5.x/6.x, need only runtime specified
+    cp "bin/dua-templates/docker-compose.yaml.template" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+    $SED -i "s/ipc: host/&\n    runtime: nvidia/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   else
+    # Compose file for anything else
     cp "bin/dua-templates/docker-compose.yaml.template" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   fi
   $SED -i "s/SERVICE/${SERVICE}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   $SED -i "s/NAME/${NAME}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   $SED -i "s/TARGET/${TARGET}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+
+  # Add restart policy for SBC targets
+  if [[ "${TARGET}" == "x86-base" ]] || \
+     [[ "${TARGET}" == "armv8-base" ]] || \
+     [[ "${TARGET}" == "jetson6" ]] || \
+     [[ "${TARGET}" == "jetson5" ]] || \
+     [[ "${TARGET}" == "jetsontx2" ]] || \
+     [[ "${TARGET}" == "jetsonnano" ]]; then
+    $SED -i "s/network_mode: \"host\"/&\n    restart: always/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+  fi
+
+  # Add necessary groups for Jetson devices running JetPack 6.x to access GPU and onboard peripherals
+  if [[ "${TARGET}" == "jetson6" ]]; then
+    $SED -i "/user: neo/a\\    group_add:\\n      - 10\\n      - 20\\n      - 29\\n      - 30\\n      - 44\\n      - 46\\n      - 104\\n      - 116\\n      - 999" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+  fi
 
   # Copy and configure Dockerfile, adding units if requested
   if [[ "${TARGET}" == "armv8-dev" ]] && [[ "${MACOS-0}" == "1" ]]; then

@@ -1,6 +1,6 @@
 # ROS 2 Launch files
 
-ROS launch files are Python scripts used to fully interact with the ROS Launch System. A launch file specifies which modules and nodes should be started and how, configuring their input arguments and many aspects of their processes. For an initial description of what launch files can do please see the [official documentation](https://docs.ros.org/en/humble/Tutorials/Launch/Launch-Main.html).
+ROS launch files are Python scripts used to fully interact with the ROS Launch System. A launch file specifies which modules and nodes should be started and how, configuring their input arguments and many aspects of their processes. For an initial description of what launch files can do please see the [official documentation](https://docs.ros.org/en/jazzy/Tutorials/Launch/Launch-Main.html).
 
 What follows is a thorough description of launch files syntax, functionalities, and related conventions and best practices.
 
@@ -158,11 +158,11 @@ Logging can be configured via the `output` argument of the `Node` object. When y
 
 Find below some links to the official ROS 2 documentation that can be useful to understand how to use the Launch System to achieve more advanced tasks and configurations.
 
-### [Event handlers](https://docs.ros.org/en/humble/Tutorials/Launch/Using-Event-Handlers.html)
+### [Event handlers](https://docs.ros.org/en/jazzy/Tutorials/Launch/Using-Event-Handlers.html)
 
 Launch files let you do much more than starting up your application(s): they can be written as complete Python scripts to perform many different operations during startup, operation, and termination of the various actions they create. See the linked documentation for details.
 
-### [Large projects](https://docs.ros.org/en/humble/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html)
+### [Large projects](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Launch/Using-ROS2-Launch-For-Large-Projects.html)
 
 Starting single modules and entire architectures with launch files are not the same thing. In the latter case, it is better to reuse launch files that one has already written, to lay down an high-level launch structure and eventually modify the rest. See the linked documentation for details.
 
@@ -174,8 +174,8 @@ If you have any questions or suggestions, please open an issue or contact us her
 
 ## License
 
-This work is licensed under the GNU General Public License v3.0. See the [`LICENSE`](LICENSE) file for details.
+This work is licensed under the Apache 2.0 License. See the [`LICENSE`](LICENSE) file for details.
 
 ## Copyright
 
-Copyright (c) 2023, Intelligent Systems Lab, University of Rome Tor Vergata
+Copyright (c) 2024, Intelligent Systems Lab, University of Rome Tor Vergata

@@ -97,7 +97,7 @@ Remember to source install scripts to see the new package and compile against it
 
 ## Interface format
 
-Below you can find some notes about how to write interface definition files of various kinds. For more information about interface files and types see the [ROS 2 documentation](https://docs.ros.org/en/humble/Concepts/About-ROS-Interfaces.html#about-ros-2-interfaces).
+Below you can find some notes about how to write interface definition files of various kinds. For more information about interface files and types see the [ROS 2 documentation](https://docs.ros.org/en/jazzy/Concepts/About-ROS-Interfaces.html#about-ros-2-interfaces).
 
 ### Messages
 
@@ -112,7 +112,7 @@ Below you can find some notes about how to write interface definition files of v
 - Types must be from ROS 2 standard types, or from another interface you can include first.
   Inclusion syntax is: `package/message`.
   Don’t forget to add a dependency for the other package in both `package.xml` and `CMakeLists.txt`!
-  Any message you’ve already created in the same package may also be included, find some notes about how to do so [here](https://docs.ros.org/en/humble/Tutorials/Single-Package-Define-And-Use-Interface.html#extra-use-an-existing-interface-definition).
+  Any message you’ve already created in the same package may also be included, find some notes about how to do so [here](https://docs.ros.org/en/jazzy/Tutorials/Single-Package-Define-And-Use-Interface.html#extra-use-an-existing-interface-definition).
 - Arrays can be specified as types with syntax:
 
   ```msg
@@ -161,8 +161,8 @@ If you have any questions or suggestions, please open an issue or contact us her
 
 ## License
 
-This work is licensed under the GNU General Public License v3.0. See the [`LICENSE`](LICENSE) file for details.
+This work is licensed under the Apache 2.0 License. See the [`LICENSE`](LICENSE) file for details.
 
 ## Copyright
 
-Copyright (c) 2023, Intelligent Systems Lab, University of Rome Tor Vergata
+Copyright (c) 2024, Intelligent Systems Lab, University of Rome Tor Vergata

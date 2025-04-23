@@ -1,6 +1,6 @@
 # ros2-examples
 
-Collection of examples about the main features and core subsystems of the [Robot Operating System 2](https://docs.ros.org/en/humble/index.html) robotics middleware, for tutorials or class materials.
+Collection of examples about the main features and core subsystems of the [Robot Operating System 2](https://docs.ros.org/en/jazzy/index.html) robotics middleware, for tutorials or class materials.
 
 ## Table of contents
 
@@ -20,7 +20,7 @@ Collection of examples about the main features and core subsystems of the [Robot
 ## Requirements
 
 - **Git** (to clone this repository) (find a comprehensive tutorial from zero to hero [here](https://www.atlassian.com/git/tutorials/what-is-git))
-- **ROS 2 Humble Hawksbill**
+- **ROS 2 Jazzy Jalisco**
 - **GCC toolchain** (or any other C++ compiler that supports C++17)
 - **Python 3**
 - **CMake**
@@ -35,31 +35,31 @@ git clone https://github.com/IntelligentSystemsLabUTV/ros2-examples.git
 
 and the repository will be cloned in the current directory, in a new directory called `ros2-examples`.
 
-To update the repository's contents, make sure to be in the `humble` branch (rember: `git checkout` enables you to switch branches) and run:
+To update the repository's contents, make sure to be in the `jazzy` branch (rember: `git checkout` enables you to switch branches) and run:
 
 ```bash
 git pull
 ```
 
-The contents of this repository were tested on a system running **Ubuntu Linux 22.04**, which is the officially supported host OS. You may as well be able to install ROS 2 on Windows and macOS, and thus run the examples on those platforms, but this is not guaranteed. Support for Windows is encouraged by means of the [Windows Subsystem for Linux 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL 2), which allows you to run a Linux kernel on Windows hosts; the `Ubuntu-22.04` distribution would be the best choice.
+The contents of this repository were tested on a system running **Ubuntu Linux 24.04**, which is the officially supported host OS. You may as well be able to install ROS 2 on Windows and macOS, and thus run the examples on those platforms, but this is not guaranteed. Support for Windows is encouraged by means of the [Windows Subsystem for Linux 2](https://docs.microsoft.com/en-us/windows/wsl/install-win10) (WSL 2), which allows you to run a Linux kernel on Windows hosts; the `Ubuntu 24.04.1 LTS` distribution would be the best choice.
 
 The repository is built around a Visual Studio Code template that you can find [here](https://github.com/robmasocco/vscode_ros2_workspace), which automates many tasks that concern ROS 2 workspace organization and maintenance. It's suggested that you play with this repository inside VS Code.
 
 ## Usage guidelines
 
-If this is the first time you hear about ROS 2, go have a look at the [official documentation](https://docs.ros.org/en/humble/index.html) and some basic [tutorials](https://docs.ros.org/en/humble/Tutorials.html) before proceeding. It is also recommended to have a look at the [installation guide](https://docs.ros.org/en/humble/Installation.html) to get a grasp of the basic concepts and terminology.
+If this is the first time you hear about ROS 2, go have a look at the [official documentation](https://docs.ros.org/en/jazzy/index.html) and some basic [tutorials](https://docs.ros.org/en/jazzy/Tutorials.html) before proceeding. It is also recommended to have a look at the [installation guide](https://docs.ros.org/en/jazzy/Installation.html) to get a grasp of the basic concepts and terminology.
 
-The file [`bin/ros2_humble_install.sh`](bin/ros2_humble_install.sh) contains a script that automates the installation of ROS 2 Humble Hawksbill on Ubuntu Linux 22.04. It is not guaranteed to work on other platforms, but it should be easy to adapt it to other Debian-based distributions.
+The file [`bin/ros2_jazzy_install.sh`](bin/ros2_jazzy_install.sh) contains a script that automates the installation of ROS 2 Jazzy Jalisco on Ubuntu Linux 24.04. It is not guaranteed to work on other platforms, but it should be easy to adapt it to other Debian-based distributions.
 
 The file [`config/ros2_cmds.sh`](config/ros2_cmds.sh) contains a list of useful CLI commands to source the ROS 2 installation and its autocompletion scripts, which you can copy and paste in your `.bashrc` file to have them available in your shell; alternatively, you can `source` that file.
 
-At this point, you should be able to build, run and modify all of the examples in this repository. **It is strongly suggested that you create your own branch and work on that**, so that you can always pull the latest updates from the `humble` branch without losing your work.
+At this point, you should be able to build, run and modify all of the examples in this repository. **It is strongly suggested that you create your own branch and work on that**, so that you can always pull the latest updates from the `jazzy` branch without losing your work.
 
 The following sections will provide a brief overview of the repository's structure and contents.
 
 ### Docker containers
 
-This repository is based on the [`Distributed Unified Architecture`](https://github.com/IntelligentSystemsLabUTV/dua-template), which provides support for Docker containers, so that you can run the examples without having to install ROS 2 on your host machine, and more. If you are interested, please find more information in the [`dua_template.md`](dua_template.md) file.
+This repository is based on the [`Distributed Unified Architecture`](https://github.com/dotX-Automation/dua-template), which provides support for Docker containers, so that you can run the examples without having to install ROS 2 on your host machine, and more. If you are interested, please find more information in the [`dua_template.md`](dua-template.md) file.
 
 According to the DUA target architecture, this repository offers the following containers:
 
@@ -148,16 +148,16 @@ Find more information about specific topics in the following files:
 Some useful references about ROS 2 features:
 
 - [**ROS/Patterns/Conventions**](http://wiki.ros.org/ROS/Patterns/Conventions)**:** Naming and measurement units conventions to respect when developing ROS 2 applications (the article is about ROS but still meaningful).
-- [**`rqt_console`**](https://docs.ros.org/en/humble/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
-- [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/humble/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins: shared libraries to implement a common interface for algorithms, subsystems, and more, to be dynamically loaded at runtime, avoiding the need to add header files to and link the application against the specific, derived implementations.
-- [**Efficient intra-process communication**](https://docs.ros.org/en/humble/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)). Note that this works at the middleware level: ROS 2 messages are passed between entities instead of being handed over to the DDS, but the latter would still bypass the network stack when implementing shared memory transport by default (*e.g.*, eProsima's FastDDS, which is the default RMW implementation in Humble).
-- [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/humble/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the `ParameterEventHandler` class, to monitor and respond to parameter changes taking place in all nodes.
-- [**The `ROS_DOMAIN_ID` environment variable**](https://docs.ros.org/en/humble/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
-- [**Recording and playing back data**](https://docs.ros.org/en/humble/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/humble/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
-- [**About composition**](https://docs.ros.org/en/humble/Concepts/About-Composition.html)**:** Introduction to the components distributed paradigm.
-- [**Composing multiple nodes in a single process**](https://docs.ros.org/en/humble/Tutorials/Composition.html)**:** Introduction to the components introspection tools and different loading methods, with links to some source code examples.
+- [**`rqt_console`**](https://docs.ros.org/en/jazzy/Tutorials/Rqt-Console/Using-Rqt-Console.html)**:** GUI to view, filter, save and reload log messages from multiple nodes at the same time.
+- [**Creating and Using Plugins (C++)**](https://docs.ros.org/en/jazzy/Tutorials/Pluginlib.html)**:** Basic tutorial about ROS 2 plugins: shared libraries to implement a common interface for algorithms, subsystems, and more, to be dynamically loaded at runtime, avoiding the need to add header files to and link the application against the specific, derived implementations.
+- [**Efficient intra-process communication**](https://docs.ros.org/en/jazzy/Tutorials/Intra-Process-Communication.html)**:** Notes about how intra-process communication can be enforced in compliant situations (design document available [here](https://design.ros2.org/articles/intraprocess_communications.html)). Note that this works at the middleware level: ROS 2 messages are passed between entities instead of being handed over to the DDS, but the latter would still bypass the network stack when implementing shared memory transport by default (*e.g.*, eProsima's FastDDS, which is the default RMW implementation in Humble).
+- [**Monitoring for parameter changes (C++)**](https://docs.ros.org/en/jazzy/Tutorials/Monitoring-For-Parameter-Changes-CPP.html)**:** Tutorial about the `ParameterEventHandler` class, to monitor and respond to parameter changes taking place in all nodes.
+- [**The `ROS_DOMAIN_ID` environment variable**](https://docs.ros.org/en/jazzy/Concepts/About-Domain-ID.html)**:** What it is and what it is useful for.
+- [**Recording and playing back data**](https://docs.ros.org/en/jazzy/Tutorials/Ros2bag/Recording-And-Playing-Back-Data.html)**:** How ROS 2 bags work and how they could be useful to log data. It is also possible to record them from an appropriate node, like [here](https://docs.ros.org/en/jazzy/Tutorials/Ros2bag/Recording-A-Bag-From-Your-Own-Node-Cpp.html).
+- [**About composition**](https://docs.ros.org/en/jazzy/Concepts/About-Composition.html)**:** Introduction to the components distributed paradigm.
+- [**Composing multiple nodes in a single process**](https://docs.ros.org/en/jazzy/Tutorials/Composition.html)**:** Introduction to the components introspection tools and different loading methods, with links to some source code examples.
 - [**Managed nodes**](https://design.ros2.org/articles/node_lifecycle.html)**:** Design document about nodes with lifecycle.
-- [**Lifecycle**](https://github.com/ros2/demos/blob/humble/lifecycle/README.rst)**:** Quick example that shows how nodes with lifecycle can be created and managed.
+- [**Lifecycle**](https://github.com/ros2/demos/blob/jazzy/lifecycle/README.rst)**:** Quick example that shows how nodes with lifecycle can be created and managed.
 - [**`image_transport`**](http://wiki.ros.org/image_transport)**:** Useful package that optimizes middleware communications when handling images, which would easily cause streams of large packets to occur (linked docs are still about ROS, but the interface is almost the same in ROS 2).
 - [**`image_pipeline`**](http://wiki.ros.org/image_pipeline)**:** Useful package to perform basic tasks on images (linked docs are still about ROS, but the interface is almost the same in ROS 2).
 - [**`message_filters`**](http://wiki.ros.org/message_filters)**:** A message filter is defined as something which a message arrives into and may or may not be spit back out of at a later point in time; this package is a collection of algorithms fully integrated in the middleware that solve common synchronization issues involving multiple different topics (linked docs are still about ROS, but the interface is almost the same in ROS 2) (suggested read: the [`ApproximateTime`](http://wiki.ros.org/message_filters/ApproximateTime) adaptive algorithm).
@@ -170,8 +170,8 @@ If you have any questions or suggestions, please open an issue or contact us her
 
 ## License
 
-This work is licensed under the GNU General Public License v3.0. See the [`LICENSE`](LICENSE) file for details.
+This work is licensed under the Apache 2.0 License. See the [`LICENSE`](LICENSE) file for details.
 
 ## Copyright
 
-Copyright (c) 2023, Intelligent Systems Lab, University of Rome Tor Vergata
+Copyright (c) 2024, Intelligent Systems Lab, University of Rome Tor Vergata

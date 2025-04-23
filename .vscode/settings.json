@@ -94,26 +94,31 @@
   // Use Pylance as language server
   "python.languageServer": "Pylance",
   "python.analysis.extraPaths": [
-    "/opt/ros/humble/lib/python3.10/site-packages/",
+    "/opt/dua-venv/lib/python3.12/site-packages/",
+    "/opt/ros/jazzy/lib/python3.12/site-packages/",
+    "/opt/ros/jazzy/local/lib/python3.12/dist-packages/",
+    "/opt/ros/dua-utils/install/lib/python3.12/site-packages/",
+    "/opt/ros/dua-utils/install/local/lib/python3.12/dist-packages/"
     // Add your own paths here!
-    "${workspaceFolder}/install/ros2_examples_interfaces/local/lib/python3.10/dist-packages/"
   ],
   // Autocomplete from ros python packages
   "python.autoComplete.extraPaths": [
-    "/opt/ros/humble/lib/python3.10/site-packages/",
+    "/opt/dua-venv/lib/python3.12/site-packages/",
+    "/opt/ros/jazzy/lib/python3.12/site-packages/",
+    "/opt/ros/jazzy/local/lib/python3.12/dist-packages/",
+    "/opt/ros/dua-utils/install/lib/python3.12/site-packages/",
+    "/opt/ros/dua-utils/install/local/lib/python3.12/dist-packages/"
     // Add your own paths here!
-    "${workspaceFolder}/install/ros2_examples_interfaces/local/lib/python3.10/dist-packages/"
   ],
   // Environment file lets vscode find python files within workspace
   "python.envFile": "${workspaceFolder}/.env",
-  // Use the system installed version of autopep8
-  "python.formatting.autopep8Path": "/usr/bin/autopep8",
-  "python.formatting.autopep8Args": [
-    "--max-line-length=100"
-  ],
+  // Use autopep8 for Python formatting
+  "[python]": {
+      "editor.defaultFormatter": "ms-python.autopep8"
+  },
   "C_Cpp.default.intelliSenseMode": "linux-gcc-x64",
   "C_Cpp.formatting": "disabled",
-  "uncrustify.configPath.linux": "/opt/ros/humble/lib/python3.10/site-packages/ament_uncrustify/configuration/ament_code_style.cfg",
+  "uncrustify.configPath.linux": "/opt/ros/jazzy/lib/python3.12/site-packages/ament_uncrustify/configuration/ament_code_style_0_78.cfg",
   "[cpp]": {
     "editor.defaultFormatter": "zachflower.uncrustify"
   },
@@ -125,37 +130,6 @@
     "**/install": true,
     "**/log": true
   },
-  "cSpell.words": [
-    "autopep",
-    "cmake",
-    "cppcheck",
-    "cpplint",
-    "DCMAKE",
-    "deque",
-    "ints",
-    "noqa",
-    "pytest",
-    "rclcpp",
-    "rclpy",
-    "repos",
-    "rosdep",
-    "rosdistro",
-    "rosidl",
-    "RTPS",
-    "uncrustify",
-    "Wextra",
-    "Wpedantic",
-    "xmllint"
-  ],
-  "cSpell.allowCompoundWords": true,
-  "cSpell.ignorePaths": [
-    "**/package-lock.json",
-    "**/node_modules/**",
-    "**/vscode-extension/**",
-    "**/.git/objects/**",
-    ".vscode",
-    ".vscode-insiders"
-  ],
   "shellcheck.enable": true,
   "shellcheck.enableQuickFix": true,
   "shellcheck.run": "onType",
@@ -180,9 +154,5 @@
     "**/zshenv": true,
     "**/*.zsh-theme": true
   },
-  "shellcheck.ignoreFileSchemes": [
-    "git",
-    "gitfs"
-  ],
-  "ros.distro": "humble"
+  "ros.distro": "jazzy"
 }
