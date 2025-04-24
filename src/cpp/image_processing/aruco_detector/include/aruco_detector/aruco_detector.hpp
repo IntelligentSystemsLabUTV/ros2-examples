@@ -29,9 +29,6 @@
 
 #include <memory>
 #include <opencv2/aruco.hpp>
-#ifdef ARUCO_API_OLD
-#include <opencv2/aruco/dictionary.hpp>
-#endif
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
 #include <pthread.h>
