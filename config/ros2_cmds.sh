@@ -11,27 +11,22 @@ if [[ $# -ne 0 ]]; then
 fi
 export ROS_VERSION=2
 export ROS_PYTHON_VERSION=3
-# Check that the distribution is installed
 if [[ ! -d /opt/ros/jazzy ]]; then
   echo >&2 "No ROS 2 distribution installed!"
   return 1
 fi
 export ROS_DISTRO=jazzy
 export RMW_IMPLEMENTATION=rmw_fastrtps_cpp
+current_shell=$(ps -p $$ | awk 'NR==2 {print $4}')
 
 # Source the ROS 2 installation according to the current shell
-if echo "$SHELL" | grep -q 'bash'; then
-  # shellcheck source=/dev/null
+if echo "$current_shell" | grep -q 'bash'; then
   source /opt/ros/$ROS_DISTRO/setup.bash
-  # shellcheck source=/dev/null
   source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash
-elif echo "$SHELL" | grep -q 'zsh'; then
-  # shellcheck source=/dev/null
+elif echo "$current_shell" | grep -q 'zsh'; then
   source /opt/ros/$ROS_DISTRO/setup.zsh
-  # shellcheck source=/dev/null
   source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
   # echo "Remember to source install/local_setup.zsh in your workspaces!"
 else
-  # shellcheck source=/dev/null
   source /opt/ros/$ROS_DISTRO/setup.sh
 fi
