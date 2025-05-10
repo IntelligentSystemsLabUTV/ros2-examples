@@ -8,7 +8,7 @@ It is better, and nowadays customary, to create entire packages made only of int
 
 In order to create an interfaces-only package, you have to do the following:
 
-1. Create a package specifying no build type (should default to ament_cmake) and no dependencies. **Its name should be `PACKAGE_interfaces`, to clarify its purpose.**
+1. Create a package specifying no build type (should default to `ament_cmake`) and no dependencies. **Its name should be `PACKAGE_interfaces`, to clarify its purpose.**
 2. Remove `include/` and `src/`.
 3. Create directories for the kinds of interfaces you want to add: `msg/`, `srv/`, `action/`.
 4. In `package.xml`, add the following lines:
