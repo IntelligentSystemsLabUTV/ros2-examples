@@ -130,7 +130,7 @@ if [ -f /etc/dua/target ]; then
   DUA_TARGET=$(cat /etc/dua/target)
   if [ -n "$DUA_TARGET" ]; then
     # Iterate through all directories in workspace/src
-    for DIR in /home/neo/workspace/src/*/; do
+    for DIR in $(find /home/neo/workspace/src -mindepth 1 -maxdepth 1 -type d -exec printf "%s/\n" {} \;); do
       if [ -d "$DIR" ]; then
         COMMANDS_PATH="${DIR}docker/container-${DUA_TARGET}/commands.sh"
         if [ -f "$COMMANDS_PATH" ]; then
