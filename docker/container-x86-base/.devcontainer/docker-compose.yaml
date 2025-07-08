@@ -1,0 +1,67 @@
+# DUA environment container management settings.
+#
+# Roberto Masocco <r.masocco@dotxautomation.com>
+#
+# June 13, 2024
+
+# Copyright 2024 dotX Automation s.r.l.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+services:
+  ros2-examples-x86-base:
+    build:
+      context: ../
+      network: host
+      dockerfile: Dockerfile
+      args:
+        - USER_UID=1000
+    image: ros2-examples:x86-base
+    environment:
+      TERM: xterm-256color
+      DISPLAY:
+      SHELL: /usr/bin/zsh
+    user: neo
+    network_mode: "host"
+    restart: always
+    privileged: true
+    ipc: host
+    init: true
+    stdin_open: false
+    tty: true
+    working_dir: /home/neo/workspace
+    command:
+      [
+        "/bin/bash",
+        "-c",
+        "trap 'exit 0' TERM; sleep infinity & wait"
+      ]
+    volumes:
+      - ../../../:/home/neo/workspace
+      - ../aliases.sh:/home/neo/.aliases.sh:rw
+      - ../bashrc:/home/neo/.bashrc:rw
+      - ../colcon-defaults.yaml:/home/neo/.colcon/defaults.yaml:rw
+      - ../commands.sh:/home/neo/.commands.sh:rw
+      - ../dua_submod.sh:/home/neo/.dua_submod.sh:rw
+      - ../dua_subtree.sh:/home/neo/.dua_subtree.sh:rw
+      - ../p10k.zsh:/home/neo/.p10k.zsh:rw
+      - ../ros2.sh:/home/neo/.ros2.sh:rw
+      - ../zshrc:/home/neo/.zshrc:rw
+      - ../zsh_history:/home/neo/zsh_history
+      - ~/.ssh:/home/neo/.ssh
+      - ~/.gitconfig:/home/neo/.gitconfig
+      - ~/.Xauthority:/home/neo/.Xauthority:rw
+      - /dev:/dev
+      - /sys:/sys
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro

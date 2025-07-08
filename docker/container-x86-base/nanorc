@@ -1,0 +1,8 @@
+set tabsize 2
+set tabstospaces
+set linenumbers
+set titlecolor brightwhite,blue
+set numbercolor cyan
+set keycolor cyan
+set functioncolor green
+include "/usr/share/nano/*.nanorc"
