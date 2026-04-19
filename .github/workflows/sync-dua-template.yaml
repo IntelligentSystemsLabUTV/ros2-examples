@@ -57,7 +57,7 @@ jobs:
 
       # Clone the template repository (we need the full history of this)
       - name: Check out template repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ env.REPO_TEMPLATE }}
           ref: 'master'
@@ -67,7 +67,7 @@ jobs:
 
       # Clone the target repository
       - name: Check out ${{ github.repository }}
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           repository: ${{ github.repository }}
           ref: ${{ env.BASE_BRANCH }}

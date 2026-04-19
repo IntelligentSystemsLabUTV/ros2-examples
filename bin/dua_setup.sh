@@ -4,9 +4,9 @@
 #
 # Roberto Masocco <r.masocco@dotxautomation.com>
 #
-# June 13, 2024
+# March 9, 2026
 
-# Copyright 2024 dotX Automation s.r.l.
+# Copyright 2026 dotX Automation s.r.l.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -48,7 +48,6 @@ declare -i DELETE
 declare -i CLEAR
 declare -i ADD
 declare -i REMOVE
-declare -i NO_MKPASSWD
 declare -i NO_GNU
 declare -i MACOS
 declare -a ADD_UNITS
@@ -74,21 +73,6 @@ elif [[ "$OS_NAME" == "Darwin" ]]; then
 else
   echo >&2 "ERROR: Operating system not supported"
   exit 1
-fi
-
-# Check that mkpasswd is available
-if ! command -v mkpasswd &>/dev/null; then
-  NO_MKPASSWD=1
-  echo "WARNING: mkpasswd is not available (try whois package?), using Python 3 passlib module instead"
-
-  # Check that python3 with the passlib module is available
-  if ! command -v python3 &>/dev/null; then
-    echo >&2 "ERROR: mkpasswd is not available and Python 3 is not installed"
-    exit 1
-  elif ! python3 -c "import passlib" &>/dev/null; then
-    echo >&2 "ERROR: mkpasswd is not available and Python 3 passlib module is not installed"
-    exit 1
-  fi
 fi
 
 # If running on Mac OS, check that gnu-sed is available and configure it as our sed
@@ -239,7 +223,7 @@ function clear_units {
 # Function to create a new target.
 function create_target {
   # Parse and check arguments
-  local NAME TARGET PASSWORD HPSW
+  local NAME TARGET
   NAME="${1-}"
   TARGET="${2-}"
   if ! check_target "${TARGET}"; then
@@ -255,23 +239,10 @@ function create_target {
     exit 1
   fi
 
-  # Ask for a password
-  read -r -s -p "Enter password for internal user: " PASSWORD
-  if [[ -z "${PASSWORD}" ]]; then
-    echo >&2 "ERROR: Empty password"
-    exit 1
-  fi
-  if [[ "${NO_MKPASSWD-0}" == "1" ]]; then
-    # Use Python 3 with passlib
-    HPSW=$(python3 -c "from passlib.hash import sha512_crypt; print(sha512_crypt.hash('${PASSWORD}', salt='duatemplate', rounds=5000))")
-  else
-    HPSW=$(mkpasswd -m sha-512 "${PASSWORD}" duatemplate)
-  fi
-
   SERVICE="${NAME}-${TARGET}"
   echo "Project name: ${NAME}"
   echo "Service name: ${SERVICE}"
-  echo "Creating target ${TARGET} (password hash: ${HPSW}) ..."
+  echo "Creating target ${TARGET} ..."
 
   # Create the folder corresponding to the requested target
   mkdir -p "docker/container-${TARGET}/.devcontainer"
@@ -313,7 +284,7 @@ function create_target {
     cp "bin/dua-templates/docker-compose.yaml.template" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   fi
   $SED -i "s/SERVICE/${SERVICE}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
-  $SED -i "s/NAME/${NAME}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
+  $SED -i "/^[[:space:]]*__GLX_VENDOR_LIBRARY_NAME/!s/NAME/${NAME}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
   $SED -i "s/TARGET/${TARGET}/g" "docker/container-${TARGET}/.devcontainer/docker-compose.yaml"
 
   # Add restart policy for SBC targets
@@ -338,7 +309,6 @@ function create_target {
     cp "bin/dua-templates/Dockerfile.template" "docker/container-${TARGET}/Dockerfile"
   fi
   $SED -i "s/TARGET/${TARGET}/g" "docker/container-${TARGET}/Dockerfile"
-  $SED -i "s/HPSW/${HPSW//\//\\/}/g" "docker/container-${TARGET}/Dockerfile"
   if [[ -n "${ADD-}" ]]; then
     add_units "${TARGET}"
   fi

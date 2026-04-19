@@ -46,11 +46,9 @@ So, to benefit from Docker in robotics and to fully support the tools listed in 
 - Containers are allowed to access the host network stack by default, which means that they can access the network and communicate with other containers and the host machine; this is necessary for ROS 2 to work properly with the DDS middleware but may be disabled when using communication middleware that is capable of traversing NAT (*e.g.*, Zenoh).
 - Containers are granted full access to the hardware, since `/dev` and `/sys` are mounted inside the container; this is necessary for software modules that require access to the hardware.
 - No namespace is created for shared memory: `/dev/shm` is mounted inside the container and the host IPC namespace is used.
-- The internal user of the container is a member of the `sudo` group inside the container; however, it has a password, that must be specified when configuring the project as explained in [Creating a target](#creating-a-target) and that is only copied as `sha-512` salted hash in the `Dockerfile`, so its plain text is never stored anywhere.
+- The internal user of the container is a member of the `sudo` group inside the container.
 
-**Please note that it is the end user's responsibility to ensure that the Docker configuration files, the Docker containers based on this work, or any other part of this work, do not compromise the security and safety of the systems on which they use them, and that the internal user password is not lost. The creators of this work decline any responsibility regarding any sort of damage caused by, or imputable to, the use of this project and its derived works. See also the attached [`LICENSE`](LICENSE) for the complete usage terms to which each user agrees by using this software and any other work that includes it in any way.**
-
-If the password is lost, the user can always change it by modifying the `Dockerfile` and rebuilding the image.
+**Please note that it is the end user's responsibility to ensure that the Docker configuration files, the Docker containers based on this work, or any other part of this work, do not compromise the security and safety of the systems on which they use them. The creators of this work decline any responsibility regarding any sort of damage caused by, or imputable to, the use of this project and its derived works. By using this software, provided AS IS, the user accepts these terms plus those stated in the [`LICENSE`](LICENSE) file.**
 
 If the user requires a different configuration, they have full control over the Docker configuration files and can modify them as they see fit.
 
@@ -82,9 +80,6 @@ The following tools are required to set up and run a DUA project on all supporte
 - Git
 - Docker
 - Visual Studio Code
-- One of the following two tools to generate hashed passwords:
-  - `mkpasswd`, usually found in the `whois` package on Ubuntu.
-  - The `passlib` Python package, which can be installed with `pip install passlib`.
 - A working installation of [`GNU sed`](https://www.gnu.org/software/sed/), which is usually the default on Linux systems, but not on macOS where it can be installed with `brew install gnu-sed`.
 
 ### Linux support
@@ -230,12 +225,10 @@ creates a new target, *i.e.*, a Docker image, for a project. The `-a` option can
 
 The `TARGET` argument is the name of the target. `TARGET` must be a valid target name, *i.e.*, one of the image tags in [`dua-foundation`](https://github.com/dotX-Automation/dua-foundation).
 
-**A password is required for all projects since the container's internal user runs with elevated privileges and has full access to the host's network stack and hardware devices.** It will be asked for during the creation of the target, and will be stored in hashed form in the target's `Dockerfile`.
-
-`create` will create a new `container-TARGET` directory inside `docker/`, and will copy and configure all the template files stored in `bin/dua-templates`. These include `Dockerfile` and `docker-compose.yaml` files, as well as many shell configuration scripts and other configuration files that are used to build and run the image. Once copied, they can be modified to fully support the specific features of the project at hand.
+`create` will create a new `container-TARGET` directory inside `docker/`, and will copy and configure all the template files stored in `bin/dua-templates`. These include `Dockerfile` and `docker-compose.yaml` files, as well as many shell configuration scripts and other configuration files that are used to build and run the image. Once copied, they can be modified to fully support the specific features of the project being developed.
 
 - [`aliases.sh`](bin/dua-templates/context/aliases.sh) is meant to contain shell aliases.
-- [`commands.sh`](bin/dua-templates/context/commands.sh) is meant to contain shell functions that execute commands that involve the software package(s) that make(s) up the project, or control architecture, at hand.
+- [`commands.sh`](bin/dua-templates/context/commands.sh) is meant to contain shell functions that execute commands that involve the software package(s) that make(s) up the project, or control architecture, being developed.
 - [`p10k.sh`](bin/dua-templates/context/p10k.sh) contains configuration options for the [`powerlevel10k`](https://github.com/romkatv/powerlevel10k) that powers the Zsh shell, which is the default in every DUA container.
 - [`ros2.sh`](bin/dua-templates/context/ros2.sh) contains configuration options and functions for the ROS 2 installation that is provided in every DUA image.
 
@@ -409,7 +402,7 @@ If you have any questions or suggestions, please open an issue or contact us her
 
 ## Copyright and License
 
-Copyright 2025 dotX Automation s.r.l.
+Copyright 2026 dotX Automation s.r.l.
 
 Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License.
 

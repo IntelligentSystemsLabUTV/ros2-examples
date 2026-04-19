@@ -7,7 +7,7 @@
 #
 # June 14, 2024
 
-# Copyright 2024 dotX Automation s.r.l.
+# Copyright 2026 dotX Automation s.r.l.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
