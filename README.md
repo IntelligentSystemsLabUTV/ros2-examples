@@ -10,7 +10,7 @@ Collection of examples about the main features and core subsystems of the [Robot
   - [Usage guidelines](#usage-guidelines)
     - [Docker containers](#docker-containers)
   - [Code organization](#code-organization)
-    - [List of examples](#list-of-examples)
+    - [List of ROS 2 examples](#list-of-ros-2-examples)
   - [Additional resources](#additional-resources)
     - [Useful references](#useful-references)
   - [Feedback](#feedback)
@@ -93,14 +93,15 @@ Expect this repository to be updated frequently, as it is meant to be a work in 
 
 All source code is found in the `src` directory, which is organized as follows:
 
+- `tools/cpp-examples` contains some code examples and exercises about the C++ language features covered in the lectures;
 - `cpp` contains all the C++ code;
 - `python` contains all the Python code;
 - non-language-specific packages are found in the root `src` directory;
 - the `cpp/advanced` and `python/advanced` directories contain examples that are more complex and are aimed at achieving a deeper understanding of ROS 2 by discussing some of its more advanced features.
 
-### List of examples
+### List of ROS 2 examples
 
-The following is a list of all the examples that are currently available in this repository.
+The following is a list of all the ROS 2 examples that are currently available in this repository.
 
 **Please note that since this is a work in progress, some packages listed here may not be available yet, being still under development. They will be automatically ignored by `colcon` to avoid issues. Similarly, this list may not include packages that are not ready yet.**
 
@@ -133,6 +134,8 @@ The following is a list of all the examples that are currently available in this
     - **rqt_image_view**: This package shows how to use the `image_transport` package to subscribe to images and display them in a GUI.
 
 - **Python examples**
+  - **topic_pubsub_py:** Example about topics and messages:
+    - `pub` and `sub` show how a node can subscribe or publish to a topic, using custom QoS settings and a custom message type defined in `ros2_examples_interfaces`.
 
 ## Additional resources
 
