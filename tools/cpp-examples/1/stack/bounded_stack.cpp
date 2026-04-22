@@ -38,7 +38,7 @@ public:
   {
     //! Note the initializer list with which data members are initialized at the very start of the
     //! constructor body.
-    std::cout << "Stack created with capacity " << capacity_ << "\n";
+    std::cout << "Stack created with capacity " << capacity_ << std::endl;
   }
 
   /**
@@ -47,7 +47,7 @@ public:
   ~BoundedStack()
   {
     delete[] data_;
-    std::cout << "Stack destroyed, memory freed\n";
+    std::cout << "Stack destroyed, memory freed" << std::endl;
   }
 
   /**
@@ -123,18 +123,18 @@ int main()
     s.push(20);
     s.push(30);
 
-    std::cout << "Top: " << s.top() << "\n";     //! 30
-    std::cout << "Size: " << s.size() << "\n";   //! 3
+    std::cout << "Top: " << s.top() << std::endl;     //! 30
+    std::cout << "Size: " << s.size() << std::endl;   //! 3
 
-    std::cout << "Popped: " << s.pop() << "\n";  //! 30
-    std::cout << "Popped: " << s.pop() << "\n";  //! 20
+    std::cout << "Popped: " << s.pop() << std::endl;  //! 30
+    std::cout << "Popped: " << s.pop() << std::endl;  //! 20
 
-    std::cout << "Size after pops: " << s.size() << "\n"; // 1
+    std::cout << "Size after pops: " << s.size() << std::endl; // 1
 
     //! s goes out of scope here — destructor is called automatically
   }
 
-  std::cout << "Back in outer scope — stack is gone\n";
+  std::cout << "Back in outer scope — stack is gone" << std::endl;
 
   exit(EXIT_SUCCESS);
 }

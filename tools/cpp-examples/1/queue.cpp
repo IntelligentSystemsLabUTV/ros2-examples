@@ -133,12 +133,12 @@ int main()
   queue_push(q, 20);
   queue_push(q, 30);
 
-  std::cout << "Size: " << queue_size(q) << "\n";  //! 3
+  std::cout << "Size: " << queue_size(q) << std::endl;  //! 3
 
-  std::cout << "Popped: " << queue_pop(q) << "\n"; //! 10 (FIFO)
-  std::cout << "Popped: " << queue_pop(q) << "\n"; //! 20
+  std::cout << "Popped: " << queue_pop(q) << std::endl; //! 10 (FIFO)
+  std::cout << "Popped: " << queue_pop(q) << std::endl; //! 20
 
-  std::cout << "Size after pops: " << queue_size(q) << "\n"; //! 1
+  std::cout << "Size after pops: " << queue_size(q) << std::endl; //! 1
 
   //! If we forget this call, we leak memory.
   //! With RAII, cleanup would be automatic.

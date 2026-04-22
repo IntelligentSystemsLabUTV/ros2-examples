@@ -25,6 +25,8 @@
 int main()
 {
   //! An array of base-class pointers, each pointing to a different derived type.
+  //! These objects are all allocated in the heap and initialized by calling their constructors,
+  //! with given arguments.
   Shape * shapes[] = {
     new Circle(5.0),
     new Rectangle(4.0, 6.0),

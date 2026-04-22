@@ -8,10 +8,10 @@
  * April 19, 2026
  */
 
-#include "circle.hpp"
-
 //! C standard library math header
 #include <cmath>
+
+#include "circle.hpp"
 
 //! Note the ClassName:: qualifier on every function name.
 
