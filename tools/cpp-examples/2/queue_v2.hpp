@@ -13,6 +13,8 @@
  *   4. Add an std::function<void(const T &)> callback invoked on each push().
  *
  * NOTES:
+ *  - To do point 1, move the implementation (i.e. the bodies) of all the function members back
+ *    into the header file: a template must be fully defined (and not only declared) in its header.
  *  - To show that point 3 works, modify main() to create and use std::shared_ptr<Queue> only.
  *  - To do point 4, add a member with that functional type and check its presence at the end of push, e.g.
  *    if (cb_) { ... }
