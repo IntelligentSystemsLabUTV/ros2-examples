@@ -12,6 +12,11 @@
  *   3. Wrap instances in std::shared_ptr.
  *   4. Add an std::function<void(const T &)> callback invoked on each push().
  *
+ * NOTES:
+ *  - To show that point 3 works, modify main() to create and use std::shared_ptr<Queue> only.
+ *  - To do point 4, add a member with that functional type and check its presence at the end of push, e.g.
+ *    if (cb_) { ... }
+ *
  * Roberto Masocco <roberto.masocco@uniroma2.it>
  *
  * April 26, 2026
