@@ -31,7 +31,7 @@
 #include <usb_camera_driver/usb_camera_driver.hpp>
 
 using namespace std::chrono_literals;
-namespace USBCameraDriver
+namespace usb_camera_driver
 {
 
 /**
@@ -126,15 +126,8 @@ CameraDriverNode::CameraDriverNode(const rclcpp::NodeOptions & opts)
 CameraDriverNode::~CameraDriverNode()
 {
   // Stop camera sampling thread
-  bool expected = false;
-  if (stopped_.compare_exchange_strong(
-      expected,
-      true,
-      std::memory_order_release,
-      std::memory_order_acquire))
-  {
-    camera_sampling_thread_.join();
-  }
+  stopped_.store(true, std::memory_order_release);
+  camera_sampling_thread_.join();
   camera_pub_.shutdown();
   rect_pub_.shutdown();
 }
@@ -240,7 +233,9 @@ void CameraDriverNode::camera_sampling_routine()
       RCLCPP_INFO(this->get_logger(), "Empty frame");
     }
 
-    sampling_timer.sleep();
+    if (rclcpp::ok()) {
+      sampling_timer.sleep();
+    }
   }
 
   // Close video capture device
@@ -253,7 +248,7 @@ void CameraDriverNode::camera_sampling_routine()
  * @brief Toggles the video capture device and related sampling thread.
  *
  * @param req Service request to parse.
- * @param resp Service response to populate.
+ * @param resp Service response to fill.
  */
 void CameraDriverNode::hw_enable_callback(
   SetBool::Request::SharedPtr req,
@@ -363,7 +358,7 @@ void CameraDriverNode::hw_enable_callback(
   }
 }
 
-} // namespace USBCameraDriver
+} // namespace usb_camera_driver
 
 #include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(USBCameraDriver::CameraDriverNode)
+RCLCPP_COMPONENTS_REGISTER_NODE(usb_camera_driver::CameraDriverNode)

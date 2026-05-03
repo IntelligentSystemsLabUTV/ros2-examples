@@ -26,14 +26,14 @@
 
 #include <aruco_detector/aruco_detector.hpp>
 
-namespace ArucoDetector
+namespace aruco_detector
 {
 
 /**
  * @brief Toggles target detection.
  *
  * @param req Service request to parse.
- * @param rest Service response to populate.
+ * @param rest Service response to fill.
  */
 void ArucoDetectorNode::enable_callback(
   SetBool::Request::SharedPtr req,
@@ -66,4 +66,4 @@ void ArucoDetectorNode::enable_callback(
   }
 }
 
-} // namespace ArucoDetector
+} // namespace aruco_detector

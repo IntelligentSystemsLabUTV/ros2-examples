@@ -25,7 +25,7 @@ public:
 
 //! ROS-specific members better be private
 private:
-  //! DDS endpoint, acting as a subscriber
+  //! RMW endpoint, acting as a subscriber
   //! When a message is received, a callback job is issued, which better be a private method
   //! Syntax is: rclcpp::Subscription<INTERFACE_TYPE>::SharedPtr OBJ;
   //! Callback signature must be:

@@ -27,7 +27,7 @@ public:
 
 //! ROS-specific members better be private
 private:
-  //! DDS endpoint, acting as a publisher
+  //! RMW endpoint, acting as a publisher
   //! Syntax is: rclcpp::Publisher<INTERFACE_TYPE>::SharedPtr OBJ;
   rclcpp::Publisher<ros2_examples_interfaces::msg::String>::SharedPtr publisher_;
 

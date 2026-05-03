@@ -51,7 +51,7 @@ void AddTwoIntsClient::call_srv(
     RCLCPP_WARN(this->get_logger(), "Service not available");
   }
 
-  //! Create and populate the request (again, as a shared object)
+  //! Create and fill the request (again, as a shared object)
   auto request = std::make_shared<AddTwoInts::Request>();
   request->set__a(a);
   request->set__b(b);

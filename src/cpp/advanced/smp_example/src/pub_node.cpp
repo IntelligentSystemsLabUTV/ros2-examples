@@ -8,7 +8,7 @@
 
 #include <chrono>
 
-#include "../include/smp_example/smp_example.hpp"
+#include <smp_example/smp_example.hpp>
 
 /**
  * @brief Creates a PubNode.

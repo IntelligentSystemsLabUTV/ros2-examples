@@ -8,7 +8,7 @@
 
 #include <iostream>
 
-#include "../include/parameters_example/parametric_node.hpp"
+#include <parameters_example/parametric_node.hpp>
 
 //! No special setup is required here, you only have to start this with:
 //! ros2 run parameters_examples parametric_pub --ros-args -p number:=...

@@ -19,13 +19,13 @@ Pub::Pub()
 : Node("publisher_node"),
   pub_cnt_(0)
 {
-  //! This time we use an explicit QoS policy by creaitng a QoS object
+  //! This time we use an explicit QoS policy by creating a QoS object
   //! Syntax is: rclcpp::QoS obj_name(QUEUE_DEPTH)
   //! Then, we modify the individual parameters using the setter methods and the enums
   //! For a complete reference see the qos.hpp header from rclcpp (try to open it via VS Code!)
   rclcpp::QoS topic_qos(rclcpp::KeepLast(1));
-  topic_qos.best_effort(); //! Equivalenty: topic_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
-  topic_qos.durability_volatile(); //! Equivalenty: topic_qos.durability(rclcpp::DurabilityPolicy::Volatile);
+  topic_qos.best_effort(); //! Equivalently: topic_qos.reliability(rclcpp::ReliabilityPolicy::Reliable);
+  topic_qos.durability_volatile(); //! Equivalently: topic_qos.durability(rclcpp::DurabilityPolicy::Volatile);
 
   //! Initialize a publisher with create_publisher from the base class:
   //! this->create_publisher<INTERFACE_TYPE>(
@@ -78,8 +78,8 @@ void Pub::pub_timer_callback(void)
 
 int main(int argc, char ** argv)
 {
-  //! This automatically creates the global context->DDS participant for this application
-  //! and parses all ROS-specific input arguments eventually passed to the new process
+  //! This automatically creates the global context (DDS participant/Zenoh session/...) for this
+  //! application and parses all ROS-specific input arguments eventually passed to the new process
   //! (and installs signal handlers)
   rclcpp::init(argc, argv);
 

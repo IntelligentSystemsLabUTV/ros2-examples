@@ -26,7 +26,7 @@
 
 #include <aruco_detector/aruco_detector.hpp>
 
-namespace ArucoDetector
+namespace aruco_detector
 {
 
 /**
@@ -469,4 +469,4 @@ SetParametersResult ArucoDetectorNode::on_set_parameters_callback(
   return res;
 }
 
-} // namespace ArucoDetector
+} // namespace aruco_detector

@@ -26,7 +26,7 @@
 
 #include <aruco_detector/aruco_detector.hpp>
 
-namespace ArucoDetector
+namespace aruco_detector
 {
 
 /**
@@ -37,9 +37,12 @@ namespace ArucoDetector
 void ArucoDetectorNode::camera_callback(const Image::ConstSharedPtr & msg)
 {
   // Get current drone pose
-  pthread_spin_lock(&(this->pose_lock_));
-  DronePose current_pose = pose_;
-  pthread_spin_unlock(&(this->pose_lock_));
+  DronePose current_pose;
+  {
+    std::lock_guard<std::mutex> lock(pose_lock_);
+
+    current_pose = pose_;
+  }
   double altitude = current_pose.z;
   double yaw = current_pose.yaw;
 
@@ -257,4 +260,4 @@ void ArucoDetectorNode::camera_callback(const Image::ConstSharedPtr & msg)
   pthread_spin_unlock(&(this->pose_lock_));
 }*/
 
-} // namespace ArucoDetector
+} // namespace aruco_detector

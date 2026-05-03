@@ -58,8 +58,8 @@ void Sub::msg_callback(const ros2_examples_interfaces::msg::String::SharedPtr ms
 
 int main(int argc, char ** argv)
 {
-  //! This automatically creates the global context->DDS participant for this application
-  //! and parses all ROS-specific input arguments eventually passed to the new process
+  //! This automatically creates the global context (DDS participant/Zenoh session/...) for this
+  //! application and parses all ROS-specific input arguments eventually passed to the new process
   //! (and installs signal handlers)
   rclcpp::init(argc, argv);
 

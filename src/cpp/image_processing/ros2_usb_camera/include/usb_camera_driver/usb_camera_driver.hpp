@@ -66,7 +66,7 @@ using namespace rcl_interfaces::msg;
 using namespace sensor_msgs::msg;
 using namespace std_srvs::srv;
 
-namespace USBCameraDriver
+namespace usb_camera_driver
 {
 
 /**
@@ -194,6 +194,6 @@ private:
   std::atomic<bool> stopped_;
 };
 
-} // namespace USBCameraDriver
+} // namespace usb_camera_driver
 
 #endif // ROS2_USB_CAMERA_USB_CAMERA_DRIVER_HPP

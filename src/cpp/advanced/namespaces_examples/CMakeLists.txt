@@ -15,7 +15,7 @@ find_package(example_interfaces REQUIRED)
 install(DIRECTORY launch
   DESTINATION share/${PROJECT_NAME})
 
-# example about ROS 2 DDS topics naming mechanisms
+# example about ROS 2 topics naming mechanisms
 add_executable(topics_ns
   src/topics_ns/topics_ns.cpp
   src/topics_ns/pub_srv.cpp)

@@ -33,21 +33,19 @@ find_package(std_srvs REQUIRED)
 find_package(Threads REQUIRED)
 
 # Aruco Detector component
-add_library(aruco_detector_component SHARED
+add_library(aruco_detector SHARED
   src/aruco_detector/aruco_detector.cpp
   src/aruco_detector/ad_services.cpp
   src/aruco_detector/ad_subscriptions.cpp
   src/aruco_detector/ad_utils.cpp)
-target_compile_definitions(aruco_detector_component PRIVATE COMPOSITION_BUILDING_DLL)
-target_include_directories(aruco_detector_component PUBLIC
+target_compile_definitions(aruco_detector PRIVATE COMPOSITION_BUILDING_DLL)
+target_include_directories(aruco_detector PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(
-  aruco_detector_component
+target_link_libraries(aruco_detector
   ${OpenCV_LIBS}
   Threads::Threads)
-ament_target_dependencies(
-  aruco_detector_component
+ament_target_dependencies(aruco_detector
   image_transport
   rclcpp
   rclcpp_components
@@ -56,7 +54,7 @@ ament_target_dependencies(
   #stanis_qos
   std_msgs
   std_srvs)
-rclcpp_components_register_nodes(aruco_detector_component "ArucoDetector::ArucoDetectorNode")
+rclcpp_components_register_nodes(aruco_detector "aruco_detector::ArucoDetectorNode")
 
 # Aruco detector standalone application
 add_executable(aruco_detector_app
@@ -64,13 +62,12 @@ add_executable(aruco_detector_app
 target_include_directories(aruco_detector_app PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-target_link_libraries(aruco_detector_app aruco_detector_component)
-ament_target_dependencies(
-  aruco_detector_app
+target_link_libraries(aruco_detector_app aruco_detector)
+ament_target_dependencies(aruco_detector_app
   rclcpp)
 
 # Aruco Detector component
-install(TARGETS aruco_detector_component
+install(TARGETS aruco_detector
   ARCHIVE DESTINATION lib
   LIBRARY DESTINATION lib
   RUNTIME DESTINATION bin)
@@ -97,8 +94,5 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-# Make sure that the library path is exported even if the library itself is not
-ament_environment_hooks("${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}")
 
 ament_package()

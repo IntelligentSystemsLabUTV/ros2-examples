@@ -9,7 +9,7 @@
 #include <iostream>
 
 #include <rclcpp/rclcpp.hpp>
-#include "../../include/namespaces_examples/topic_ns/pub_srv.hpp"
+#include <namespaces_examples/topic_ns/pub_srv.hpp>
 
 int main(int argc, char ** argv)
 {

@@ -6,7 +6,7 @@
  * January 9, 2022
  */
 
-#include "../../include/namespaces_examples/topic_ns/pub_srv.hpp"
+#include <namespaces_examples/topic_ns/pub_srv.hpp>
 
 #define UNUSED(arg) (void)(arg)
 
@@ -42,7 +42,7 @@ DummyPubSrv::DummyPubSrv()
  * @brief Dummy server callback.
  *
  * @param req Request to parse.
- * @param resp Response to populate.
+ * @param resp Response to fill.
  */
 void DummyPubSrv::server_clbk(
   Trigger::Request::SharedPtr req,

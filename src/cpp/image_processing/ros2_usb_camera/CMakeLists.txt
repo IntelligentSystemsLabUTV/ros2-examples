@@ -45,8 +45,7 @@ target_include_directories(usb_camera_driver PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_link_libraries(usb_camera_driver Threads::Threads)
-ament_target_dependencies(
-  usb_camera_driver
+ament_target_dependencies(usb_camera_driver
   "camera_calibration_parsers"
   "camera_info_manager"
   "image_transport"
@@ -57,7 +56,7 @@ ament_target_dependencies(
   "std_msgs"
   "std_srvs"
 )
-rclcpp_components_register_nodes(usb_camera_driver "USBCameraDriver::CameraDriverNode")
+rclcpp_components_register_nodes(usb_camera_driver "usb_camera_driver::CameraDriverNode")
 
 # USB Camera standalone application
 add_executable(usb_camera_app
@@ -66,9 +65,8 @@ target_include_directories(usb_camera_app PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
 target_link_libraries(usb_camera_app usb_camera_driver)
-ament_target_dependencies(
-  usb_camera_app
-  "rclcpp")
+ament_target_dependencies(usb_camera_app
+  rclcpp)
 
 # usb_camera_driver component
 install(TARGETS usb_camera_driver
@@ -98,8 +96,5 @@ if(BUILD_TESTING)
   #set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
-
-# Make sure that the library path is exported even if the library itself is not
-ament_environment_hooks("${ament_cmake_package_templates_ENVIRONMENT_HOOK_LIBRARY_PATH}")
 
 ament_package()

@@ -34,7 +34,7 @@
 
 #include <usb_camera_driver/usb_camera_driver.hpp>
 
-namespace USBCameraDriver
+namespace usb_camera_driver
 {
 
 /**
@@ -656,4 +656,4 @@ SetParametersResult CameraDriverNode::on_set_parameters_callback(
   return res;
 }
 
-} // namespace USBCameraDriver
+} // namespace usb_camera_driver

@@ -24,12 +24,12 @@
  * 51 Franklin St, Fifth Floor, Boston, MA 02110-1301 USA.
  */
 
-#include <string>
 #include <stdexcept>
+#include <string>
 
 #include <aruco_detector/aruco_detector.hpp>
 
-namespace ArucoDetector
+namespace aruco_detector
 {
 
 /**
@@ -42,9 +42,6 @@ namespace ArucoDetector
 ArucoDetectorNode::ArucoDetectorNode(const rclcpp::NodeOptions & opts)
 : Node("aruco_detector", opts)
 {
-  // Initialize synchronization primitives
-  init_sync_primitives();
-
   // Initialize callback groups
   init_cgroups();
 
@@ -90,21 +87,6 @@ ArucoDetectorNode::~ArucoDetectorNode()
     is_on_ = false;
   }
   //target_img_pub_.shutdown();
-
-  // Destroy synchronization primitives
-  pthread_spin_destroy(&(this->pose_lock_));
-}
-
-/**
- * @brief Routine to initialize synchronization primitives.
- *
- * @throws RuntimeError
- */
-void ArucoDetectorNode::init_sync_primitives()
-{
-  if (pthread_spin_init(&(this->pose_lock_), PTHREAD_PROCESS_PRIVATE)) {
-    throw std::runtime_error("Failed to initialize spinlocks");
-  }
 }
 
 /**
@@ -274,7 +256,7 @@ void ArucoDetectorNode::init_services()
       std::placeholders::_2));
 }
 
-} // namespace ArucoDetector
+} // namespace aruco_detector
 
 #include <rclcpp_components/register_node_macro.hpp>
-RCLCPP_COMPONENTS_REGISTER_NODE(ArucoDetector::ArucoDetectorNode)
+RCLCPP_COMPONENTS_REGISTER_NODE(aruco_detector::ArucoDetectorNode)

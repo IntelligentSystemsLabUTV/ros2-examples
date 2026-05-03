@@ -26,7 +26,7 @@ public:
   AddTwoIntsServer();
 
 private:
-  //! This object is a modified DDS endpoint that receives requests and,
+  //! This object is a special RMW endpoint that receives requests and,
   //! in addition, implements the ROS 2 server semantics to send responses
   //! The job to execute upon arrival must be coded in a related callback
   //! The syntax is:
@@ -53,7 +53,7 @@ public:
   void call_srv(int a, int b);
 
 private:
-  //! This object is a modified DDS endpoint that sends requests and,
+  //! This object is a special RMW endpoint that sends requests and,
   //! in addition, implements the ROS 2 client semantics to receive responses
   //! The syntax is:
   //! rclcpp::Client<INTERFACE_TYPE>::SharedPtr OBJ;

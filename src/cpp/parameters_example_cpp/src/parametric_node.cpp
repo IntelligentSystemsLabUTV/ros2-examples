@@ -108,7 +108,7 @@ rcl_interfaces::msg::SetParametersResult ParametricPub::param_clbk(
   res.set__successful(false);
   res.set__reason("Invalid parameters");
 
-  // Look for valid parameters to update, and populate result accordingly
+  // Look for valid parameters to update, and fill result accordingly
   for (const rclcpp::Parameter & p : params) {
     if ((p.get_name() == "number") && (p.get_type() == rclcpp::ParameterType::PARAMETER_INTEGER)) {
       RCLCPP_INFO(

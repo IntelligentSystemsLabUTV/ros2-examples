@@ -10,7 +10,7 @@
 
 #include <rclcpp/rclcpp.hpp>
 
-#include "../include/smp_example/smp_example.hpp"
+#include <smp_example/smp_example.hpp>
 
 int main(int argc, char ** argv)
 {

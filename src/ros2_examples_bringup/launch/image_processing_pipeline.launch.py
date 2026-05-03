@@ -49,7 +49,7 @@ def generate_launch_description():
         composable_node_descriptions=[
             ComposableNode(
                 package='ros2_usb_camera',
-                plugin='USBCameraDriver::CameraDriverNode',
+                plugin='usb_camera_driver::CameraDriverNode',
                 name='usb_camera_driver',
                 namespace='image_processing_pipeline',
                 parameters=[
@@ -61,7 +61,7 @@ def generate_launch_description():
                 extra_arguments=[{'use_intra_process_comms': True}]),
             ComposableNode(
                 package='aruco_detector',
-                plugin='ArucoDetector::ArucoDetectorNode',
+                plugin='aruco_detector::ArucoDetectorNode',
                 name='aruco_detector',
                 namespace='image_processing_pipeline',
                 parameters=[

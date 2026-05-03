@@ -37,7 +37,7 @@
 
 #include <aruco_detector/aruco_detector.hpp>
 
-using namespace ArucoDetector;
+using namespace aruco_detector;
 
 int main(int argc, char ** argv)
 {

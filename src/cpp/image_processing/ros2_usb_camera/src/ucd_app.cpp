@@ -41,7 +41,7 @@
 
 #include <usb_camera_driver/usb_camera_driver.hpp>
 
-using namespace USBCameraDriver;
+using namespace usb_camera_driver;
 
 int main(int argc, char ** argv)
 {

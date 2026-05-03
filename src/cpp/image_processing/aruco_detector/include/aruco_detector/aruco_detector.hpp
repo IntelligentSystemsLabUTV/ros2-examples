@@ -28,10 +28,10 @@
 #define STANIS_ARUCO_DETECTOR_HPP
 
 #include <memory>
+#include <mutex>
 #include <opencv2/aruco.hpp>
 #include <opencv2/core.hpp>
 #include <opencv2/imgproc.hpp>
-#include <pthread.h>
 #include <vector>
 
 #include <rclcpp/rclcpp.hpp>
@@ -57,7 +57,7 @@ using namespace sensor_msgs::msg;
 using namespace std_msgs::msg;
 using namespace std_srvs::srv;
 
-namespace ArucoDetector
+namespace aruco_detector
 {
 
 /**
@@ -94,7 +94,6 @@ public:
 
 private:
   /* Node initialization routines */
-  void init_sync_primitives();
   void init_cgroups();
   void init_parameters();
   void init_subscriptions();
@@ -166,7 +165,7 @@ private:
   ParameterDescriptor focal_length_descriptor_;
 
   /* Synchronization primitives */
-  pthread_spinlock_t pose_lock_;
+  std::mutex pose_lock_;
 
   /* Parameters callback */
   OnSetParametersCallbackHandle::SharedPtr on_set_params_chandle_;
@@ -204,6 +203,6 @@ private:
     bool read_only, ParameterDescriptor & descriptor);
 };
 
-} // namespace ArucoDetector
+} // namespace aruco_detector
 
 #endif // STANIS_ARUCO_DETECTOR_HPP

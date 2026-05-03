@@ -39,13 +39,13 @@ AddTwoIntsServer::AddTwoIntsServer()
  * @brief Adds two given integers and returns the sum.
  *
  * @param request Message with the two integers to add.
- * @param response Response message to populate.
+ * @param response Response message to fill.
  */
 void AddTwoIntsServer::add_two_ints_clbk(
   const AddTwoInts::Request::SharedPtr request,
   const AddTwoInts::Response::SharedPtr response)
 {
-  //! Note that this has void return type: all that has to be done is to populate
+  //! Note that this has void return type: all that has to be done is to fill
   //! the appropriate fields in the response message
   response->set__sum(request->a + request->b);
 

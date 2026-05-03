@@ -9,7 +9,7 @@
 #include <chrono>
 #include <thread>
 
-#include "../include/smp_example/smp_example.hpp"
+#include <smp_example/smp_example.hpp>
 
 /**
  * @brief Creates an SMPNode.
@@ -24,7 +24,7 @@ SMPNode::SMPNode()
 
   //! When creating timers, the callback group must be passed to the API
   //! This is also true for services, whereas in topic subscriptions an
-  //! appropriate object named "subscription option" must be populated and then
+  //! appropriate object named "subscription option" must be filled and then
   //! passed to the API, like this:
   //!
   //! auto SUB_OPTS_OBJ = rclcpp::SubscriptionOptions();
