@@ -1,6 +1,6 @@
 # ROS 2 Components
 
-Components, also known as *composable nodes*, or *nodelets* in ROS, are a simple way to manage an entire, distributed control architecture in a simplified and modular way from the host OS point of view. In essence, a component is a shared library that compiles a ROS 2 node class. It can then be loaded and unloaded, at runtime, inside a *container* process, in which runs a *component manager* node. For a description of this framwework, as well as a list of commands, see the [official documentation](https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Composition.html).
+Components, also known as *composable nodes*, or *nodelets* in ROS, are a simple way to manage an entire, distributed control architecture in a simplified and modular way from the host OS point of view. In essence, **a component is a shared library that compiles a ROS 2 node class**. It can then be loaded and unloaded, at runtime, inside a *container* process, in which runs a *component manager* node. For a description of this framwework, as well as a list of commands, see the [official documentation](https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Composition.html).
 
 What follows is a description of the steps to take to enable the use of components in a ROS 2 package. In the following, the terms *component*, *composable nodes*, and *plugin* are used interchangeably.
 
@@ -18,7 +18,7 @@ Just add `rclcpp_components` in both your `package.xml` and `CMakeLists.txt` fil
 
 ## Node class source code
 
-The following rules should be followed while writing source code for a component:
+The following rules should be followed while writing source code for a component.
 
 1. The node class should be defined in a namespace that has the same name of the package. This is to avoid conflicts with plugin names in other packages.
 2. The constructor of the node class should take only one argument, of type `const rclcpp::NodeOptions &`.
@@ -39,8 +39,7 @@ target_compile_definitions(pub PRIVATE COMPOSITION_BUILDING_DLL)
 target_include_directories(pub PUBLIC
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
   $<INSTALL_INTERFACE:include>)
-ament_target_dependencies(
-  pub
+ament_target_dependencies(pub
   rclcpp
   rclcpp_components
   std_msgs)
@@ -105,7 +104,7 @@ The `use_intra_process_comms` extra argument is necessary to enable intra-proces
 
 ## Config files
 
-For some reason, the Launch System is less capable of resolving node names when processing config files for components. This is why it is recommended to **enter full node names in config files**, *i.e.*, the full namespace and node name, as in the following example:
+It is required to **enter full node names in config files**, *i.e.*, the full namespace and node name, as in the following example, to ensure that parameters are correctly loaded for the components:
 
 ```yaml
 /namespace/node_name:

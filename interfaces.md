@@ -1,12 +1,12 @@
 # ROS 2 Interfaces
 
-This article covers best practices about the creation and management of ROS 2 *interface files*, meaning specifications of messages, services and actions.
+This article covers best practices about the creation and management of ROS 2 *interface files*, containing the specifications of messages, services, and actions; they are the starting point from which the code of interface libraries, which implement the corresponding data types, are generated.
 
 ## Packaging
 
-It is better, and nowadays customary, to create entire packages made only of interfaces. These could be related to single parts of a project or to an entire one, could be of only one kind or many, the choice is yours. Including interfaces in packages that are also made of code that uses them is a bad practice: usually these interfaces are needed by more than one package in order to establish some sort of communication between nodes. This way, you can list interfaces as dependencies of the packages that use them.
+**It is customary to create entire packages made only of interfaces.** These could be related to single parts of a project or to an entire one, could be of only one kind or many, the choice is yours. **Including interfaces in packages that are also made of code that uses them is a bad practice**: usually these interfaces are needed by more than one package in order to establish some sort of communication between nodes. This way, you can list interfaces as dependencies of the packages that use them.
 
-In order to create an interfaces-only package, you have to do the following:
+To create an interfaces package, you have to do the following:
 
 1. Create a package specifying no build type (should default to `ament_cmake`) and no dependencies. **Its name should be `PACKAGE_interfaces`, to clarify its purpose.**
 2. Remove `include/` and `src/`.
@@ -14,10 +14,10 @@ In order to create an interfaces-only package, you have to do the following:
 4. In `package.xml`, add the following lines:
 
     ```xml
+    <member_of_group>rosidl_interface_packages</member_of_group>
     <buildtool_depend>rosidl_default_generators</buildtool_depend>
     <exec_depend>rosidl_default_runtime</exec_depend>
     <depend>action_msgs</depend> <!--Only for actions!-->
-    <member_of_group>rosidl_interface_packages</member_of_group>
     ```
 
 5. In `CMakeLists.txt` you can remove many things, but the only necessary modification is the following line:
@@ -26,7 +26,7 @@ In order to create an interfaces-only package, you have to do the following:
     find_package(rosidl_default_generators REQUIRED)
     ```
 
-    Then you have to add files to generate interfaces from with *rosidl* macros, like this:
+    Then you have to add files to generate interfaces from with `rosidl` macros, like this:
 
     ```cmake
     rosidl_generate_interfaces(${PROJECT_NAME}
@@ -63,7 +63,6 @@ In order to create an interfaces-only package, you have to do the following:
 
 6. **If using actions**, the following dependencies are required:
     - `rclcpp_action`
-    - Interfaces package where actions are specified.
 
 Then you can build the package with `colcon`. Generated files will be placed in:
 
@@ -83,9 +82,6 @@ Then you can build the package with `colcon`. Generated files will be placed in:
     #include <PACKAGE_interfaces/srv/MyInterface.hpp>
     #include <PACKAGE_interfaces/action/MyInterface.hpp>
     // And so on...
-
-    // Only for actions:
-    #include <rclcpp_action/rclcpp_action.hpp>
     ```
 
 Remember to source install scripts to see the new package and compile against it!
@@ -93,7 +89,7 @@ Remember to source install scripts to see the new package and compile against it
 ## Best Practices
 
 - Interface files extensions must be like `.msg`, `.srv`, `.action`, with uppercase camel notation names.
-- Of course, all packages that use your interfaces will depend on the new interfaces package.
+- All packages that use your interfaces will depend on the new interfaces package.
 
 ## Interface format
 

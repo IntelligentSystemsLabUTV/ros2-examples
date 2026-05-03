@@ -136,7 +136,7 @@ For more information about what each argument to the object constructors does pl
 
 ## Starting modules with launch files
 
-After having built and sourced a package with a launch file, the command to start it is `ros2 launch`. Have a look at its helper for its syntax and all its options. Eventual command line arguments specified in the launch file can be set with:
+After having built and sourced a package with a launch file, the command to start it is `ros2 launch`. Have a look at its helper for its syntax and all its options. Command line arguments specified in the launch file can be set with:
 
 ```bash
 ros2 launch PACKAGE_NAME LAUNCH_FILE_NAME arg1:=value1 arg2:=value2 [...]
@@ -144,7 +144,7 @@ ros2 launch PACKAGE_NAME LAUNCH_FILE_NAME arg1:=value1 arg2:=value2 [...]
 
 As soon as the Launch System loads and starts the executables specified in the launch file, you'll start to see some output in the console: by default, it will be the combined output of all the nodes started by the launch file. Also, if running in a shell or terminal, `stdin` will be combined too and if `Ctrl+C` is pressed then `SIGINT` is delivered to all processes simultaneously, forcing them all to terminate.
 
-**Even if you specify no particular configuration for a node, *e.g.*, as in the first code example above, the Launch System is still going to add `--ros-args` to the process's command line, hence to its argv (not knowing this caused the writer quite many headaches when checking argc).**
+**Even if you specify no particular configuration for a node, *e.g.*, as in the first code example above, the Launch System is still going to add `--ros-args` to the process's command line, hence to its `argv`.**
 
 Logging can be configured via the `output` argument of the `Node` object. When you use `ros2 run` to start an executable it doesn't redirect process output, so you're going to see `stdout` and `stderr` in your console, and no log files will be generated. If you use `ros2 launch` instead, output will be redirected: by default it will be reduced to `stderr` only in the console while everything goes in a log `.txt` file, usually written in a subdirectory of `~/.ros/`. Options for the `output` argument, taken from the Rolling documentation of `launch/logging/__init__.py`, are as follows:
 
