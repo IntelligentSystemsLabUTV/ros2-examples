@@ -108,7 +108,7 @@ Below you can find some notes about how to write interface definition files of v
 - Types must be from ROS 2 standard types, or from another interface you can include first.
   Inclusion syntax is: `package/message`.
   Don’t forget to add a dependency for the other package in both `package.xml` and `CMakeLists.txt`!
-  Any message you’ve already created in the same package may also be included, find some notes about how to do so [here](https://docs.ros.org/en/jazzy/Tutorials/Single-Package-Define-And-Use-Interface.html#extra-use-an-existing-interface-definition).
+  Any message you’ve already created in the same package may also be included, find some notes about how to do so [in the official docs](https://docs.ros.org/en/jazzy/Tutorials/Single-Package-Define-And-Use-Interface.html#extra-use-an-existing-interface-definition).
 - Arrays can be specified as types with syntax:
 
   ```msg
